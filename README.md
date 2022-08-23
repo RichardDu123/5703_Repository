@@ -1,10 +1,8 @@
-# G3_CS34 _COMP5703
+# G3_CS34 \_COMP5703
 
 ## Installation
 
-First ensure you are in an empty directory.
-
-Run the simple dApp  using 1 of 2 ways.
+Run the simple dApp using 1 of 2 ways.
 
 ```sh
 # Install Truffle globally and run `truffle unbox`
@@ -29,4 +27,3 @@ $ yarn serve
 ```
 
 Make sure you install the MetaMask
-
