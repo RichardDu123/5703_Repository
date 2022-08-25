@@ -51,7 +51,7 @@ export const useETHStore = defineStore('ETH', {
     },
     watchWeb3Account() {
       console.log('begin watch')
-      const handleAccountChange = async () => {
+      const handleAccountChange = () => {
         // if (this.web3) {
         //   const accounts = await this.web3.eth.getAccounts()
         //   const activeAccount = accounts[0]
