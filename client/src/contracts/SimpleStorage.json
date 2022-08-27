@@ -12,8 +12,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -36,7 +35,7 @@
   "sourceMap": "66:205:3:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "66:205:3:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;196:73;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;115:75;;;:::i;:::-;;;;;;;;;;;;;;;;;;;196:73;254:8;246:5;:16;;;;196:73;:::o;115:75::-;152:7;178:5;;171:12;;115:75;:::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract SimpleStorage {\n    uint256 value;\n\n    function read() public view returns (uint256) {\n        return value;\n    }\n\n    function write(uint256 newValue) public {\n        value = newValue;\n    }\n}\n",
-  "sourcePath": "/Users/richard/Doc/澳洲/sydney_study/22s2/5703/Vue-webpack/truffle/contracts/SimpleStorage.sol",
+  "sourcePath": "/Users/richard/Doc/澳洲/sydney_study/22s2/5703/vue-web3-5703/truffle/contracts/SimpleStorage.sol",
   "ast": {
     "absolutePath": "project:/contracts/SimpleStorage.sol",
     "exportedSymbols": {
@@ -628,8 +627,7 @@
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-08-23T11:03:25.246Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-08-25T14:03:43.376Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

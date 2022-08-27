@@ -29,7 +29,7 @@ const handleSubmit = async () => {
   if (contract && accounts) {
     //sell
     let result = await contract.methods
-      .createItem(itemName.value, itemPrice.value)
+      .createItem(itemName.value, 100)
       .send({ from: accounts[0] })
     itemAddress.value = result.events.SupplyChainStep.returnValues._address
   }
@@ -56,27 +56,6 @@ if (contract) {
 onUnmounted(() => {
   subscribe?.unsubscribe()
 })
-
-// import { useETHStore } from "../store"
-// import { ref } from 'vue';
-// const store = useETHStore()
-// let address = ref<string>('')
-// const clickF = async () => {
-//   if (store.accounts && store.contract) {
-//     console.log(123)
-//     let result = await store.contract.methods.write(2).send({ from: store.accounts[0] })
-//     console.log(result)
-//   }
-// }
-// const clickW = async () => {
-//   if (store.accounts && store.contract) {
-//     const value = await store.contract.methods.read().call({ from: store.accounts[0] });
-//     console.log(value);
-//   }
-// }
-// const get = () => {
-//   alert(store.accounts ? store.accounts[0] : '123')
-// }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

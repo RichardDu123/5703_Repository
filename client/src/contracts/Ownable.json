@@ -35,7 +35,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.6.0;\n\ncontract Ownable {\n    address public _owner;\n\n    constructor() internal {\n        _owner = msg.sender;\n    }\n\n    /**\n     * @dev Throws if called by any account other than the owner.\n     */\n    modifier onlyOwner() {\n        require(isOwner(), \"Ownable: caller is not the owner\");\n        _;\n    }\n\n    /**\n     * @dev Returns true if the caller is the current owner.\n     */\n    function isOwner() public view returns (bool) {\n        return (msg.sender == _owner);\n    }\n}\n",
-  "sourcePath": "/Users/richard/Doc/澳洲/sydney_study/22s2/5703/Vue-webpack/truffle/contracts/Ownable.sol",
+  "sourcePath": "/Users/richard/Doc/澳洲/sydney_study/22s2/5703/vue-web3-5703/truffle/contracts/Ownable.sol",
   "ast": {
     "absolutePath": "project:/contracts/Ownable.sol",
     "exportedSymbols": {
@@ -1024,7 +1024,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-08-23T03:40:23.410Z",
+  "updatedAt": "2022-08-25T14:03:43.375Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
