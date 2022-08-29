@@ -29,7 +29,7 @@ const handleSubmit = async () => {
   if (contract && accounts) {
     //sell
     let result = await contract.methods
-      .createItem(itemName.value, 100)
+      .createItem(itemName.value, itemPrice.value)
       .send({ from: accounts[0] })
     itemAddress.value = result.events.SupplyChainStep.returnValues._address
   }
