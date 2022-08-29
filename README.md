@@ -10,15 +10,6 @@ $ npm install -g truffle
 ```
 
 ```sh
-#test on port 9545
-$ cd truffle
-# start local blockchain
-$ truffle develop
-# deploy the smart contract
-$ migrate
-```
-
-```sh
 #test on port 7545
 open ganache software and start a private blockchain
 $ cd truffle
