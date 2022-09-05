@@ -52,15 +52,6 @@ export const useETHStore = defineStore('ETH', {
     watchWeb3Account() {
       console.log('begin watch')
       const handleAccountChange = () => {
-        // if (this.web3) {
-        //   const accounts = await this.web3.eth.getAccounts()
-        //   const activeAccount = accounts[0]
-        //   if (this.accounts && activeAccount !== this.accounts[0]) {
-        //     this.accounts = accounts
-        //   }
-        //   this.initWeb3()
-        // }
-        // this.initWeb3()
         window.location.reload()
       }
       const handleChainChange = () => {
@@ -75,3 +66,12 @@ export const useETHStore = defineStore('ETH', {
     },
   },
 })
+// if (this.web3) {
+//   const accounts = await this.web3.eth.getAccounts()
+//   const activeAccount = accounts[0]
+//   if (this.accounts && activeAccount !== this.accounts[0]) {
+//     this.accounts = accounts
+//   }
+//   this.initWeb3()
+// }
+// this.initWeb3()

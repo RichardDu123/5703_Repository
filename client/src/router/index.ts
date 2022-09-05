@@ -9,8 +9,25 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/',
-        name: 'buy',
-        component: () => import('@/views/buy/index.vue'),
+        name: 'layout',
+        component: () => import('@/views/layout/index.vue'),
+        children: [
+          {
+            path: '/',
+            name: 'welcome',
+            component: () => import('@/views/welcome/index.vue'),
+          },
+          {
+            path: '/buy',
+            name: 'buy',
+            component: () => import('@/views/buyElec/index.vue'),
+          },
+          {
+            path: '/sell',
+            name: 'sell',
+            component: () => import('@/views/sellElec/index.vue'),
+          },
+        ],
       },
     ],
   },
