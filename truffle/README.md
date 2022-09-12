@@ -1,6 +1,5 @@
 智能合约结构示意图
-
-<img src="C:\Users\89731\AppData\Roaming\Typora\typora-user-images\image-20220912214236231.png" alt="image-20220912214236231" style="zoom:80%;" />
+[![vX47RJ.png](https://s1.ax1x.com/2022/09/12/vX47RJ.png)](https://imgse.com/i/vX47RJ)
 
 ### Backend API Spec
 
