@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
     children: [
       {
@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: '/',
-            name: 'welcome',
+            name: 'dashboard',
             component: () => import('@/views/welcome/index.vue'),
           },
           {
@@ -26,6 +26,16 @@ const routes: Array<RouteRecordRaw> = [
             path: '/sell',
             name: 'sell',
             component: () => import('@/views/sellElec/index.vue'),
+          },
+          {
+            path: '/profile',
+            name: 'profile',
+            component: () => import('@/views/profile/index.vue'),
+          },
+          {
+            path: '/statistics',
+            name: 'statistics',
+            component: () => import('@/views/stat/index.vue'),
           },
         ],
       },

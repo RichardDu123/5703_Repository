@@ -8,11 +8,8 @@
         <h2>name</h2>
         <nav>
           <ul @click="handleClick">
-            <li id="dashBoard">
-              <div
-                class="navItem"
-                :class="{ active: currentNav === 'dashBoard' }"
-              >
+            <li id="dashboard">
+              <div class="navItem" :class="{ active: currentNav === '/' }">
                 <svg
                   width="20"
                   height="20"
@@ -29,7 +26,7 @@
               </div>
             </li>
             <li id="buy">
-              <div class="navItem" :class="{ active: currentNav === 'buy' }">
+              <div class="navItem" :class="{ active: currentNav === '/buy' }">
                 <svg
                   width="12"
                   height="18"
@@ -45,7 +42,7 @@
               </div>
             </li>
             <li id="sell">
-              <div class="navItem" :class="{ active: currentNav === 'sell' }">
+              <div class="navItem" :class="{ active: currentNav === '/sell' }">
                 <svg
                   width="12"
                   height="18"
@@ -60,6 +57,44 @@
                 <span>Sell</span>
               </div>
             </li>
+            <li id="statistics">
+              <div
+                class="navItem"
+                :class="{ active: currentNav === '/statistics' }"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.4498 1.7803C13.4098 2.0303 13.3898 2.2803 13.3898 2.5303C13.3898 4.7803 15.2098 6.5993 17.4498 6.5993C17.6998 6.5993 17.9398 6.5703 18.1898 6.5303V14.5993C18.1898 17.9903 16.1898 20.0003 12.7898 20.0003H5.40076C1.99976 20.0003 -0.000244141 17.9903 -0.000244141 14.5993V7.2003C-0.000244141 3.8003 1.99976 1.7803 5.40076 1.7803H13.4498ZM13.6508 7.8603C13.3798 7.8303 13.1108 7.9503 12.9498 8.1703L10.5308 11.3003L7.75976 9.1203C7.58976 8.9903 7.38976 8.9393 7.18975 8.9603C6.99076 8.9903 6.81076 9.0993 6.68975 9.2593L3.73076 13.1103L3.66976 13.2003C3.49976 13.5193 3.57976 13.9293 3.87976 14.1503C4.01976 14.2403 4.16976 14.3003 4.33976 14.3003C4.57076 14.3103 4.78976 14.1893 4.92976 14.0003L7.43975 10.7693L10.2898 12.9103L10.3798 12.9693C10.6998 13.1393 11.0998 13.0603 11.3298 12.7593L14.2198 9.0303L14.1798 9.0503C14.3398 8.8303 14.3698 8.5503 14.2598 8.3003C14.1508 8.0503 13.9098 7.8803 13.6508 7.8603ZM17.5899 0C18.9199 0 19.9999 1.08 19.9999 2.41C19.9999 3.74 18.9199 4.82 17.5899 4.82C16.2599 4.82 15.1799 3.74 15.1799 2.41C15.1799 1.08 16.2599 0 17.5899 0Z"
+                  />
+                </svg>
+                <span>Statistics</span>
+              </div>
+            </li>
+            <li id="profile">
+              <div
+                class="navItem"
+                :class="{ active: currentNav === '/profile' }"
+              >
+                <svg
+                  width="16"
+                  height="20"
+                  viewBox="0 0 16 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 13.1739C12.3386 13.1739 16 13.8789 16 16.599C16 19.32 12.3146 20 8 20C3.66237 20 0 19.295 0 16.575C0 13.8539 3.68538 13.1739 8 13.1739ZM8 0C10.9391 0 13.294 2.35402 13.294 5.29105C13.294 8.22808 10.9391 10.5831 8 10.5831C5.0619 10.5831 2.70601 8.22808 2.70601 5.29105C2.70601 2.35402 5.0619 0 8 0Z"
+                  />
+                </svg>
+                <span>Profile</span>
+              </div>
+            </li>
           </ul>
         </nav>
       </div>
@@ -67,6 +102,7 @@
     <transition name="right">
       <div class="right" v-show="showRight">
         <account />
+        <recent-transac />
       </div>
     </transition>
   </div>
@@ -77,23 +113,24 @@
 //handle navbar change
 import { useETHStore } from '@/store'
 import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Account from './right/account.vue'
+import RecentTransac from './right/recentTransac.vue'
 const router = useRouter()
-const currentNav = ref('dashBoard')
-const handleClick = (e: any) => {
-  let target = e.target
+const route = useRoute()
+console.log(route.path)
+const currentNav = ref(route.path)
+const handleClick = (e: Event) => {
+  let target = e.target as HTMLElement
   while (target.tagName != 'ul') {
     if (target.tagName.toLowerCase() == 'li') {
-      currentNav.value = target.id
-      if (target.id === 'dashBoard') {
-        router.push('/')
-      } else {
-        router.push(`/${target.id}`)
-      }
+      currentNav.value = target.id === 'dashboard' ? '/' : '/' + target.id
+      router.push({
+        name: `${target.id}`,
+      })
       break
     }
-    target = target.parentNode
+    target = target.parentElement as HTMLElement
   }
 }
 //left animation
@@ -156,7 +193,6 @@ const isETHLoaded = store.isWeb3Load
       margin-top: 93px;
       ul {
         li {
-          list-style: none;
           margin-bottom: 10px;
           .navItem {
             position: relative;

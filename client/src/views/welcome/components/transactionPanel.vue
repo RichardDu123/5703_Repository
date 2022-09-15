@@ -21,6 +21,7 @@
     border-radius: 24px;
     text-align: left;
     overflow: hidden;
+    box-shadow: 0px 0px 40px rgba(48, 73, 191, 0.04);
     span {
       display: block;
       width: 400px;
@@ -31,6 +32,7 @@
       margin-top: 40px;
     }
     .buyBtn {
+      .hoverShadow();
       width: 76px;
       height: 57px;
       background-color: #40baff;
@@ -44,6 +46,7 @@
       }
     }
     .sellBtn {
+      .hoverShadow();
       width: 76px;
       height: 57px;
       background-color: #fff;
