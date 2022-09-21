@@ -14,7 +14,7 @@ import Portfolio from './components/portfolio.vue'
 .welcomeContainer {
   overflow: hidden;
   background-color: #fcfdff;
-  height: 100vh;
+  height: 968px;
   .transacPanel {
     margin-top: 112px;
     height: 244px;

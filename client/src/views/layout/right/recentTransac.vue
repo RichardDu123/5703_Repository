@@ -55,7 +55,7 @@ import ItemSell from './itemSell.vue'
     line-height: 31px;
   }
   ul {
-    height: 58vh;
+    height: 500px;
     overflow-y: scroll;
     padding: 0;
     li {

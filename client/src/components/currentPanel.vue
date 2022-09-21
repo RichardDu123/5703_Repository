@@ -4,21 +4,18 @@
       <Thunder class="thunder" />
       <div>
         <h3>Current</h3>
-        <span>Watts</span>
+        <span>kW⋅h</span>
       </div>
     </div>
-    <div class="bigRight">{{ curElec }}KW</div>
+    <div class="bigRight">{{ UserStore.currElec }}kW⋅h</div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/store'
 import Thunder from './svgs/thunder.vue'
-defineProps({
-  curElec: {
-    type: String || Number,
-    required: true,
-  },
-})
+const UserStore = useUserStore()
+UserStore.setElec()
 </script>
 
 <style scoped lang="less">

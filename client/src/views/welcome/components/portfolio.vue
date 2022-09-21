@@ -2,7 +2,7 @@
   <div class="portfolioContainer">
     <h2>My Portfolio</h2>
     <section class="main">
-      <CurrentPanel cur-elec="2700" />
+      <CurrentPanel :cur-elec="UserStore.currElec" />
       <BottomPanel total-buy="0" total-sell="1700" />
     </section>
   </div>
@@ -11,6 +11,8 @@
 <script setup lang="ts">
 import CurrentPanel from '../../../components/currentPanel.vue'
 import BottomPanel from '@/components/bottomPanel.vue'
+import { useUserStore } from '@/store'
+const UserStore = useUserStore()
 </script>
 
 <style scoped lang="less">

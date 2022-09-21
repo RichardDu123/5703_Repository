@@ -8,7 +8,7 @@
           <span>in week</span>
         </div>
       </div>
-      <div>{{ totalBuy }}W</div>
+      <div>{{ totalBuy }}kW⋅h</div>
     </section>
     <section class="bottomLeft">
       <div class="left">
@@ -18,7 +18,7 @@
           <span>in week</span>
         </div>
       </div>
-      <div>{{ totalSell }}KW</div>
+      <div>{{ totalSell }}kW⋅h</div>
     </section>
   </section>
 </template>
@@ -57,6 +57,7 @@ defineProps({
       margin-right: 40px;
     }
     .left {
+      flex-shrink: 0;
       display: flex;
       justify-content: center;
       align-items: center;

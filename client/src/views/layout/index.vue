@@ -118,7 +118,6 @@ import Account from './right/account.vue'
 import RecentTransac from './right/recentTransac.vue'
 const router = useRouter()
 const route = useRoute()
-console.log(route.path)
 const currentNav = ref(route.path)
 const handleClick = (e: Event) => {
   let target = e.target as HTMLElement
@@ -176,11 +175,13 @@ const isETHLoaded = store.isWeb3Load
   background-color: #f1f8ff;
   .main {
     height: 100vh;
+    min-height: 968px;
     background-color: #fff;
     flex: 1;
   }
   .left {
     height: 100vh;
+    min-height: 968px;
     width: 280px;
     background-color: #f1f8ff;
     order: -1;
@@ -193,7 +194,7 @@ const isETHLoaded = store.isWeb3Load
       margin-top: 93px;
       ul {
         li {
-          margin-bottom: 10px;
+          padding-bottom: 10px;
           .navItem {
             position: relative;
             text-align: left;
@@ -236,6 +237,7 @@ const isETHLoaded = store.isWeb3Load
   }
   .right {
     height: 100vh;
+    min-height: 968px;
     width: 324px;
     background-color: #fff;
     margin-left: 15px;

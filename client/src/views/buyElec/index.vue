@@ -1,13 +1,15 @@
 <template>
   <div class="buyContainer">
     <h2>My Portfolio</h2>
-    <CurrentPanel cur-elec="2700" class="panel" />
+    <CurrentPanel class="panel" />
     <h3>Buyer List</h3>
+    <BuyerList />
   </div>
 </template>
 
 <script setup lang="ts">
 import CurrentPanel from '@/components/currentPanel.vue'
+import BuyerList from './components/buyerList.vue'
 </script>
 
 <style scoped lang="less">

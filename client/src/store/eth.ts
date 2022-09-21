@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
-import ARTIFACT from '../contracts/ItemManager.json'
+import ARTIFACT from '../contracts/MainSystem.json'
 import detectEthereumProvider from '@metamask/detect-provider'
 
 interface ETH {
@@ -51,18 +51,12 @@ export const useETHStore = defineStore('ETH', {
     },
     watchWeb3Account() {
       console.log('begin watch')
-      const handleAccountChange = () => {
+      ;(window as any).ethereum.on('accountsChanged', () => {
         window.location.reload()
-      }
-      const handleChainChange = () => {
-        if ((window as any).ethereum.chainId !== '0x539') {
-          window.location.reload()
-        } else {
-          window.location.reload()
-        }
-      }
-      ;(window as any).ethereum.on('accountsChanged', handleAccountChange)
-      ;(window as any).ethereum.on('chainChanged', handleChainChange)
+      })
+      ;(window as any).ethereum.on('chainChanged', () => {
+        window.location.reload()
+      })
     },
   },
 })

@@ -2,13 +2,20 @@
   <div class="welcomeContainer">
     <section>
       <span>Buy and Sell Electricity Instant</span>
-      <button class="buyBtn">Buy</button>
+      <button class="buyBtn" @click="dialogFormVisible = true">Buy</button>
       <button class="sellBtn">Sell</button>
     </section>
+    <CreatePost v-model="dialogFormVisible" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-message-box.css'
+import CreatePost from './createPost.vue'
+const dialogFormVisible = ref(false)
+</script>
 
 <style scoped lang="less">
 .welcomeContainer {
