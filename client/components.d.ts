@@ -21,6 +21,8 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    Plus: typeof import('./src/components/svgs/plus.vue')['default']
+    PlusBtn: typeof import('./src/components/plusBtn.vue')['default']
     ResponseMessage: typeof import('./src/components/responseMessage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

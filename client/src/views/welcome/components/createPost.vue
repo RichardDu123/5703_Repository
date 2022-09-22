@@ -44,7 +44,7 @@ import { reactive, ref, watch } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { validatePrice, validateAmount } from '@/utils/validate'
 import { createPurchasePost } from '@/api/mainSys'
-import { useETHStore, useUserStore } from '@/store'
+import { useBuyerStore, useETHStore, useUserStore } from '@/store'
 import { Contract } from 'web3-eth-contract'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -64,7 +64,6 @@ watch(
   }
 )
 watch(dialogFormVisible, (newVal) => {
-  console.log(newVal)
   emit('update:modelValue', newVal)
 })
 const formLabelWidth = '140px'
@@ -90,6 +89,7 @@ const rules = reactive<FormRules>({
 //submit form
 const ETHStore = useETHStore()
 const UserStore = useUserStore()
+const BuyerStore = useBuyerStore()
 const contract = ETHStore.contract as Contract
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const isLoading = ref(false)
@@ -106,6 +106,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       )
       console.log(res)
       await UserStore.setWei()
+      await BuyerStore.setBuyerList()
       isLoading.value = false
       ElMessage({
         message: 'Success. The purchase request has been post.',

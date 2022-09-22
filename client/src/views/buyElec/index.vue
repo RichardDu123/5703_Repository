@@ -2,6 +2,7 @@
   <div class="buyContainer">
     <h2>My Portfolio</h2>
     <CurrentPanel class="panel" />
+    <PlusBtn />
     <h3>Buyer List</h3>
     <BuyerList />
   </div>
@@ -10,6 +11,7 @@
 <script setup lang="ts">
 import CurrentPanel from '@/components/currentPanel.vue'
 import BuyerList from './components/buyerList.vue'
+import PlusBtn from '../../components/plusBtn.vue'
 </script>
 
 <style scoped lang="less">

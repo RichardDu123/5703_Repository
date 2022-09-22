@@ -3,10 +3,13 @@
     <h2>My Portfolio</h2>
     <CurrentPanel cur-elec="2700" class="panel" />
     <h3>Seller List</h3>
+    <SellerList />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SellerList from './components/sellerList.vue'
+</script>
 
 <style scoped lang="less">
 .sellContainer {

@@ -1,5 +1,5 @@
 <template>
-  <div class="buyerListContainer">
+  <div class="sellerListContainer">
     <el-table
       :data="showFormData"
       style="width: 100%"
@@ -156,7 +156,7 @@ const handleReply = (row: Post) => {
 </script>
 
 <style scoped lang="less">
-.buyerListContainer {
+.sellerListContainer {
   width: 750px;
   height: 500px;
   margin: auto;

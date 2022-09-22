@@ -50,3 +50,22 @@ export const createPurchasePostRes = (
     .createResponseMessageToPurchasePost(amount, price, postId)
     .send({ from: address })
 }
+
+export const createSellPost = (
+  contract: Contract,
+  address: string,
+  price: string,
+  amount: string
+): Promise<any> => {
+  return contract.methods
+    .createSellingPost(price, amount)
+    .send({ from: address })
+}
+export const getSellPostSize = (
+  contract: Contract,
+  address: string
+): Promise<number> => {
+  return contract.methods.returnPurchasePostMapSize().call({
+    from: address,
+  })
+}
