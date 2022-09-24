@@ -1,5 +1,5 @@
 智能合约结构示意图
-[![vX47RJ.png](https://s1.ax1x.com/2022/09/12/vX47RJ.png)](https://imgse.com/i/vX47RJ)
+[![xA0Qv4.png](https://s1.ax1x.com/2022/09/24/xA0Qv4.png)](https://imgse.com/i/xA0Qv4)
 
 ### Backend API Spec
 
