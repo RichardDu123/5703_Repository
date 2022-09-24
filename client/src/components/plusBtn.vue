@@ -3,13 +3,21 @@
     <Plus />
     <span>POST</span>
   </button>
-  <CreatePost v-model="dialogFormVisible" />
+  <CreatePost v-model="dialogFormVisible" v-if="props.type === 'buy'" />
+  <CreateSellPost v-model="dialogFormVisible" v-if="props.type === 'sell'" />
 </template>
 
 <script setup lang="ts">
 import Plus from '@/components/svgs/plus.vue'
 import CreatePost from '@/views/welcome/components/createPost.vue'
 import { ref } from 'vue'
+import CreateSellPost from '@/views/welcome/components/createSellPost.vue'
+const props = defineProps({
+  type: {
+    type: String,
+    required: true,
+  },
+})
 const dialogFormVisible = ref(false)
 const sendPost = () => {
   dialogFormVisible.value = true

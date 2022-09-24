@@ -3,9 +3,10 @@
     <section>
       <span>Buy and Sell Electricity Instant</span>
       <button class="buyBtn" @click="dialogFormVisible = true">Buy</button>
-      <button class="sellBtn">Sell</button>
+      <button class="sellBtn" @click="sellPostVisible = true">Sell</button>
     </section>
     <CreatePost v-model="dialogFormVisible" />
+    <CreateSellPost v-model="sellPostVisible" />
   </div>
 </template>
 
@@ -14,7 +15,9 @@ import { ref } from 'vue'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import CreatePost from './createPost.vue'
+import CreateSellPost from './createSellPost.vue'
 const dialogFormVisible = ref(false)
+const sellPostVisible = ref(false)
 </script>
 
 <style scoped lang="less">

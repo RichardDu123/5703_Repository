@@ -2,6 +2,7 @@
   <div class="sellContainer">
     <h2>My Portfolio</h2>
     <CurrentPanel cur-elec="2700" class="panel" />
+    <PlusBtn type="sell" />
     <h3>Seller List</h3>
     <SellerList />
   </div>
@@ -9,6 +10,7 @@
 
 <script setup lang="ts">
 import SellerList from './components/sellerList.vue'
+import PlusBtn from '../../components/plusBtn.vue'
 </script>
 
 <style scoped lang="less">
@@ -28,7 +30,7 @@ import SellerList from './components/sellerList.vue'
     margin-top: 46px;
   }
   h3 {
-    margin-top: 83px;
+    margin-top: 40px;
   }
 }
 </style>
