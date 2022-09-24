@@ -81,8 +81,7 @@ contract PostResponseMessage {
         require(msg.sender != messageSender, "You cannot make a payment to your own selling response message");
 
         // 2. transfer received ether to system contract
-        (bool success, ) = systemContractAddress.call{value:msg.value}(abi.encodeWithSignature("triggerPayment(uint256,uint256)", postKey, messageIndex));
-        
+        (bool success, ) = systemContractAddress.call{value:msg.value}(abi.encodeWithSignature("handlePurchasePostPostPayment(uint256,uint256)", postKey, messageIndex));
         // 3. if the payment process handled by the system contract failed, rollback the whole transaction
         require(success, "payment failed");
         isPaid = true;
