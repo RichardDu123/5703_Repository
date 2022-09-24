@@ -2,52 +2,122 @@
 
 pragma solidity ^0.8.0;
 
-import "./BuyerModule.sol";
-import "./SellerModule.sol";
+import "./BeanStructs.sol";
+import "./BuyerService.sol";
+import "./SellerService.sol";
+import "./UserService.sol";
+import "./StatisticsService.sol";
 
 // system contract
-contract MainSystem is BuyerModule, SellerModule {
+contract MainSystem is BeanStructs {
 
+    UserService private  userService;
+    StatisticsService private statisticsService;
+    BuyerService private  buyerService;
+    SellerService  private sellerService;
+    
     // ------------------------- constructor ------------------------- 
     constructor() {
-        // initialize testing data, allocate 100 units of electricity to test account
-        address testAccount = 0xFf6f3A57c688d382Df20B09e5fCAB66Cc61DBc22;
-        userMap[testAccount].availableElecUnits = 100;
+        // 1.initialize services and mount them to reference variables
+        userService = new UserService(address(this));
+        statisticsService = new StatisticsService();
+        buyerService = new BuyerService(statisticsService, userService);       
+        sellerService = new SellerService(statisticsService, userService);      
+        userService.initializeContractAddresses(address(buyerService), address(sellerService)); 
     }
 
-    // ------------------------- utils -------------------------
+    // -------------------------buyer service API -------------------------
+    
+    // buyer -  create a new purchase post
+    function createPurchasePost (uint _priceToBuy, uint _amountToBuy) public {
+        buyerService.createPurchasePost(_priceToBuy, _amountToBuy, msg.sender);
+    }
 
-    // return total number of purchase posts in the system
+    // seller - create purchase post response messages
+    function createResponseMessageToPurchasePost(uint _amountToSell, uint _quotationInWei, uint _purchasePostKey) public {
+        buyerService.createResponseMessageToPurchasePost(_amountToSell, _quotationInWei, _purchasePostKey, msg.sender);
+    }
+
+    // returns all purchase posts by user address
+    function returnAllPurchasePostsByAddress(address _account) public view returns (PurchasePost[] memory) {
+        return buyerService.returnAllPurchasePostsByAddress(_account);
+    }
+
+     // return total number of purchase posts in the system
     function returnPurchasePostMapSize() public view returns(uint) {
-        return purchasePostCounter;
+        return buyerService.returnPurchasePostMapSize();
     }
 
-    // return one purchase post by key
+    // return one purchase post by user address and post key
     function getPurchasePostByKey(uint _postKey) public view returns(PurchasePost memory) {
-        return purchasePostMap[_postKey];
+        return buyerService.getPurchasePostByKey(_postKey);
     }
 
-     // return one selling post by key
-    function getSellingPostByKey(uint _postKey) public view returns(SellingPost memory) {
-        return sellingPostMap[_postKey];
-    }
-
-   // return all response messages of one post by key
+    // return all response messages of a purchase post by post key
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
-        require(_postKey >= 0, "post key starts from 0");
-        return purchasePostMap[_postKey].responseMessages;
+        return returnPurchasePostResponseMessagesByKey(_postKey);
+    }
+
+    // ------------------------- seller service API -------------------------
+
+    // seller -  create a new selling post
+    function createSellingPost (uint _priceToSell, uint _amountToSell) public {
+        sellerService.createSellingPost(_priceToSell, _amountToSell, msg.sender);
+    }
+     
+    // buyer - create selling post response messages
+    // buyer creates response message and wait for confirmation from seller. buyer then pays for it once response is accepted
+    function createResponseMessageToSellingPost(uint _amountToBuy, uint _quotationInWei, uint _sellingPostKey) public {
+        sellerService.createResponseMessageToSellingPost(_amountToBuy, _quotationInWei, _sellingPostKey, msg.sender);
+    }
+
+
+    // returns all selling posts by user address
+    function returnAllSellingPostsByAddress(address _account) public view returns (SellingPost[] memory) {
+        return sellerService.returnAllSellingPostsByAddress(_account);
+    }
+
+    // return one selling post by post key
+    function getSellingPostByKey(uint _postKey) public view returns(SellingPost memory) {
+        return sellerService.getSellingPostByKey(_postKey);
     }
 
     // return all response messages of one post by key
     function returnSellingPostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
-        require(_postKey >= 0, "post key starts from 0");
-        return sellingPostMap[_postKey].responseMessages;
+        return sellerService.returnSellingPostResponseMessagesByKey(_postKey);
     }
 
-    // return units of electricity available by address
-    function getAvailableElecUnitsByAccountAddress(address _account) public view returns(uint){
-        return userMap[_account].availableElecUnits;
+    // ------------------------- user service API -------------------------
+
+    function getUsernameByAddress(address _user) public view returns (string memory) {
+        return userService.getUsername(_user);
     }
+
+    // return available electricity units by account address
+    function getAvailableElecUnitsByAccountAddress(address _user) public view returns (uint) {
+        return userService.getAvailableElecUnits(_user);
+    }
+
+    function setUsername(address _user, string memory _username) public {
+        userService.setUsername(_user, _username);
+    }  
+
+
+    // -------------------------statistics service API -------------------------
+
+    function returnTotalBuyByAddress(address _accountAdress) public view returns (uint) {
+        return statisticsService.returnTotalBuyByAddress(_accountAdress);
+    }
+
+    function returnTotalSellByAddress(address _accountAdress) public view returns (uint) {
+        return statisticsService.returnTotalSellByAddress(_accountAdress);
+    }
+
+    // return 10 recent transactions (return all if transactions if total amount is less than 10)
+    function returnRecentTransactions(address _account) public view returns (TransactionBean[] memory)  {
+        return statisticsService.returnRecentTransactions(_account);
+    }
+
     
 
 }
