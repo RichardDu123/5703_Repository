@@ -1,0 +1,638 @@
+{
+  "contractName": "BeanStructs",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/BeanStructs.sol\":\"BeanStructs\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/BeanStructs.sol\":{\"keccak256\":\"0x9f37c236b4c1a9b185579c62b78380a100e35c54b979d05e27f8f1cd627ae8ac\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://64411fb6e0403c6e2e07fec022cb27b603c59dd8b941b8030ac9677379c3dac8\",\"dweb:/ipfs/QmeMV8izk8pjFVoEDkQugJNsycHD9y7bNWQ3dbje7PNwxq\"]},\"project:/contracts/PostResponseMessage.sol\":{\"keccak256\":\"0x5839aab71a31a81510e3c3bcfcf9255ec4915f562d92e5f451110706790c25a6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3686d53420dd3bd8e2517861a18fa6d2a4062b4db07fe1e2e798ab4a0e5088a0\",\"dweb:/ipfs/QmW8qcuWo76q1NdWiaEKeKU8aadexN4kgNt9K75xJ1YjTU\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212201be90bc249797f244cfdbf87a33e4f3aad7d8e3dd58bf0266da1e66854b7d69164736f6c63430008110033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212201be90bc249797f244cfdbf87a33e4f3aad7d8e3dd58bf0266da1e66854b7d69164736f6c63430008110033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "94:1148:0:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "94:1148:0:-:0;;;;;",
+  "source": "//SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport \"./PostResponseMessage.sol\";\n\ncontract BeanStructs {\n \n    // ------------------------- buyer module bean -------------------------\n    struct PurchasePost{\n        uint priceToBuy;\n        uint amountToBuy;\n        address buyer;\n        bool enabled;\n        uint createdAt;\n        PostResponseMessage[] responseMessages;  // response messages attached to this purchase post \n    }\n\n    // ------------------------- seller module bean -------------------------\n    // selling post storage structure\n    struct SellingPost{\n        uint priceToSell;\n        uint amountToSell;\n        address seller;\n        bool enabled;\n        uint createdAt;\n        PostResponseMessage[] responseMessages;\n    }\n    \n    // ------------------------- statistics module bean -------------------------\n    // encapsulate recent transactions units\n    struct TransactionBean {\n        uint createdAt;\n        uint transactionType;\n        uint transactionValue;\n    }\n\n    // encapsulate weekly buy unit\n    struct WeeklyBuyBean {\n        uint dayNum;        // range:1 - 7;  1 - Monday, 2 - Tuesday, 3 -Wednesday ...\n        uint totalSum;      // total buy amount on a certain day\n    }\n\n}\n",
+  "sourcePath": "/Users/richard/Doc/澳洲/sydney_study/22s2/5703/vue-web3-5703/truffle/contracts/BeanStructs.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/BeanStructs.sol",
+    "exportedSymbols": {
+      "BeanStructs": [
+        45
+      ],
+      "PostResponseMessage": [
+        1159
+      ]
+    },
+    "id": 46,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:0"
+      },
+      {
+        "absolutePath": "project:/contracts/PostResponseMessage.sol",
+        "file": "./PostResponseMessage.sol",
+        "id": 2,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 46,
+        "sourceUnit": 1160,
+        "src": "57:35:0",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "BeanStructs",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 45,
+        "linearizedBaseContracts": [
+          45
+        ],
+        "name": "BeanStructs",
+        "nameLocation": "103:11:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "BeanStructs.PurchasePost",
+            "id": 17,
+            "members": [
+              {
+                "constant": false,
+                "id": 4,
+                "mutability": "mutable",
+                "name": "priceToBuy",
+                "nameLocation": "234:10:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 17,
+                "src": "229:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "229:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 6,
+                "mutability": "mutable",
+                "name": "amountToBuy",
+                "nameLocation": "259:11:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 17,
+                "src": "254:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "254:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 8,
+                "mutability": "mutable",
+                "name": "buyer",
+                "nameLocation": "288:5:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 17,
+                "src": "280:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 7,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "280:7:0",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10,
+                "mutability": "mutable",
+                "name": "enabled",
+                "nameLocation": "308:7:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 17,
+                "src": "303:12:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 9,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "303:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 12,
+                "mutability": "mutable",
+                "name": "createdAt",
+                "nameLocation": "330:9:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 17,
+                "src": "325:14:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 11,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "325:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 16,
+                "mutability": "mutable",
+                "name": "responseMessages",
+                "nameLocation": "371:16:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 17,
+                "src": "349:38:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                  "typeString": "contract PostResponseMessage[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 14,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 13,
+                      "name": "PostResponseMessage",
+                      "nameLocations": [
+                        "349:19:0"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1159,
+                      "src": "349:19:0"
+                    },
+                    "referencedDeclaration": 1159,
+                    "src": "349:19:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PostResponseMessage_$1159",
+                      "typeString": "contract PostResponseMessage"
+                    }
+                  },
+                  "id": 15,
+                  "nodeType": "ArrayTypeName",
+                  "src": "349:21:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                    "typeString": "contract PostResponseMessage[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "PurchasePost",
+            "nameLocation": "207:12:0",
+            "nodeType": "StructDefinition",
+            "scope": 45,
+            "src": "200:248:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "BeanStructs.SellingPost",
+            "id": 32,
+            "members": [
+              {
+                "constant": false,
+                "id": 19,
+                "mutability": "mutable",
+                "name": "priceToSell",
+                "nameLocation": "603:11:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 32,
+                "src": "598:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 18,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "598:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 21,
+                "mutability": "mutable",
+                "name": "amountToSell",
+                "nameLocation": "629:12:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 32,
+                "src": "624:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 20,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "624:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23,
+                "mutability": "mutable",
+                "name": "seller",
+                "nameLocation": "659:6:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 32,
+                "src": "651:14:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 22,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "651:7:0",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 25,
+                "mutability": "mutable",
+                "name": "enabled",
+                "nameLocation": "680:7:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 32,
+                "src": "675:12:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 24,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "675:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27,
+                "mutability": "mutable",
+                "name": "createdAt",
+                "nameLocation": "702:9:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 32,
+                "src": "697:14:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 26,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "697:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 31,
+                "mutability": "mutable",
+                "name": "responseMessages",
+                "nameLocation": "743:16:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 32,
+                "src": "721:38:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                  "typeString": "contract PostResponseMessage[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 29,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 28,
+                      "name": "PostResponseMessage",
+                      "nameLocations": [
+                        "721:19:0"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1159,
+                      "src": "721:19:0"
+                    },
+                    "referencedDeclaration": 1159,
+                    "src": "721:19:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PostResponseMessage_$1159",
+                      "typeString": "contract PostResponseMessage"
+                    }
+                  },
+                  "id": 30,
+                  "nodeType": "ArrayTypeName",
+                  "src": "721:21:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                    "typeString": "contract PostResponseMessage[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "SellingPost",
+            "nameLocation": "577:11:0",
+            "nodeType": "StructDefinition",
+            "scope": 45,
+            "src": "570:196:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "BeanStructs.TransactionBean",
+            "id": 39,
+            "members": [
+              {
+                "constant": false,
+                "id": 34,
+                "mutability": "mutable",
+                "name": "createdAt",
+                "nameLocation": "941:9:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 39,
+                "src": "936:14:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 33,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "936:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 36,
+                "mutability": "mutable",
+                "name": "transactionType",
+                "nameLocation": "965:15:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 39,
+                "src": "960:20:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 35,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "960:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 38,
+                "mutability": "mutable",
+                "name": "transactionValue",
+                "nameLocation": "995:16:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 39,
+                "src": "990:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 37,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "990:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "TransactionBean",
+            "nameLocation": "910:15:0",
+            "nodeType": "StructDefinition",
+            "scope": 45,
+            "src": "903:115:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "BeanStructs.WeeklyBuyBean",
+            "id": 44,
+            "members": [
+              {
+                "constant": false,
+                "id": 41,
+                "mutability": "mutable",
+                "name": "dayNum",
+                "nameLocation": "1095:6:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 44,
+                "src": "1090:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 40,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1090:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 43,
+                "mutability": "mutable",
+                "name": "totalSum",
+                "nameLocation": "1182:8:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 44,
+                "src": "1177:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 42,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1177:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "WeeklyBuyBean",
+            "nameLocation": "1066:13:0",
+            "nodeType": "StructDefinition",
+            "scope": 45,
+            "src": "1059:180:0",
+            "visibility": "public"
+          }
+        ],
+        "scope": 46,
+        "src": "94:1148:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:1211:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.17+commit.8df45f5f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.9",
+  "updatedAt": "2022-09-24T10:10:35.817Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
