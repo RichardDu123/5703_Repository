@@ -45,7 +45,7 @@ describe("MainSystem", function () {
         it("test purchase post counter", async function () {          
             await mainSystem.connect(buyer1).createPurchasePost(10, 10);                   
             await mainSystem.connect(buyer2).createPurchasePost(20, 10);
-            expect(await mainSystem.purchasePostCounter()).to.equal(2);
+            expect(await mainSystem.returnPurchasePostMapSize()).to.equal(2);
   
         });
 
@@ -69,7 +69,7 @@ describe("MainSystem", function () {
         });
 
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
-        it("test response Message users valiadtion", async function () {
+        it("test response Message data valiadtion", async function () {
             await mainSystem.connect(buyer1).createPurchasePost(10, 10);
             expect(
                 mainSystem.connect(buyer1).createResponseMessageToPurchasePost(0, 10, 0))
@@ -101,14 +101,20 @@ describe("MainSystem", function () {
 
     });
 
-    describe("test for create Response Message To Purchase Post", function() {
+    describe("test for payment process Purchase Post", function() {
 
          //creat purschase post and response message before each test for payment
         beforeEach("deploy the contract instance and create purchase post and response message first", async function () {
             await mainSystem.connect(buyer1).createPurchasePost(10, 10);
             await mainSystem.connect(buyer2).createPurchasePost(20, 10);
+            await mainSystem.connect(buyer1).createPurchasePost(10, 20);
             await mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, 0);
             
+        });
+
+        it("test return All Purchase Posts By Address ", async function(){
+            const allPost = await mainSystem.connect(seller).returnAllPurchasePostsByAddress(buyer1.address);
+            expect(allPost).to.have.lengthOf(2);
         });
 
         it("test banlance", async function () {
