@@ -41,14 +41,6 @@ describe("MainSystem", function () {
   
         });
 
-        //test the selling post counter, create two selling post, and the counter should return 2
-        it("test selling post counter", async function () {          
-            await mainSystem.connect(seller1).createSellingPost(10, 10);                   
-            await mainSystem.connect(seller2).createSellingPost(20, 10);
-            expect(await mainSystem.sellingPostCounter()).to.equal(2);
-  
-        });
-
 
     });
 
@@ -69,7 +61,7 @@ describe("MainSystem", function () {
         });
 
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
-        it("test response Message users valiadtion", async function () {
+        it("test response Message data valiadtion", async function () {
             await mainSystem.connect(buyer).createSellingPost(10, 10);
             expect(
                 mainSystem.connect(buyer).createResponseMessageToSellingPost(0, 10, 0))
@@ -107,8 +99,14 @@ describe("MainSystem", function () {
         beforeEach("deploy the contract instance and create selling post and response message first", async function () {
             await mainSystem.connect(seller1).createSellingPost(10, 10);
             await mainSystem.connect(seller2).createSellingPost(20, 10);
+            await mainSystem.connect(seller1).createSellingPost(10, 20);
             await mainSystem.connect(buyer).createResponseMessageToSellingPost(10, 10, 0);
             
+        });
+
+        it("test return All Purchase Posts By Address ", async function(){
+            const allPost = await mainSystem.connect(buyer).returnAllSellingPostsByAddress(seller1.address);
+            expect(allPost).to.have.lengthOf(2);
         });
 
         it("test banlance", async function () {
