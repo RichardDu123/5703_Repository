@@ -5,8 +5,8 @@ import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
 import {
   getElecByAddress,
-  returnAllPurchasePostsByAddress,
-  returnPurchasePostResponseMessagesByKey,
+  getPurchasePostKeys,
+  getPurchasePostByKey,
 } from '@/api/mainSys'
 interface purchasePost {
   postIdx: number
@@ -37,14 +37,19 @@ export const useUserStore = defineStore('User', {
       this.currElec = await getElecByAddress(contract, address)
     },
     async setPurchasePosts() {
+      this.purchasePosts = []
       const ETHStore = useETHStore()
       const contract = ETHStore.contract as Contract
       const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
-      const res = await returnAllPurchasePostsByAddress(contract, address)
-
-      res.forEach((item: purchasePost) => {
+      const idxArr = await getPurchasePostKeys(contract, address)
+      idxArr.forEach(async (id: string) => {
+        const item: purchasePost = await getPurchasePostByKey(
+          contract,
+          address,
+          Number(id)
+        )
         this.purchasePosts.push({
-          postIdx: item.postIdx,
+          postIdx: Number(id),
           priceToBuy: item.priceToBuy,
           amountToBuy: item.amountToBuy,
           buyer: item.buyer,
@@ -53,13 +58,6 @@ export const useUserStore = defineStore('User', {
           responseMessages: item.responseMessages,
         })
       })
-
-      const res1 = await returnPurchasePostResponseMessagesByKey(
-        contract,
-        address,
-        0
-      )
-      console.log(this.purchasePosts)
     },
   },
 })

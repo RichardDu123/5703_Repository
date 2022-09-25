@@ -103,6 +103,14 @@ contract MainSystem is BeanStructs {
         return userService.getAvailableElecUnits(_user);
     }
 
+    function getPurchasePostKeys(address _user) public view returns (uint[] memory) {
+        return userService.getPurchasePostKeys(_user);
+    }
+
+    function getSellingPostKeys(address _user) public view returns (uint[] memory) {
+        return userService.getSellingPostKeys(_user);
+    }
+
     function setUsername(address _user, string memory _username) public {
         userService.setUsername(_user, _username);
     }  

@@ -75,22 +75,11 @@
 </template>
 
 <script setup lang="ts">
-import { useBuyerStore, useETHStore, useUserStore } from '@/store'
+import { useETHStore, useUserStore } from '@/store'
 import { fromNow, format } from '@/utils/day'
 import { toEther } from '@/api/basic'
 import Web3 from 'web3'
 import { computed, ref, toRef, watchEffect } from 'vue'
-interface Post {
-  postIdx: number
-  date: string
-  name: string
-  address: string
-  priceToBuy: string
-  amountToBuy: string
-  priceInWei: string
-  fromNow: string
-  timestamp: string
-}
 
 //get buyerlist size
 const UserSotre = useUserStore()

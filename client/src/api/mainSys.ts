@@ -110,3 +110,12 @@ export const returnPurchasePostResponseMessagesByKey = (
     from: address,
   })
 }
+
+export const getPurchasePostKeys = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getPurchasePostKeys(address).call({
+    from: address,
+  })
+}
