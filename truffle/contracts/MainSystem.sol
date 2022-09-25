@@ -55,7 +55,7 @@ contract MainSystem is BeanStructs {
 
     // return all response messages of a purchase post by post key
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
-        return returnPurchasePostResponseMessagesByKey(_postKey);
+        return buyerService.returnPurchasePostResponseMessagesByKey(_postKey);
     }
 
     // ------------------------- seller service API -------------------------
@@ -96,6 +96,14 @@ contract MainSystem is BeanStructs {
     // return available electricity units by account address
     function getAvailableElecUnitsByAccountAddress(address _user) public view returns (uint) {
         return userService.getAvailableElecUnits(_user);
+    }
+
+    function getPurchasePostKeys(address _user) public view returns (uint[] memory) {
+        return userService.getPurchasePostKeys(_user);
+    }
+
+    function getSellingPostKeys(address _user) public view returns (uint[] memory) {
+        return userService.getSellingPostKeys(_user);
     }
 
     function setUsername(address _user, string memory _username) public {
