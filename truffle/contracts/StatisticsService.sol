@@ -170,13 +170,16 @@ contract StatisticsService is BeanStructs{
     /*
         return weekly buy transactions statistics:
             _user: identify target user
+            _txType:
+                0: buy transaction
+                1: sell transaction
             _prevWeekNum: identify which week's statistics to retrieve. Value starts from 0
                 0: indicating current week
                 1: previous week
                 2: 2 weeks ago
                 ...  
     */
-    function returnWeeklyBuyStatistics(address _user, uint _prevWeekNum) public view returns (uint[] memory) {
+    function returnWeeklyStatistics(address _user, uint _prevWeekNum, uint8 _txType) public view returns (uint[] memory) {
         require(_prevWeekNum >= 0, "week number starts from 0");
         // _prevWeekNum = 1;
         WeeklyBuyStatisticsInfo memory info;
@@ -197,7 +200,15 @@ contract StatisticsService is BeanStructs{
         info.endDateTimestamp = info.startDateTimestamp + 1 weeks;
         
         // 5. iterate all buy transactions happen between start date and end date and accumulate data of the same day 
-        uint[] memory keys = userStatisticsMap[_user].electricityBuyKeys;
+        uint[] memory keys;
+        if (_txType == 0) {
+            keys = userStatisticsMap[_user].electricityBuyKeys;
+        } else if (_txType == 1) {
+            keys = userStatisticsMap[_user].electricitySellKeys;
+        } else {
+            require(false, "invalid transaction type");
+        }
+        
         for (uint i = 0; i < keys.length; i++) {
             if ( keys[i] >= info.startDateTimestamp && keys[i] <= info.endDateTimestamp ) {
                 uint _dayNum = BokkyPooBahsDateTimeLibrary.getDayOfWeek(keys[i]);
@@ -206,47 +217,7 @@ contract StatisticsService is BeanStructs{
         }
         return info.weeklyStatistics;
     }
-
-
-    /*
-        return weekly sell transactions statistics:
-            _user: identify target user
-            _prevWeekNum: identify which week's statistics to retrieve. Value starts from 0
-                0: indicating current week
-                1: previous week
-                2: 2 weeks ago
-                ...  
-    */
-    function returnWeeklySellStatistics(address _user, uint _prevWeekNum) public view returns (uint[] memory) {
-        require(_prevWeekNum >= 0, "week number starts from 0");
-        // _prevWeekNum = 1;
-        WeeklyBuyStatisticsInfo memory info;
-        info.weeklyStatistics = new uint[](7);
-        info.totalWeekSkip = 1 weeks * _prevWeekNum;
-        
-        // 2. get current day number of the week, and then convert it back to timestamp
-        (uint _year, uint _month, uint _day) = BokkyPooBahsDateTimeLibrary.timestampToDate(block.timestamp); // 2022, 09, 25
-        uint currentDateInTimestamp = BokkyPooBahsDateTimeLibrary.timestampFromDate(_year, _month, _day);    // current date in 00:00
-        
-        // 3. minus currentDateInTimestamp by (currentDayOfWeek - 1) to get the Monday timestamp of current week
-        uint currentDayOfWeek = BokkyPooBahsDateTimeLibrary.getDayOfWeek(block.timestamp);                   // 7
-        uint mondayOfCurrentWeekInTimestamp = currentDateInTimestamp - ((currentDayOfWeek - 1) * 1 days);    // Monday of current week
-        
-        // 4. minus mondayOfCurrentWeekInTimestamp by _totalWeekSkip to get the starting date of the weekly statistics in timestamp
-        // e.g.  _totalWeekSkip is one week, then we will get last week's Monday timestamp
-        info.startDateTimestamp = mondayOfCurrentWeekInTimestamp - info.totalWeekSkip;
-        info.endDateTimestamp = info.startDateTimestamp + 1 weeks;
-        
-        // 5. iterate all sell transactions happen between start date and end date and accumulate data of the same day 
-        uint[] memory keys = userStatisticsMap[_user].electricitySellKeys;
-        for (uint i = 0; i < keys.length; i++) {
-            if ( keys[i] >= info.startDateTimestamp && keys[i] <= info.endDateTimestamp ) {
-                uint _dayNum = BokkyPooBahsDateTimeLibrary.getDayOfWeek(keys[i]);
-                info.weeklyStatistics[_dayNum - 1] += userStatisticsMap[_user].electricityBuyTransactions[keys[i]];
-            }
-        }
-        return info.weeklyStatistics;
-    }
+    
 
     // utils
     // function getDayOfWeek() public view returns (uint){

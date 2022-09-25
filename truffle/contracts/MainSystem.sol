@@ -142,7 +142,7 @@ contract MainSystem is BeanStructs {
                 ...  
     */
     function returnWeeklyBuyStatistics(address _user, uint _prevWeekNum) public view returns (uint[] memory) {
-        return statisticsService.returnWeeklyBuyStatistics(_user, _prevWeekNum);
+        return statisticsService.returnWeeklyStatistics(_user, _prevWeekNum, 0);
     }
 
     /*
@@ -155,7 +155,7 @@ contract MainSystem is BeanStructs {
                 ...  
     */
     function returnWeeklySellStatistics(address _user, uint _prevWeekNum) public view returns (uint[] memory) {
-        return statisticsService.returnWeeklySellStatistics(_user, _prevWeekNum);
+        return statisticsService.returnWeeklyStatistics(_user, _prevWeekNum, 1);
     }
 
 
