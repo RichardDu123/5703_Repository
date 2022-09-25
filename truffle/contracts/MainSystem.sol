@@ -132,6 +132,33 @@ contract MainSystem is BeanStructs {
         return statisticsService.returnRecentTransactions(_account);
     }
 
+    /*
+        return weekly buy transactions statistics:
+            _user: identify target user
+            _prevWeekNum: identify which week's statistics to retrieve. Value starts from 0
+                0: indicating current week
+                1: previous week
+                2: 2 weeks ago
+                ...  
+    */
+    function returnWeeklyBuyStatistics(address _user, uint _prevWeekNum) public view returns (uint[] memory) {
+        return statisticsService.returnWeeklyBuyStatistics(_user, _prevWeekNum);
+    }
+
+    /*
+        return weekly sell transactions statistics:
+            _user: identify target user
+            _prevWeekNum: identify which week's statistics to retrieve. Value starts from 0
+                0: indicating current week
+                1: previous week
+                2: 2 weeks ago
+                ...  
+    */
+    function returnWeeklySellStatistics(address _user, uint _prevWeekNum) public view returns (uint[] memory) {
+        return statisticsService.returnWeeklySellStatistics(_user, _prevWeekNum);
+    }
+
+
     
 
 }
