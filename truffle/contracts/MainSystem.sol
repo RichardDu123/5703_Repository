@@ -89,6 +89,7 @@ contract MainSystem is BeanStructs {
 
     // ------------------------- user service API -------------------------
 
+    // return username by user's account address
     function getUsernameByAddress(address _user) public view returns (string memory) {
         return userService.getUsername(_user);
     }
@@ -98,14 +99,17 @@ contract MainSystem is BeanStructs {
         return userService.getAvailableElecUnits(_user);
     }
 
+    // return an array contaning all purchase post keys that are published by a user
     function getPurchasePostKeys(address _user) public view returns (uint[] memory) {
         return userService.getPurchasePostKeys(_user);
     }
 
+    // return an array contaning all selling post keys that are published by a user
     function getSellingPostKeys(address _user) public view returns (uint[] memory) {
         return userService.getSellingPostKeys(_user);
     }
 
+    // set username
     function setUsername(address _user, string memory _username) public {
         userService.setUsername(_user, _username);
     }  
@@ -113,12 +117,14 @@ contract MainSystem is BeanStructs {
 
     // -------------------------statistics service API -------------------------
 
-    function returnTotalBuyByAddress(address _accountAdress) public view returns (uint) {
-        return statisticsService.returnTotalBuyByAddress(_accountAdress);
+    // return total buy amount by user's account address
+    function returnTotalBuyByAddress(address _accountAddress) public view returns (uint) {
+        return statisticsService.returnTotalBuyByAddress(_accountAddress);
     }
-
-    function returnTotalSellByAddress(address _accountAdress) public view returns (uint) {
-        return statisticsService.returnTotalSellByAddress(_accountAdress);
+    
+    // return total buy amount by user's account address
+    function returnTotalSellByAddress(address _accountAddress) public view returns (uint) {
+        return statisticsService.returnTotalSellByAddress(_accountAddress);
     }
 
     // return 10 recent transactions (return all if transactions if total amount is less than 10)

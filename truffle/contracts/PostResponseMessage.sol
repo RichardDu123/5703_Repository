@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+
 contract PostResponseMessage {
     
     address public messageSender;
@@ -85,6 +86,35 @@ contract PostResponseMessage {
         // 3. if the payment process handled by the system contract failed, rollback the whole transaction
         require(success, "payment failed");
         isPaid = true;
+    }
+
+    struct PostResponseMessageBean {
+        address messageSender;
+        uint amount;
+        uint quotationInWei;
+        uint8 responseMessageType;   // 0 - purchase post response; 1 - selling post response
+        uint postKey;                // identify which purchase post it belongs to
+        uint messageIndex;           // index of message in array
+        bool isAccepted;             // identify if response message is accepted
+        bool isPaid;
+        uint createdAt;
+    }
+
+    function returnPostResponseMessageBean() public view returns(PostResponseMessageBean memory) {
+        
+        PostResponseMessageBean memory bean;
+        bean.messageSender = messageSender;
+        bean.amount = amount;
+        bean.quotationInWei = quotationInWei;
+        bean.responseMessageType = responseMessageType;
+        bean.postKey = postKey;
+        bean.messageIndex = messageIndex;
+        bean.isAccepted = isAccepted;
+        bean.isPaid = isPaid;
+        bean.createdAt = createdAt;
+        
+        return bean;
+
     }
 
 }
