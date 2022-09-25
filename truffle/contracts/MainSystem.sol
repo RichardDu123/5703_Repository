@@ -55,7 +55,7 @@ contract MainSystem is BeanStructs {
 
     // return all response messages of a purchase post by post key
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
-        return returnPurchasePostResponseMessagesByKey(_postKey);
+        return buyerService.returnPurchasePostResponseMessagesByKey(_postKey);
     }
 
     // ------------------------- seller service API -------------------------
@@ -85,6 +85,11 @@ contract MainSystem is BeanStructs {
     // return all response messages of one post by key
     function returnSellingPostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
         return sellerService.returnSellingPostResponseMessagesByKey(_postKey);
+    }
+
+    //new
+    function returnSellPostMapSize() public view returns(uint){
+        return sellerService.returnSellPostMapSize();
     }
 
     // ------------------------- user service API -------------------------

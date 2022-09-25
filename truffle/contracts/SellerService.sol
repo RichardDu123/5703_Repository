@@ -161,4 +161,10 @@ contract SellerService is BeanStructs {
         return sellingPostMap[_postKey].responseMessages;
     }
 
+    //new
+    // return total number of sell posts in the system
+    function returnSellPostMapSize() public view returns(uint) {
+        return sellingPostCounter;
+    }
+
 }

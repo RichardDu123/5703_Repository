@@ -91,3 +91,22 @@ export const createSellPostRes = (
     .createResponseMessageToSellingPost(amount, price, postId)
     .send({ from: address })
 }
+
+export const returnAllPurchasePostsByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnAllPurchasePostsByAddress(address).call({
+    from: address,
+  })
+}
+
+export const returnPurchasePostResponseMessagesByKey = (
+  contract: Contract,
+  address: string,
+  postId: number
+): Promise<any> => {
+  return contract.methods.returnPurchasePostResponseMessagesByKey(postId).call({
+    from: address,
+  })
+}
