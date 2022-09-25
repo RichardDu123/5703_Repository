@@ -4,7 +4,7 @@
         <div class="text1Size">
             Hello,Welcome !
         </div>
-        <img class = "imgLocation1" src="../../components/static/group_301.png" alt="">
+        <img class = "imgLocation1" src="../assets/images/group_301.png" alt="">
 
     </div>
 
@@ -18,7 +18,7 @@
         <div class="text3Size">
             Please use the MetaMask to connect and start the Electricity Transaction.
         </div>
-        <img class = "imgLocation2" src="../../components/static/meta.png" alt="">
+        <img class = "imgLocation2" src="../assets/images/meta.png" alt="">
     </div>
 
   </div>

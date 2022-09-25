@@ -25,7 +25,8 @@
                 Please choose the Right Network in the MetaMask
             </div>
 
-            <img class = "imageLocations" src="../../components/static/meta.png" alt="">
+            
+            <img class = "imageLocations" src="../assets/images/meta.png" alt="">
 
         </div>
   </div>
