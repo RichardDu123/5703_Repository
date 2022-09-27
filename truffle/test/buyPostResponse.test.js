@@ -1,5 +1,7 @@
 const { expect } = require("chai");
 const { ethers} = require("hardhat");
+// need npm install --save-dev @nomicfoundation/hardhat-chai-matchers to make revertedWith works
+//const { ethers} = require("@nomicfoundation/hardhat-chai-matchers");
 
 describe("MainSystem", function () {
     let seller, buyer1, buyer2, mainSystem;
@@ -17,10 +19,10 @@ describe("MainSystem", function () {
     describe("test for create Purchase Post", function() {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test purchase post value validation", async function () {
-            expect(
+            await expect(
                 mainSystem.createPurchasePost(0, 10)).to.be.revertedWith('purchase price must be greater than 0');
 
-            expect(
+            await expect(
                 mainSystem.createPurchasePost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
         });
 
@@ -71,15 +73,15 @@ describe("MainSystem", function () {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test response Message data valiadtion", async function () {
             await mainSystem.connect(buyer1).createPurchasePost(10, 10);
-            expect(
+            await expect(
                 mainSystem.connect(buyer1).createResponseMessageToPurchasePost(0, 10, 0))
                 .to.be.revertedWith("amount must be greater than 0");
-            expect(
+            await expect(
                 mainSystem.connect(buyer1).createResponseMessageToPurchasePost(10, 0, 0))
                 .to.be.revertedWith("quotation must be greater than 0");
             
-            expect(
-                mainSystem.connect(buyer1).createResponseMessageToPurchasePost(0, 10, 0))
+            await expect(
+                mainSystem.connect(buyer1).createResponseMessageToPurchasePost(10, 10, -1))
                 .to.be.revertedWith("post key starts from 0");
             
         });
