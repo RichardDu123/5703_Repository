@@ -5,23 +5,18 @@ import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
 import {
   getElecByAddress,
-  returnAllPurchasePostsByAddress,
-  returnPurchasePostResponseMessagesByKey,
+  getPurchasePostKeys,
+  getPurchasePostByKey,
+  getSellingPostKeys,
+  getSellPostByKey,
 } from '@/api/mainSys'
-interface purchasePost {
-  postIdx: number
-  priceToBuy: string
-  amountToBuy: string
-  buyer: string
-  enabled: boolean
-  createdAt: string
-  responseMessages: string[]
-}
+import { PurchasePost, SellingPost } from '@/types/index'
 export const useUserStore = defineStore('User', {
   state: () => ({
     currElec: '0',
     currWei: '0',
-    purchasePosts: <purchasePost[]>[],
+    purchasePosts: <PurchasePost[]>[],
+    sellingPosts: <SellingPost[]>[],
   }),
   actions: {
     async setWei() {
@@ -37,29 +32,43 @@ export const useUserStore = defineStore('User', {
       this.currElec = await getElecByAddress(contract, address)
     },
     async setPurchasePosts() {
+      this.purchasePosts = []
       const ETHStore = useETHStore()
       const contract = ETHStore.contract as Contract
       const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
-      const res = await returnAllPurchasePostsByAddress(contract, address)
-
-      res.forEach((item: purchasePost) => {
+      const keys = await getPurchasePostKeys(contract, address)
+      keys.forEach(async (key: string) => {
+        const post = await getPurchasePostByKey(contract, address, Number(key))
         this.purchasePosts.push({
-          postIdx: item.postIdx,
-          priceToBuy: item.priceToBuy,
-          amountToBuy: item.amountToBuy,
-          buyer: item.buyer,
-          enabled: item.enabled,
-          createdAt: item.createdAt,
-          responseMessages: item.responseMessages,
+          postIdx: Number(key),
+          priceToBuy: post.priceToBuy,
+          amountToBuy: post.amountToBuy,
+          buyer: post.buyer,
+          enabled: post.enabled,
+          createdAt: post.createdAt,
+          responseMessages: post.responseMessages,
         })
       })
-
-      const res1 = await returnPurchasePostResponseMessagesByKey(
-        contract,
-        address,
-        0
-      )
-      console.log(this.purchasePosts)
+    },
+    async setSellingPosts() {
+      this.sellingPosts = []
+      const ETHStore = useETHStore()
+      const contract = ETHStore.contract as Contract
+      const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+      const keys = await getSellingPostKeys(contract, address)
+      keys.forEach(async (key: string) => {
+        const post = await getSellPostByKey(contract, address, Number(key))
+        console.log(post)
+        this.sellingPosts.push({
+          postIdx: Number(key),
+          priceToSell: post.priceToSell,
+          amountToSell: post.amountToBuy,
+          seller: post.buyer,
+          enabled: post.enabled,
+          createdAt: post.createdAt,
+          responseMessages: post.responseMessages,
+        })
+      })
     },
   },
 })

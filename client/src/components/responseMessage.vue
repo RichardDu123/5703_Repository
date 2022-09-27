@@ -150,7 +150,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           await UserStore.setWei()
           isLoading.value = false
           ElMessage({
-            message: 'Success. The sell response message has been post.',
+            message: 'Success.The sell response message has been post.',
             type: 'success',
           })
         } catch (err: any) {

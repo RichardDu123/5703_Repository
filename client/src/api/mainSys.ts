@@ -29,16 +29,6 @@ export const getPurchasePostSize = (
   })
 }
 
-export const getPurchasePostByKey = (
-  contract: Contract,
-  address: string,
-  postKey: number
-): Promise<any> => {
-  return contract.methods.getPurchasePostByKey(postKey).call({
-    from: address,
-  })
-}
-
 export const createPurchasePostRes = (
   contract: Contract,
   address: string,
@@ -70,16 +60,6 @@ export const getSellPostSize = (
   })
 }
 
-export const getSellPostByKey = (
-  contract: Contract,
-  address: string,
-  postKey: number
-): Promise<any> => {
-  return contract.methods.getSellingPostByKey(postKey).call({
-    from: address,
-  })
-}
-
 export const createSellPostRes = (
   contract: Contract,
   address: string,
@@ -107,6 +87,42 @@ export const returnPurchasePostResponseMessagesByKey = (
   postId: number
 ): Promise<any> => {
   return contract.methods.returnPurchasePostResponseMessagesByKey(postId).call({
+    from: address,
+  })
+}
+
+export const getSellPostByKey = (
+  contract: Contract,
+  address: string,
+  postKey: number
+): Promise<any> => {
+  return contract.methods.getSellingPostByKey(postKey).call({
+    from: address,
+  })
+}
+export const getPurchasePostByKey = (
+  contract: Contract,
+  address: string,
+  postKey: number
+): Promise<any> => {
+  return contract.methods.getPurchasePostByKey(postKey).call({
+    from: address,
+  })
+}
+export const getPurchasePostKeys = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getPurchasePostKeys(address).call({
+    from: address,
+  })
+}
+
+export const getSellingPostKeys = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getSellingPostKeys(address).call({
     from: address,
   })
 }
