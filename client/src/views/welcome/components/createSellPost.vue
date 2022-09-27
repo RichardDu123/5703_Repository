@@ -99,13 +99,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       try {
-        const res = await createSellPost(
+        await createSellPost(
           contract,
           address,
           form.priceToSell,
           form.amountToSell
         )
-        console.log(res)
         await UserStore.setWei()
         await SellerStore.setSellerList()
         ElMessage({
