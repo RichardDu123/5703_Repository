@@ -1,15 +1,15 @@
 {
   "contractName": "BeanStructs",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/BeanStructs.sol\":\"BeanStructs\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/BeanStructs.sol\":{\"keccak256\":\"0x9f37c236b4c1a9b185579c62b78380a100e35c54b979d05e27f8f1cd627ae8ac\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://64411fb6e0403c6e2e07fec022cb27b603c59dd8b941b8030ac9677379c3dac8\",\"dweb:/ipfs/QmeMV8izk8pjFVoEDkQugJNsycHD9y7bNWQ3dbje7PNwxq\"]},\"project:/contracts/PostResponseMessage.sol\":{\"keccak256\":\"0x5839aab71a31a81510e3c3bcfcf9255ec4915f562d92e5f451110706790c25a6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3686d53420dd3bd8e2517861a18fa6d2a4062b4db07fe1e2e798ab4a0e5088a0\",\"dweb:/ipfs/QmW8qcuWo76q1NdWiaEKeKU8aadexN4kgNt9K75xJ1YjTU\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212201be90bc249797f244cfdbf87a33e4f3aad7d8e3dd58bf0266da1e66854b7d69164736f6c63430008110033",
-  "deployedBytecode": "0x6080604052600080fdfea26469706673582212201be90bc249797f244cfdbf87a33e4f3aad7d8e3dd58bf0266da1e66854b7d69164736f6c63430008110033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/BeanStructs.sol\":\"BeanStructs\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/BeanStructs.sol\":{\"keccak256\":\"0x654dff5be6ce9d3a52ffe778efa0cb5d042edf4342554ffc90b43724871e8ce3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://461eb0c192bb55e4ee13c6c32de5326f5fb47c00f30a5fc3643b4429967e05cd\",\"dweb:/ipfs/QmS8p4ZNQWxH6Pd8KsqsKvgUzmN7s8tw3hH3DGqQgy4PHm\"]},\"project:/contracts/PostResponseMessage.sol\":{\"keccak256\":\"0x6e3435f5c567136b3d25be165b798a9924eed486350b9c95d7d9eb9438ef636b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b3a9f10021d220f0524edb139109c02a339b46397296a5ce7369742a9a03ba69\",\"dweb:/ipfs/QmNmKB1JERatwhiaPFfGoA7jaiURaqHb3SfSiPomtTVRhE\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220a39535adaf3645826bedeb886f1cec564d7f8e699d46a09a53d9e78aa7a63b7864736f6c63430008110033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220a39535adaf3645826bedeb886f1cec564d7f8e699d46a09a53d9e78aa7a63b7864736f6c63430008110033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "94:1148:0:-:0;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "94:1148:0:-:0;;;;;",
-  "source": "//SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport \"./PostResponseMessage.sol\";\n\ncontract BeanStructs {\n \n    // ------------------------- buyer module bean -------------------------\n    struct PurchasePost{\n        uint priceToBuy;\n        uint amountToBuy;\n        address buyer;\n        bool enabled;\n        uint createdAt;\n        PostResponseMessage[] responseMessages;  // response messages attached to this purchase post \n    }\n\n    // ------------------------- seller module bean -------------------------\n    // selling post storage structure\n    struct SellingPost{\n        uint priceToSell;\n        uint amountToSell;\n        address seller;\n        bool enabled;\n        uint createdAt;\n        PostResponseMessage[] responseMessages;\n    }\n    \n    // ------------------------- statistics module bean -------------------------\n    // encapsulate recent transactions units\n    struct TransactionBean {\n        uint createdAt;\n        uint transactionType;\n        uint transactionValue;\n    }\n\n    // encapsulate weekly buy unit\n    struct WeeklyBuyBean {\n        uint dayNum;        // range:1 - 7;  1 - Monday, 2 - Tuesday, 3 -Wednesday ...\n        uint totalSum;      // total buy amount on a certain day\n    }\n\n}\n",
+  "sourceMap": "94:1238:0:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "94:1238:0:-:0;;;;;",
+  "source": "//SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport \"./PostResponseMessage.sol\";\n\ncontract BeanStructs {\n \n    // ------------------------- buyer module bean -------------------------\n    struct PurchasePost{\n        uint priceToBuy;\n        uint amountToBuy;\n        address buyer;\n        bool enabled;\n        uint createdAt;\n        PostResponseMessage[] responseMessages;  // response messages attached to this purchase post \n    }\n\n    // ------------------------- seller module bean -------------------------\n    // selling post storage structure\n    struct SellingPost{\n        uint priceToSell;\n        uint amountToSell;\n        address seller;\n        bool enabled;\n        uint createdAt;\n        PostResponseMessage[] responseMessages;\n    }\n    \n    // ------------------------- statistics module bean -------------------------\n    // encapsulate recent transactions units\n    struct TransactionBean {\n        uint createdAt;\n        uint transactionType;\n        uint transactionValue;\n    }\n\n    // encapsulate weekly buy unit\n    struct WeeklyBuyBean {\n        uint dayNum;        // range:1 - 7;  1 - Monday, 2 - Tuesday, 3 -Wednesday ...\n        uint totalSum;      // total buy amount on a certain day\n    }\n\n    // ------------------------- PostResponseMessage bean -------------------------\n    \n\n}\n",
   "sourcePath": "/Users/richard/Doc/澳洲/sydney_study/22s2/5703/vue-web3-5703/truffle/contracts/BeanStructs.sol",
   "ast": {
     "absolutePath": "project:/contracts/BeanStructs.sol",
@@ -18,7 +18,7 @@
         45
       ],
       "PostResponseMessage": [
-        1159
+        2794
       ]
     },
     "id": 46,
@@ -43,7 +43,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 46,
-        "sourceUnit": 1160,
+        "sourceUnit": 2795,
         "src": "57:35:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -215,7 +215,7 @@
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$2794_$dyn_storage_ptr",
                   "typeString": "contract PostResponseMessage[]"
                 },
                 "typeName": {
@@ -229,13 +229,13 @@
                         "349:19:0"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 1159,
+                      "referencedDeclaration": 2794,
                       "src": "349:19:0"
                     },
-                    "referencedDeclaration": 1159,
+                    "referencedDeclaration": 2794,
                     "src": "349:19:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_PostResponseMessage_$1159",
+                      "typeIdentifier": "t_contract$_PostResponseMessage_$2794",
                       "typeString": "contract PostResponseMessage"
                     }
                   },
@@ -243,7 +243,7 @@
                   "nodeType": "ArrayTypeName",
                   "src": "349:21:0",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                    "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$2794_$dyn_storage_ptr",
                     "typeString": "contract PostResponseMessage[]"
                   }
                 },
@@ -409,7 +409,7 @@
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$2794_$dyn_storage_ptr",
                   "typeString": "contract PostResponseMessage[]"
                 },
                 "typeName": {
@@ -423,13 +423,13 @@
                         "721:19:0"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 1159,
+                      "referencedDeclaration": 2794,
                       "src": "721:19:0"
                     },
-                    "referencedDeclaration": 1159,
+                    "referencedDeclaration": 2794,
                     "src": "721:19:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_PostResponseMessage_$1159",
+                      "typeIdentifier": "t_contract$_PostResponseMessage_$2794",
                       "typeString": "contract PostResponseMessage"
                     }
                   },
@@ -437,7 +437,7 @@
                   "nodeType": "ArrayTypeName",
                   "src": "721:21:0",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$1159_$dyn_storage_ptr",
+                    "typeIdentifier": "t_array$_t_contract$_PostResponseMessage_$2794_$dyn_storage_ptr",
                     "typeString": "contract PostResponseMessage[]"
                   }
                 },
@@ -612,11 +612,11 @@
           }
         ],
         "scope": 46,
-        "src": "94:1148:0",
+        "src": "94:1238:0",
         "usedErrors": []
       }
     ],
-    "src": "32:1211:0"
+    "src": "32:1301:0"
   },
   "compiler": {
     "name": "solc",
@@ -624,7 +624,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-09-24T10:10:35.817Z",
+  "updatedAt": "2022-09-27T05:41:22.783Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
