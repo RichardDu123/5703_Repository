@@ -27,6 +27,16 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/sellElec/index.vue'),
           },
           {
+            path: '/myPosts',
+            name: 'myPosts',
+            component: () => import('@/views/myPosts/index.vue'),
+          },
+          {
+            path: '/myReplies',
+            name: 'myReplies',
+            component: () => import('@/views/myReplies/index.vue'),
+          },
+          {
             path: '/profile',
             name: 'profile',
             component: () => import('@/views/profile/index.vue'),

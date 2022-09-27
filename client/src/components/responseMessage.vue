@@ -1,17 +1,19 @@
 <template>
   <el-dialog
     v-model="dialogFormVisible"
-    title="Create a Purchase Response Message"
+    :title="`Create a ${
+      props.type === 'buy' ? 'Pruchase' : 'Sell'
+    } Response Message`"
     draggable
     @close="resetForm(ruleFormRef)"
   >
     <el-form :model="form" ref="ruleFormRef" :rules="rules">
       <el-form-item
-        label="Amount to sell:"
+        :label="`Amount to ${props.type === 'buy' ? 'sell' : 'buy'}:`"
         :label-width="formLabelWidth"
-        prop="amountToSell"
+        prop="amount"
       >
-        <el-input v-model="form.amountToSell" autocomplete="off" type="number">
+        <el-input v-model="form.amount" autocomplete="off" type="number">
           <template #append>kW⋅h</template>
         </el-input>
       </el-form-item>
@@ -47,7 +49,7 @@
 import { reactive, ref, watch } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { validatePrice, validateAmount } from '@/utils/validate'
-import { createPurchasePostRes } from '@/api/mainSys'
+import { createPurchasePostRes, createSellPostRes } from '@/api/mainSys'
 import { useETHStore, useUserStore } from '@/store'
 import { Contract } from 'web3-eth-contract'
 import { ElMessage } from 'element-plus'
@@ -59,6 +61,10 @@ const props = defineProps({
     required: true,
   },
   postId: {
+    type: String,
+    required: true,
+  },
+  type: {
     type: String,
     required: true,
   },
@@ -76,7 +82,7 @@ watch(dialogFormVisible, (newVal) => {
 })
 const formLabelWidth = '140px'
 const form = reactive({
-  amountToSell: '0',
+  amount: '0',
   quotationInWei: '0',
 })
 const ruleFormRef = ref<FormInstance>()
@@ -87,7 +93,7 @@ const rules = reactive<FormRules>({
       trigger: 'blur',
     },
   ],
-  amountToSell: [
+  amount: [
     {
       validator: validateAmount,
       trigger: 'blur',
@@ -105,29 +111,57 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      try {
-        const res = await createPurchasePostRes(
-          contract,
-          address,
-          Number(form.quotationInWei),
-          Number(form.amountToSell),
-          Number(props.postId)
-        )
-        console.log(res)
-        await UserStore.setWei()
-        isLoading.value = false
-        ElMessage({
-          message: 'Success. The purchase response message has been post.',
-          type: 'success',
-        })
-      } catch (err: any) {
-        isLoading.value = false
-        if (err.code === 4001) {
-          ElMessage.error('User denied transaction signature.')
-        } else if (err.code === -32603) {
-          ElMessage.error('You cannot reply to your own purchase post.')
-        } else {
-          ElMessage.error('Error happend, please reload the page')
+      if (props.type === 'buy') {
+        try {
+          const res = await createPurchasePostRes(
+            contract,
+            address,
+            Number(form.quotationInWei),
+            Number(form.amount),
+            Number(props.postId)
+          )
+          console.log(res)
+          await UserStore.setWei()
+          isLoading.value = false
+          ElMessage({
+            message: 'Success. The purchase response message has been post.',
+            type: 'success',
+          })
+        } catch (err: any) {
+          isLoading.value = false
+          if (err.code === 4001) {
+            ElMessage.error('User denied transaction signature.')
+          } else if (err.code === -32603) {
+            ElMessage.error('You cannot reply to your own purchase post.')
+          } else {
+            ElMessage.error('Error happend, please reload the page')
+          }
+        }
+      } else if (props.type === 'sell') {
+        try {
+          const res = await createSellPostRes(
+            contract,
+            address,
+            Number(form.quotationInWei),
+            Number(form.amount),
+            Number(props.postId)
+          )
+          console.log(res)
+          await UserStore.setWei()
+          isLoading.value = false
+          ElMessage({
+            message: 'Success.The sell response message has been post.',
+            type: 'success',
+          })
+        } catch (err: any) {
+          isLoading.value = false
+          if (err.code === 4001) {
+            ElMessage.error('User denied transaction signature.')
+          } else if (err.code === -32603) {
+            ElMessage.error('You cannot reply to your own sell post.')
+          } else {
+            ElMessage.error('Error happend, please reload the page')
+          }
         }
       }
 

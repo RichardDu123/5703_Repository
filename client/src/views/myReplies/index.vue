@@ -1,5 +1,5 @@
 <template>
-  <div>myProfile</div>
+  <div>myReplies</div>
 </template>
 
 <script setup lang="ts"></script>

@@ -29,16 +29,6 @@ export const getPurchasePostSize = (
   })
 }
 
-export const getPurchasePostByKey = (
-  contract: Contract,
-  address: string,
-  postKey: number
-): Promise<any> => {
-  return contract.methods.getPurchasePostByKey(postKey).call({
-    from: address,
-  })
-}
-
 export const createPurchasePostRes = (
   contract: Contract,
   address: string,
@@ -65,7 +55,74 @@ export const getSellPostSize = (
   contract: Contract,
   address: string
 ): Promise<number> => {
-  return contract.methods.returnPurchasePostMapSize().call({
+  return contract.methods.returnSellPostMapSize().call({
+    from: address,
+  })
+}
+
+export const createSellPostRes = (
+  contract: Contract,
+  address: string,
+  price: number,
+  amount: number,
+  postId: number
+): Promise<any> => {
+  return contract.methods
+    .createResponseMessageToSellingPost(amount, price, postId)
+    .send({ from: address })
+}
+
+export const returnAllPurchasePostsByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnAllPurchasePostsByAddress(address).call({
+    from: address,
+  })
+}
+
+export const returnPurchasePostResponseMessagesByKey = (
+  contract: Contract,
+  address: string,
+  postId: number
+): Promise<any> => {
+  return contract.methods.returnPurchasePostResponseMessagesByKey(postId).call({
+    from: address,
+  })
+}
+
+export const getSellPostByKey = (
+  contract: Contract,
+  address: string,
+  postKey: number
+): Promise<any> => {
+  return contract.methods.getSellingPostByKey(postKey).call({
+    from: address,
+  })
+}
+export const getPurchasePostByKey = (
+  contract: Contract,
+  address: string,
+  postKey: number
+): Promise<any> => {
+  return contract.methods.getPurchasePostByKey(postKey).call({
+    from: address,
+  })
+}
+export const getPurchasePostKeys = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getPurchasePostKeys(address).call({
+    from: address,
+  })
+}
+
+export const getSellingPostKeys = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getSellingPostKeys(address).call({
     from: address,
   })
 }

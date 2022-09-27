@@ -1,26 +1,26 @@
 <template>
   <el-dialog
     v-model="dialogFormVisible"
-    title="Create a Purchase Post"
+    title="Create a Sell Post"
     draggable
     @close="resetForm(ruleFormRef)"
   >
     <el-form :model="form" ref="ruleFormRef" :rules="rules">
       <el-form-item
-        label="Price To Buy:"
+        label="Price To Sell:"
         :label-width="formLabelWidth"
-        prop="priceToBuy"
+        prop="priceToSell"
       >
-        <el-input v-model="form.priceToBuy" autocomplete="off" type="number">
+        <el-input v-model="form.priceToSell" autocomplete="off" type="number">
           <template #append>Wei</template>
         </el-input>
       </el-form-item>
       <el-form-item
-        label="Amount To Buy:"
+        label="Amount To Sell:"
         :label-width="formLabelWidth"
-        prop="amountToBuy"
+        prop="amountToSell"
       >
-        <el-input v-model="form.amountToBuy" autocomplete="off" type="number">
+        <el-input v-model="form.amountToSell" autocomplete="off" type="number">
           <template #append>kW⋅h</template>
         </el-input>
       </el-form-item>
@@ -43,8 +43,8 @@
 import { reactive, ref, watch } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { validatePrice, validateAmount } from '@/utils/validate'
-import { createPurchasePost } from '@/api/mainSys'
-import { useBuyerStore, useETHStore, useUserStore } from '@/store'
+import { createSellPost } from '@/api/mainSys'
+import { useSellerStore, useETHStore, useUserStore } from '@/store'
 import { Contract } from 'web3-eth-contract'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -68,18 +68,18 @@ watch(dialogFormVisible, (newVal) => {
 })
 const formLabelWidth = '140px'
 const form = reactive({
-  priceToBuy: '0',
-  amountToBuy: '0',
+  priceToSell: '0',
+  amountToSell: '0',
 })
 const ruleFormRef = ref<FormInstance>()
 const rules = reactive<FormRules>({
-  priceToBuy: [
+  priceToSell: [
     {
       validator: validatePrice,
       trigger: 'blur',
     },
   ],
-  amountToBuy: [
+  amountToSell: [
     {
       validator: validateAmount,
       trigger: 'blur',
@@ -89,7 +89,7 @@ const rules = reactive<FormRules>({
 //submit form
 const ETHStore = useETHStore()
 const UserStore = useUserStore()
-const BuyerStore = useBuyerStore()
+const SellerStore = useSellerStore()
 const contract = ETHStore.contract as Contract
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const isLoading = ref(false)
@@ -99,16 +99,16 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       try {
-        await createPurchasePost(
+        await createSellPost(
           contract,
           address,
-          form.priceToBuy,
-          form.amountToBuy
+          form.priceToSell,
+          form.amountToSell
         )
         await UserStore.setWei()
-        await BuyerStore.setBuyerList()
+        await SellerStore.setSellerList()
         ElMessage({
-          message: 'Success. The purchase request has been post.',
+          message: 'Success. The sell request has been post.',
           type: 'success',
         })
       } catch (error) {

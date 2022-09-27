@@ -87,6 +87,11 @@ contract MainSystem is BeanStructs {
         return sellerService.returnSellingPostResponseMessagesByKey(_postKey);
     }
 
+    //new
+    function returnSellPostMapSize() public view returns(uint){
+        return sellerService.returnSellPostMapSize();
+    }
+
     // ------------------------- user service API -------------------------
 
     // return username by user's account address
