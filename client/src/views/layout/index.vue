@@ -148,6 +148,7 @@
     </transition>
   </div>
   <div v-else><wrong /></div>
+
 </template>
 
 <script setup lang="ts">
@@ -158,6 +159,7 @@ import { useRoute, useRouter } from 'vue-router'
 import Account from './right/account.vue'
 import RecentTransac from './right/recentTransac.vue'
 import wrong from '../../components/erro.vue'
+
 const router = useRouter()
 const route = useRoute()
 const currentNav = ref(route.path)
