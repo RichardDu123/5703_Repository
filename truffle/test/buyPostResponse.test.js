@@ -3,13 +3,13 @@ const { ethers} = require("hardhat");
 // need npm install --save-dev @nomicfoundation/hardhat-chai-matchers to make revertedWith works
 //const { ethers} = require("@nomicfoundation/hardhat-chai-matchers");
 
-describe("MainSystem", function () {
+describe("purchaseProcess", function () {
     let seller, buyer1, buyer2, mainSystem;
     //depoly MainSystem contract before each test
     beforeEach("deploy the contract instance first", async function () {
         const MainSystem = await ethers.getContractFactory("MainSystem");
         //get address infor for first three account for testing purpose
-        [seller, buyer1, buyer2] = await ethers.getSigners();
+        [buyer1, seller, buyer2] = await ethers.getSigners();
         mainSystem = await MainSystem.deploy();
         await mainSystem.deployed();     
     });
@@ -20,10 +20,10 @@ describe("MainSystem", function () {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test purchase post value validation", async function () {
             await expect(
-                mainSystem.createPurchasePost(0, 10)).to.be.revertedWith('purchase price must be greater than 0');
+                mainSystem.connect(buyer1).createPurchasePost(0, 10)).to.be.revertedWith('purchase price must be greater than 0');
 
             await expect(
-                mainSystem.createPurchasePost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
+                mainSystem.connect(buyer1).createPurchasePost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
         });
 
         //Test the creation for multi users, in this case we create different purchase post by 2 different users
@@ -46,8 +46,8 @@ describe("MainSystem", function () {
         //test the purchase post counter, create two purchase post, and the counter should return 2
         it("test purchase post counter", async function () {          
             await mainSystem.connect(buyer1).createPurchasePost(10, 10);                   
-            await mainSystem.connect(buyer2).createPurchasePost(20, 10);
-            expect(await mainSystem.returnPurchasePostMapSize()).to.equal(2);
+            await mainSystem.connect(buyer1).createPurchasePost(20, 10);
+            expect(await mainSystem.connect(buyer1).returnPurchasePostMapSize()).to.equal(2);
   
         });
 
@@ -72,23 +72,21 @@ describe("MainSystem", function () {
 
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test response Message data valiadtion", async function () {
-            await mainSystem.connect(buyer1).createPurchasePost(10, 10);
             await expect(
-                mainSystem.connect(buyer1).createResponseMessageToPurchasePost(0, 10, 0))
+                mainSystem.connect(seller).createResponseMessageToPurchasePost(0, 10, 0))
                 .to.be.revertedWith("amount must be greater than 0");
             await expect(
-                mainSystem.connect(buyer1).createResponseMessageToPurchasePost(10, 0, 0))
+                mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 0, 0))
                 .to.be.revertedWith("quotation must be greater than 0");
             
             await expect(
-                mainSystem.connect(buyer1).createResponseMessageToPurchasePost(10, 10, -1))
+                mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, -1))
                 .to.be.revertedWith("post key starts from 0");
             
         });
 
         //test the functionality for getPurchasePostByKey, if success the result shold be same as the 6th atttributes that store in the purchase post
         it("test for get response Message by key", async function () {
-           
             await mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, 0);
             const responseMessagesbyKey = await mainSystem.connect(seller).returnPurchasePostResponseMessagesByKey(0).then(resultArray => {
                 const responseMessagesbyKey = resultArray[0];
