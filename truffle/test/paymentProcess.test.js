@@ -34,13 +34,13 @@ describe("payment process", function () {
 
         it("test amount", async function(){
             
-            await paymentSystem.triggerPurchasePostPayment;
+            await paymentSystem.triggerPurchasePostPayment();
             const resBuyer =  await mainSystem.connect(seller1).getAvailableElecUnitsByAccountAddress(buyer1.address);
             console.log(resBuyer.toNumber());
-            expect(await resBuyer.toNumber()).to.equal(0);
+            expect(await resBuyer.toNumber()).to.equal(10);
             const resSeller =  await mainSystem.connect(seller1).getAvailableElecUnitsByAccountAddress(seller1.address);
             console.log(resSeller.toNumber());
-            expect(await resSeller.toNumber()).to.equal(100);
+            expect(await resSeller.toNumber()).to.equal(90);
         });
 
 
