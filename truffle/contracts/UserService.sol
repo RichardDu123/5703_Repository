@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+import "./PostResponseMessage.sol";
 
 contract UserService {
 
@@ -19,6 +20,7 @@ contract UserService {
         uint availableElecUnits; // units of electricity available
         uint[] purchasePostKeys; // indexes of purchase posts published by user
         uint[] sellingPostsKeys;  // indexes of selling posts published by user
+        PostResponseMessage[] responses; // all response messages belong to user
     }
 
     //constructor
@@ -77,6 +79,14 @@ contract UserService {
         userMap[_user].sellingPostsKeys.push(_sellingPostKey);
     }
 
+    // update response messages
+    function addResponse(address _user, PostResponseMessage message) public {
+        userMap[_user].responses.push(message);
+    }
+
+    function returnAllResponses(address _user) public view returns (PostResponseMessage[] memory) {
+        return userMap[_user].responses;
+    }
 
 
 }
