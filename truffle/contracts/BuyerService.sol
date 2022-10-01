@@ -82,6 +82,7 @@ contract BuyerService is BeanStructs {
         
         // 3. add the response message to the corresponding purchase post 
         purchasePostMap[_purchasePostKey].responseMessages.push() = message;
+        userService.addResponse(_msgSender, message);
 
         // 4. emit event
         emit PurchasePostResponseMessageCreated( _msgSender, address(message));
