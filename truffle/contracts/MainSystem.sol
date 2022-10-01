@@ -119,6 +119,11 @@ contract MainSystem is BeanStructs {
         userService.setUsername(_user, _username);
     }  
 
+    // return all response messages of user by user address
+    function returnAllResponses(address _user) public view returns (PostResponseMessage[] memory) {
+        return userService.returnAllResponses(_user);
+    } 
+    
 
     // -------------------------statistics service API -------------------------
 
