@@ -28,3 +28,19 @@ export interface SellingPost {
   createdAt: string
   responseMessages: string[]
 }
+export interface responseMessage {
+  name: string
+  amount: string
+  timestamp: string
+  date: string
+  isAccepted: boolean
+  isPaid: boolean
+  msgIdx: string
+  postKey: string
+  quotationInWei: string
+  responseMessageType: string
+  priceInEther: string
+  msgAddress: string
+  status: string
+  contract: any
+}
