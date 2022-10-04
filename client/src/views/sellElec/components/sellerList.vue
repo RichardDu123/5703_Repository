@@ -145,10 +145,15 @@ watchEffect(updateTable)
 //Pagination
 const showFormData = computed(() => {
   const tempTable = tableData.value
-    .slice((curPage.value - 1) * 6, (curPage.value - 1) * 6 + 6)
+    .concat([])
     .sort((a, b) => {
       return Number(b.timestamp) - Number(a.timestamp)
     })
+    .filter((item) => {
+      return item.amountToSell != '0'
+    })
+    .slice((curPage.value - 1) * 6, (curPage.value - 1) * 6 + 6)
+
   if (units.value === '-1' || units.value === '') {
     return tempTable
   } else {

@@ -71,9 +71,21 @@
                     >
                   </template>
                 </el-table-column>
-                <el-table-column label="isPaid" width="100">
+                <el-table-column label="Buy" width="100">
                   <template #default="scope">
-                    <span>{{ scope.row.isPaid }}</span>
+                    <el-button
+                      size="small"
+                      type="success"
+                      @click="sendTransaction(scope.row)"
+                      :disabled="
+                        scope.row.isAccepted
+                          ? scope.row.isPaid
+                            ? true
+                            : false
+                          : true
+                      "
+                      >Buy</el-button
+                    >
                   </template>
                 </el-table-column>
               </el-table>
@@ -218,6 +230,35 @@ const handleApprove = async (contract: Contract) => {
     message: 'Success. The reply has been approved.',
     type: 'success',
   })
+}
+
+//send
+const sendTransaction = async (row: any) => {
+  const ETHStore = useETHStore()
+  const web3 = ETHStore.web3 as Web3
+  const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
+  const msg = {
+    from: address,
+    to: row.msgAddress,
+    value: row.quotationInWei * row.amount,
+    gas: 2000000,
+    gasPrice: 2000000000,
+  }
+  console.log(msg)
+  try {
+    await web3.eth.sendTransaction(msg)
+    ElMessage({
+      message: 'Success. The transaction is complete.',
+      type: 'success',
+    })
+  } catch (error) {
+    ElMessage({
+      message: 'Warning. Your electricity is not enough.',
+      type: 'warning',
+    })
+  } finally {
+    updateTable()
+  }
 }
 </script>
 

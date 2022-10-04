@@ -9,6 +9,7 @@ import {
   getPurchasePostByKey,
   getSellingPostKeys,
   getSellPostByKey,
+  returnAllResponses,
 } from '@/api/mainSys'
 import { PurchasePost, SellingPost } from '@/types/index'
 export const useUserStore = defineStore('User', {
@@ -17,6 +18,7 @@ export const useUserStore = defineStore('User', {
     currWei: '0',
     purchasePosts: <PurchasePost[]>[],
     sellingPosts: <SellingPost[]>[],
+    relies: <string[]>[],
   }),
   actions: {
     async setWei() {
@@ -69,6 +71,14 @@ export const useUserStore = defineStore('User', {
           responseMessages: post.responseMessages,
         })
       })
+    },
+    async setReplies() {
+      this.relies = []
+      const ETHStore = useETHStore()
+      const contract = ETHStore.contract as Contract
+      const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+      const keys = await returnAllResponses(contract, address)
+      this.relies = keys
     },
   },
 })

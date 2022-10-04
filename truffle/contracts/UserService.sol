@@ -28,7 +28,7 @@ contract UserService {
         // initilize main system contract address
         mainSystemAddress = _mainSystemAddress;
         // initialize user testing data, allocate 100 units of electricity to test account
-        address testAccount = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
+        address testAccount = 0x96c1CE80aB24e9Aa360c702A4026cAE725B0F31A;
         userMap[testAccount].availableElecUnits = 100;
 
     }

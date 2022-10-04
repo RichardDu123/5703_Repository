@@ -116,8 +116,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           const res = await createPurchasePostRes(
             contract,
             address,
-            Number(form.quotationInWei),
-            Number(form.amount),
+            form.quotationInWei,
+            form.amount,
             Number(props.postId)
           )
           console.log(res)
@@ -142,8 +142,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           const res = await createSellPostRes(
             contract,
             address,
-            Number(form.quotationInWei),
-            Number(form.amount),
+            form.quotationInWei,
+            form.amount,
             Number(props.postId)
           )
           console.log(res)

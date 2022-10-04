@@ -13,7 +13,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Time" width="100">
+        <el-table-column label="Time" width="200">
           <template #default="scope">
             <span>{{ scope.row.date }}</span>
           </template>
@@ -27,7 +27,7 @@
               width="auto"
             >
               <template #default>
-                <div>Price in Wei: {{ scope.row.priceInWei }}</div>
+                <div>Price in Wei: {{ scope.row.quotationInWei }}</div>
               </template>
               <template #reference>
                 <el-tag>{{ scope.row.priceInEther }} Ether</el-tag>
@@ -38,6 +38,19 @@
         <el-table-column label="Expected Units" width="130">
           <template #default="scope">
             <span style="margin-left: 10px">{{ scope.row.amount }} kW.h</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Status" width="130">
+          <template #default="scope">
+            <el-tag
+              class="ml-2"
+              :type="`${
+                scope.row.isAccepted
+                  ? `${scope.row.isPaid ? 'success' : ''}`
+                  : 'info'
+              }`"
+              >{{ scope.row.status }}</el-tag
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -60,18 +73,20 @@ import { computed, ref } from 'vue'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import { responseMessage } from '@/types/index'
+import { useETHStore } from '@/store'
+import Web3 from 'web3'
 //tableData
 const props = defineProps<{
   tableData: responseMessage[]
 }>()
-
 //Pagination
 const showFormData = computed(() => {
   return props.tableData
-    .slice((curPage.value - 1) * 3, (curPage.value - 1) * 3 + 3)
+    .concat([])
     .sort((a, b) => {
-      return Number(b.createdAt) - Number(a.createdAt)
+      return Number(b.timestamp) - Number(a.timestamp)
     })
+    .slice((curPage.value - 1) * 3, (curPage.value - 1) * 3 + 3)
 })
 const totalSize = computed(() => {
   return props.tableData.length
@@ -98,19 +113,6 @@ const pageChanged = (value: any) => {
     width: 676px;
     height: 400px;
     overflow-y: scroll;
-    .numReply {
-      margin-left: 3px;
-      font-family: 'Lato';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 22px;
-      letter-spacing: 0.1px;
-      color: rgba(0, 0, 0, 0.5);
-    }
-    .innerTable {
-      width: 676px;
-    }
   }
   .pagination {
     margin-top: 40px;
