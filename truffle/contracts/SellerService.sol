@@ -78,6 +78,7 @@ contract SellerService is BeanStructs {
         
         // 3. add the response message to the corresponding selling post 
         sellingPostMap[_sellingPostKey].responseMessages.push() = message;
+        userService.addResponse(_msgSender, message);
 
         // 4. emit event
         emit SellingPostResponseMessageCreated(_msgSender, address(message));

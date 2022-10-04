@@ -21,13 +21,17 @@ declare module '@vue/runtime-core' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    Erro: typeof import('./src/components/erro.vue')['default']
     Plus: typeof import('./src/components/svgs/plus.vue')['default']
     PlusBtn: typeof import('./src/components/plusBtn.vue')['default']
     ResponseMessage: typeof import('./src/components/responseMessage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Start_page: typeof import('./src/components/start_page.vue')['default']
     Thunder: typeof import('./src/components/svgs/thunder.vue')['default']
   }
 }

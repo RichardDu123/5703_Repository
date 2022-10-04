@@ -41,4 +41,7 @@ contract BeanStructs {
         uint totalSum;      // total buy amount on a certain day
     }
 
+    // ------------------------- PostResponseMessage bean -------------------------
+    
+
 }

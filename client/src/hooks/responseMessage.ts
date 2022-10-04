@@ -5,16 +5,19 @@ import Web3 from 'web3'
 import { Post } from '@/types/index'
 import { fromNow, format } from '@/utils/day'
 import { toEther } from '@/api/basic'
-export const useResponseMessage = (tableData: Post[]): Post[] => {
+import { PurchasePost, SellingPost } from '@/types/index'
+export const useResponseMessage = (tableData: Post[], type: string): Post[] => {
   const ETHStore = useETHStore()
   const UserStore = useUserStore()
   const abi: any = ARTIFACT.abi
   const web3 = ETHStore.web3 as Web3
   tableData.forEach((item) => {
     item.children = []
-    UserStore.purchasePosts.forEach((post) => {
+    const posts =
+      type === 'buy' ? UserStore.purchasePosts : UserStore.sellingPosts
+    posts.forEach((post: PurchasePost | SellingPost) => {
       if (post.postIdx === item.postIdx) {
-        post.responseMessages.forEach(async (msgAddress) => {
+        post.responseMessages.forEach(async (msgAddress: string) => {
           const contract: Contract = new web3.eth.Contract(abi, msgAddress)
           const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
           const res = await contract.methods
