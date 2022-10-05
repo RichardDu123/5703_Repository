@@ -3,10 +3,10 @@
     <h2>My Replies</h2>
     <el-tabs v-model="activeName" class="demo-tabs">
       <el-tab-pane label="Buy" name="buy" class="panel">
-        <ReplyTable :tableData="buy" />
+        <ReplyTable :tableData="buy" type="buy" />
       </el-tab-pane>
       <el-tab-pane label="Sell" name="sell" class="panel">
-        <ReplyTable :tableData="sell" />
+        <ReplyTable :tableData="sell" type="sell" @updateTable="handleUpdate" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -21,12 +21,18 @@ import { responseMessage } from '@/types/index'
 const UserStore = useUserStore()
 const buy = ref<responseMessage[]>([])
 const sell = ref<responseMessage[]>([])
-UserStore.setReplies().then(async () => {
-  const [buyTable, sellTable] = await useRepliesTable()
-  buy.value = buyTable
-  sell.value = sellTable
-})
+const update = () => {
+  UserStore.setReplies().then(async () => {
+    const [buyTable, sellTable] = await useRepliesTable()
+    buy.value = buyTable
+    sell.value = sellTable
+  })
+}
+update()
 const activeName = ref('buy')
+const handleUpdate = () => {
+  update()
+}
 </script>
 
 <style scoped lang="less">

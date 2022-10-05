@@ -60,11 +60,10 @@ export const useUserStore = defineStore('User', {
       const keys = await getSellingPostKeys(contract, address)
       keys.forEach(async (key: string) => {
         const post = await getSellPostByKey(contract, address, Number(key))
-        console.log(post)
         this.sellingPosts.push({
           postIdx: Number(key),
           priceToSell: post.priceToSell,
-          amountToSell: post.amountToBuy,
+          amountToSell: post.amountToSell,
           seller: post.buyer,
           enabled: post.enabled,
           createdAt: post.createdAt,

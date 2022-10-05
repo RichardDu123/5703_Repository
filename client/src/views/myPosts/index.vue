@@ -1,7 +1,7 @@
 <template>
   <div class="myPostsContainer">
     <h2>My Posts</h2>
-    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tabs v-model="activeName" class="demo-tabs">
       <el-tab-pane label="Buy" name="buy" class="panel">
         <MyBuyPosts
       /></el-tab-pane>
@@ -14,15 +14,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { TabsPaneContext } from 'element-plus'
 import MyBuyPosts from './myBuy/myBuyPosts.vue'
 import MySellPosts from './mySell/mySellPosts.vue'
 
 const activeName = ref('buy')
-
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event)
-}
 </script>
 
 <style scoped lang="less">

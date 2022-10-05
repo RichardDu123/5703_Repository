@@ -44,6 +44,7 @@
           <template #default="scope">
             <el-tag
               class="ml-2"
+              @click="buyElec(scope.row)"
               :type="`${
                 scope.row.isAccepted
                   ? `${scope.row.isPaid ? 'success' : ''}`
@@ -73,12 +74,17 @@ import { computed, ref } from 'vue'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import { responseMessage } from '@/types/index'
-import { useETHStore } from '@/store'
+import { useETHStore, useUserStore } from '@/store'
 import Web3 from 'web3'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-message-box.css'
 //tableData
 const props = defineProps<{
   tableData: responseMessage[]
+  type: string
 }>()
+const emit = defineEmits(['updateTable'])
 //Pagination
 const showFormData = computed(() => {
   return props.tableData
@@ -95,6 +101,37 @@ const curPage = ref(1)
 
 const pageChanged = (value: any) => {
   curPage.value = value
+}
+//buy elec if sell repliy has been approved
+const buyElec = async (row: any) => {
+  if (row.isAccepted && !row.isPaid && props.type === 'sell') {
+    const ETHStore = useETHStore()
+    const UserSotre = useUserStore()
+    const web3 = ETHStore.web3 as Web3
+    const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
+    const msg = {
+      from: address,
+      to: row.msgAddress,
+      value: row.quotationInWei * row.amount,
+      gas: 2000000,
+      gasPrice: 2000000000,
+    }
+    try {
+      await web3.eth.sendTransaction(msg)
+      await UserSotre.setWei()
+      await UserSotre.setElec()
+      ElMessage({
+        message: 'Success. The transaction is complete.',
+        type: 'success',
+      })
+      emit('updateTable')
+    } catch (error) {
+      ElMessage({
+        message: 'Warning. Your transaction is reverted.',
+        type: 'warning',
+      })
+    }
+  }
 }
 </script>
 
