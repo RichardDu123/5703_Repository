@@ -2,7 +2,7 @@
   <div class="buyContainer">
     <h2>My Portfolio</h2>
     <CurrentPanel class="panel" />
-    <PlusBtn />
+    <PlusBtn type="buy" />
     <h3>Buyer List</h3>
     <BuyerList />
   </div>
@@ -31,7 +31,7 @@ import PlusBtn from '../../components/plusBtn.vue'
     margin-top: 46px;
   }
   h3 {
-    margin-top: 83px;
+    margin-top: 40px;
   }
 }
 </style>

@@ -1,4 +1,17 @@
 <template>
+  <el-select
+    v-model="units"
+    class="select"
+    placeholder="Sort by: Units"
+    size="large"
+  >
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    />
+  </el-select>
   <div class="buyerListContainer">
     <el-table
       :data="showFormData"
@@ -77,7 +90,7 @@
       />
     </div>
   </div>
-  <ResponseMessage v-model="isShow" :post-id="postIdx" />
+  <ResponseMessage v-model="isShow" :post-id="postIdx" type="buy" />
 </template>
 
 <script setup lang="ts">
@@ -131,11 +144,54 @@ const updateTable = () => {
 watchEffect(updateTable)
 //Pagination
 const showFormData = computed(() => {
-  return tableData.value
-    .slice((curPage.value - 1) * 6, (curPage.value - 1) * 6 + 6)
+  const tempTable = tableData.value
+    .concat([])
     .sort((a, b) => {
       return Number(b.timestamp) - Number(a.timestamp)
     })
+    .filter((item) => {
+      return item.amountToBuy !== '0'
+    })
+    .slice((curPage.value - 1) * 6, (curPage.value - 1) * 6 + 6)
+
+  if (units.value === '-1' || units.value === '') {
+    return tempTable
+  } else {
+    switch (units.value) {
+      case '0':
+        return tempTable.filter((item) => {
+          return Number(item.amountToBuy) <= 50
+        })
+      case '1':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToBuy) <= 100 && Number(item.amountToBuy) > 50
+          )
+        })
+      case '2':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToBuy) <= 150 && Number(item.amountToBuy) > 100
+          )
+        })
+      case '3':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToBuy) <= 200 && Number(item.amountToBuy) > 150
+          )
+        })
+      case '4':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToBuy) <= 250 && Number(item.amountToBuy) > 200
+          )
+        })
+      default:
+        return tempTable.filter((item) => {
+          return Number(item.amountToBuy) > 250
+        })
+    }
+  }
 })
 const totalSize = computed(() => {
   return tableData.value.length
@@ -153,9 +209,48 @@ const handleReply = (row: Post) => {
   isShow.value = true
   postIdx.value = row.postIdx.toString()
 }
+
+//options
+
+const units = ref('')
+const options = [
+  {
+    value: '-1',
+    label: 'All',
+  },
+  {
+    value: '0',
+    label: '0-50 kWh',
+  },
+  {
+    value: '1',
+    label: '50-100 kWh',
+  },
+  {
+    value: '2',
+    label: '100-150 kWh',
+  },
+  {
+    value: '3',
+    label: '150-200 kWh',
+  },
+  {
+    value: '4',
+    label: '200-250 kWh',
+  },
+  {
+    value: '5',
+    label: '>250 kWh',
+  },
+]
 </script>
 
 <style scoped lang="less">
+.select {
+  width: 145px;
+  margin-left: 70%;
+  margin-bottom: 11px;
+}
 .buyerListContainer {
   width: 750px;
   height: 500px;

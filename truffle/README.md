@@ -74,3 +74,11 @@ Request parameter
 设置回复讯息的状态，如果买方或卖方accpet特定的回复讯息，调用此函数更新讯息状态
 
 默认 isAccpeted 为 false，此时无法进行支付操作，只有在  isAccpeted 更新为true后才能进行支付
+
+
+#### 6. Test cases
+
+npm install --save-dev ethereum-waffle;
+npm install chai;
+npm install --global mocha;
+npm install --save-dev @nomicfoundation/hardhat-chai-matchers;

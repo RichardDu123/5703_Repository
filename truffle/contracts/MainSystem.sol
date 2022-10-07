@@ -87,6 +87,11 @@ contract MainSystem is BeanStructs {
         return sellerService.returnSellingPostResponseMessagesByKey(_postKey);
     }
 
+    //new
+    function returnSellPostMapSize() public view returns(uint){
+        return sellerService.returnSellPostMapSize();
+    }
+
     // ------------------------- user service API -------------------------
 
     // return username by user's account address
@@ -114,6 +119,11 @@ contract MainSystem is BeanStructs {
         userService.setUsername(_user, _username);
     }  
 
+    // return all response messages of user by user address
+    function returnAllResponses(address _user) public view returns (PostResponseMessage[] memory) {
+        return userService.returnAllResponses(_user);
+    } 
+    
 
     // -------------------------statistics service API -------------------------
 
@@ -158,7 +168,22 @@ contract MainSystem is BeanStructs {
         return statisticsService.returnWeeklyStatistics(_user, _prevWeekNum, 1);
     }
 
-
+    /*
+        return weekly total buy and total sell:
+            _user: identify target user
+            _prevWeekNum: identify which week's statistics to retrieve. Value starts from 0
+                0: indicating current week
+                1: previous week
+                2: 2 weeks ago
+                ...  
+        return format:[WeeklyTotalBuy, WeeklyTotalSell]
+    */
+    function returnWeeklyTotalBuyAndSell(address _user, uint _prevWeekNum) public view returns (uint[2] memory) {
+        uint weeklyBuy = statisticsService.returnWeeklyTotalBuyOrSell(_user, _prevWeekNum, 0);
+        uint weeklySell = statisticsService.returnWeeklyTotalBuyOrSell(_user, _prevWeekNum, 1);
+        uint[2] memory result = [weeklyBuy, weeklySell];
+        return result;   
+    }
     
 
 }

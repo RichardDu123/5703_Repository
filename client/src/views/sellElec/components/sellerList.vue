@@ -1,11 +1,24 @@
 <template>
+  <el-select
+    v-model="units"
+    class="select"
+    placeholder="Sort by: Units"
+    size="large"
+  >
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    />
+  </el-select>
   <div class="sellerListContainer">
     <el-table
       :data="showFormData"
       style="width: 100%"
       :header-cell-style="{ background: '#FAFAFA', color: '#606266' }"
     >
-      <el-table-column label="Buyer" width="130">
+      <el-table-column label="Seller" width="130">
         <template #default="scope">
           <el-popover
             effect="light"
@@ -23,7 +36,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="Expected Unit Price" width="160">
+      <el-table-column label="Unit Price" width="160">
         <template #default="scope">
           <el-popover
             effect="light"
@@ -35,15 +48,15 @@
               <div>Price in Wei: {{ scope.row.priceInWei }}</div>
             </template>
             <template #reference>
-              <el-tag>{{ scope.row.priceToBuy }} Ether</el-tag>
+              <el-tag>{{ scope.row.priceToSell }} Ether</el-tag>
             </template>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="Expected Units" width="130">
+      <el-table-column label="Units" width="130">
         <template #default="scope">
           <span style="margin-left: 10px"
-            >{{ scope.row.amountToBuy }} kW.h</span
+            >{{ scope.row.amountToSell }} kW.h</span
           >
         </template>
       </el-table-column>
@@ -77,11 +90,11 @@
       />
     </div>
   </div>
-  <ResponseMessage v-model="isShow" :post-id="postIdx" />
+  <ResponseMessage v-model="isShow" :post-id="postIdx" type="sell" />
 </template>
 
 <script setup lang="ts">
-import { useBuyerStore, useETHStore } from '@/store'
+import { useSellerStore, useETHStore } from '@/store'
 import { fromNow, format } from '@/utils/day'
 import { toEther } from '@/api/basic'
 import Web3 from 'web3'
@@ -92,33 +105,33 @@ interface Post {
   date: string
   name: string
   address: string
-  priceToBuy: string
-  amountToBuy: string
+  priceToSell: string
+  amountToSell: string
   priceInWei: string
   fromNow: string
   timestamp: string
 }
 
 //get buyerlist size
-const buyerStore = useBuyerStore()
+const SellerStore = useSellerStore()
 const ETHStore = useETHStore()
-buyerStore.setBuyerList()
-const buyerListRef = toRef(buyerStore, 'buyerList')
+SellerStore.setSellerList()
+const selllerListRef = toRef(SellerStore, 'sellerList')
 let tableData = ref<Post[]>([])
 const updateTable = () => {
   tableData.value = []
-  buyerListRef.value.forEach((item) => {
+  selllerListRef.value.forEach((item) => {
     tableData.value.push({
       postIdx: item.postIdx,
       timestamp: item.createdAt,
       date: format(Number(item.createdAt)),
       fromNow: fromNow(Number(item.createdAt)),
       name: 'Anonymous',
-      address: item.buyer,
-      priceInWei: item.priceToBuy,
-      amountToBuy: item.amountToBuy,
-      priceToBuy: ETHStore.web3
-        ? Number(toEther(ETHStore.web3 as Web3, item.priceToBuy))
+      address: item.seller,
+      priceInWei: item.priceToSell,
+      amountToSell: item.amountToSell,
+      priceToSell: ETHStore.web3
+        ? Number(toEther(ETHStore.web3 as Web3, item.priceToSell))
             .toFixed(4)
             .toString()
         : '0',
@@ -131,11 +144,54 @@ const updateTable = () => {
 watchEffect(updateTable)
 //Pagination
 const showFormData = computed(() => {
-  return tableData.value
-    .slice((curPage.value - 1) * 6, (curPage.value - 1) * 6 + 6)
+  const tempTable = tableData.value
+    .concat([])
     .sort((a, b) => {
       return Number(b.timestamp) - Number(a.timestamp)
     })
+    .filter((item) => {
+      return item.amountToSell != '0'
+    })
+    .slice((curPage.value - 1) * 6, (curPage.value - 1) * 6 + 6)
+
+  if (units.value === '-1' || units.value === '') {
+    return tempTable
+  } else {
+    switch (units.value) {
+      case '0':
+        return tempTable.filter((item) => {
+          return Number(item.amountToSell) <= 50
+        })
+      case '1':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToSell) <= 100 && Number(item.amountToSell) > 50
+          )
+        })
+      case '2':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToSell) <= 150 && Number(item.amountToSell) > 100
+          )
+        })
+      case '3':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToSell) <= 200 && Number(item.amountToSell) > 150
+          )
+        })
+      case '4':
+        return tempTable.filter((item) => {
+          return (
+            Number(item.amountToSell) <= 250 && Number(item.amountToSell) > 200
+          )
+        })
+      default:
+        return tempTable.filter((item) => {
+          return Number(item.amountToSell) > 250
+        })
+    }
+  }
 })
 const totalSize = computed(() => {
   return tableData.value.length
@@ -153,9 +209,49 @@ const handleReply = (row: Post) => {
   isShow.value = true
   postIdx.value = row.postIdx.toString()
 }
+
+//options
+//options
+
+const units = ref('')
+const options = [
+  {
+    value: '-1',
+    label: 'All',
+  },
+  {
+    value: '0',
+    label: '0-50 kWh',
+  },
+  {
+    value: '1',
+    label: '50-100 kWh',
+  },
+  {
+    value: '2',
+    label: '100-150 kWh',
+  },
+  {
+    value: '3',
+    label: '150-200 kWh',
+  },
+  {
+    value: '4',
+    label: '200-250 kWh',
+  },
+  {
+    value: '5',
+    label: '>250 kWh',
+  },
+]
 </script>
 
 <style scoped lang="less">
+.select {
+  width: 145px;
+  margin-left: 70%;
+  margin-bottom: 11px;
+}
 .sellerListContainer {
   width: 750px;
   height: 500px;

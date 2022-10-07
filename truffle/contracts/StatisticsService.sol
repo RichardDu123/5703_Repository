@@ -217,6 +217,15 @@ contract StatisticsService is BeanStructs{
         }
         return info.weeklyStatistics;
     }
+
+    function returnWeeklyTotalBuyOrSell(address _user, uint _prevWeekNum, uint8 _txType) public view returns (uint) {
+        uint[] memory weeklyStatistics = returnWeeklyStatistics(_user, _prevWeekNum, _txType);
+        uint weeklyTotalSum = 0;
+        for (uint i = 0; i < weeklyStatistics.length; i++) {
+            weeklyTotalSum += weeklyStatistics[i];
+        }
+        return weeklyTotalSum;
+    }
     
 
     // utils

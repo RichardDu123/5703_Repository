@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+import "./PostResponseMessage.sol";
 
 contract UserService {
 
@@ -19,6 +20,7 @@ contract UserService {
         uint availableElecUnits; // units of electricity available
         uint[] purchasePostKeys; // indexes of purchase posts published by user
         uint[] sellingPostsKeys;  // indexes of selling posts published by user
+        PostResponseMessage[] responses; // all response messages belong to user
     }
 
     //constructor
@@ -26,7 +28,7 @@ contract UserService {
         // initilize main system contract address
         mainSystemAddress = _mainSystemAddress;
         // initialize user testing data, allocate 100 units of electricity to test account
-        address testAccount = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
+        address testAccount = 0x96c1CE80aB24e9Aa360c702A4026cAE725B0F31A;
         userMap[testAccount].availableElecUnits = 100;
 
     }
@@ -77,6 +79,14 @@ contract UserService {
         userMap[_user].sellingPostsKeys.push(_sellingPostKey);
     }
 
+    // update response messages
+    function addResponse(address _user, PostResponseMessage message) public {
+        userMap[_user].responses.push(message);
+    }
+
+    function returnAllResponses(address _user) public view returns (PostResponseMessage[] memory) {
+        return userMap[_user].responses;
+    }
 
 
 }

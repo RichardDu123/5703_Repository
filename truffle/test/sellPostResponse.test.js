@@ -1,8 +1,10 @@
 const { expect } = require("chai");
 const { ethers} = require("hardhat");
+// need npm install --save-dev @nomicfoundation/hardhat-chai-matchers to make revertedWith works
+//const { ethers} = require("@nomicfoundation/hardhat-chai-matchers");
 
-describe("MainSystem", function () {
-    let seller1, buyer, seller2, mainSystem;
+describe("sell Process", function () {
+    let buyer, seller1, seller2, mainSystem;
     //depoly MainSystem contract before each test
     beforeEach("deploy the contract instance first", async function () {
         const MainSystem = await ethers.getContractFactory("MainSystem");
@@ -17,11 +19,11 @@ describe("MainSystem", function () {
     describe("test for create selling Post", function() {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test selling post value validation", async function () {
-            expect(
-                mainSystem.createSellingPost(0, 10)).to.be.revertedWith('selling price must be greater than 0');
+            await expect(
+                mainSystem.connect(seller1).createSellingPost(0, 10)).to.be.revertedWith('selling price must be greater than 0');
 
-            expect(
-                mainSystem.createSellingPost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
+            await expect(
+                mainSystem.connect(seller1).createSellingPost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
         });
 
         //Test the creation for multi users, in this case we create different selling post by 2 different users
@@ -41,6 +43,14 @@ describe("MainSystem", function () {
   
         });
 
+        //test the sell post counter, create two sell post, and the counter should return 2
+        it("test purchase sell counter", async function () {          
+            await mainSystem.connect(seller1).createSellingPost(10, 10);                   
+            await mainSystem.connect(seller1).createSellingPost(20, 10);
+            expect(await mainSystem.returnSellPostMapSize()).to.equal(2);
+  
+        });
+
 
     });
 
@@ -54,7 +64,7 @@ describe("MainSystem", function () {
 
         //test user validation for the response message, the poster and responser should be different
         it("test response Message users valiadtion", async function () {
-            expect(
+            await expect(
                 mainSystem.connect(seller1).createResponseMessageToSellingPost(10, 10, 0))
                 .to.be.revertedWith("You cannot reply to your own selling post");
             
@@ -62,15 +72,15 @@ describe("MainSystem", function () {
 
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test response Message data valiadtion", async function () {
-            await mainSystem.connect(buyer).createSellingPost(10, 10);
-            expect(
+            await mainSystem.connect(seller1).createSellingPost(10, 10);
+            await expect(
                 mainSystem.connect(buyer).createResponseMessageToSellingPost(0, 10, 0))
                 .to.be.revertedWith("amount must be greater than 0");
-            expect(
+            await expect(
                 mainSystem.connect(buyer).createResponseMessageToSellingPost(10, 0, 0))
                 .to.be.revertedWith("quotation must be greater than 0");
             
-            expect(
+            await expect(
                 mainSystem.connect(buyer).createResponseMessageToSellingPost(0, 10, 0))
                 .to.be.revertedWith("selling key starts from 0");
             

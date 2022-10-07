@@ -78,6 +78,7 @@ contract SellerService is BeanStructs {
         
         // 3. add the response message to the corresponding selling post 
         sellingPostMap[_sellingPostKey].responseMessages.push() = message;
+        userService.addResponse(_msgSender, message);
 
         // 4. emit event
         emit SellingPostResponseMessageCreated(_msgSender, address(message));
@@ -159,6 +160,12 @@ contract SellerService is BeanStructs {
     function returnSellingPostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
         require(_postKey >= 0, "post key starts from 0");
         return sellingPostMap[_postKey].responseMessages;
+    }
+
+    //new
+    // return total number of sell posts in the system
+    function returnSellPostMapSize() public view returns(uint) {
+        return sellingPostCounter;
     }
 
 }
