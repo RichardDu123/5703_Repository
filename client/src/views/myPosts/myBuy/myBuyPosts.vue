@@ -251,6 +251,7 @@ const sendTransaction = async (row: any) => {
       message: 'Success. The transaction is completed.',
       type: 'success',
     })
+    await UserSotre.setRecnetTransaction()
   } catch (error) {
     ElMessage({
       message: 'Warning. Your transaction is reverted.',

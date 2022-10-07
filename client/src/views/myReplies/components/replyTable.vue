@@ -124,6 +124,7 @@ const buyElec = async (row: any) => {
         message: 'Success. The transaction is complete.',
         type: 'success',
       })
+      await UserSotre.setRecnetTransaction()
       emit('updateTable')
     } catch (error) {
       ElMessage({

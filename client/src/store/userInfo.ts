@@ -10,8 +10,9 @@ import {
   getSellingPostKeys,
   getSellPostByKey,
   returnAllResponses,
+  returnRecentTransactions,
 } from '@/api/mainSys'
-import { PurchasePost, SellingPost } from '@/types/index'
+import { PurchasePost, SellingPost, transacItem } from '@/types/index'
 export const useUserStore = defineStore('User', {
   state: () => ({
     currElec: '0',
@@ -19,6 +20,7 @@ export const useUserStore = defineStore('User', {
     purchasePosts: <PurchasePost[]>[],
     sellingPosts: <SellingPost[]>[],
     relies: <string[]>[],
+    recentTransaction: <transacItem[]>[],
   }),
   actions: {
     async setWei() {
@@ -78,6 +80,21 @@ export const useUserStore = defineStore('User', {
       const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
       const keys = await returnAllResponses(contract, address)
       this.relies = keys
+    },
+    async setRecnetTransaction() {
+      this.recentTransaction = []
+      const ETHStore = useETHStore()
+      const contract = ETHStore.contract as Contract
+      const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+      const res = await returnRecentTransactions(contract, address)
+      res.forEach((item: any) => {
+        this.recentTransaction.push({
+          time: item.createdAt,
+          type: item.transactionType,
+          amount: item.transactionValue,
+        })
+      })
+      console.log(res)
     },
   },
 })
