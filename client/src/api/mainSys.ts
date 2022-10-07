@@ -135,3 +135,12 @@ export const returnAllResponses = (
     from: address,
   })
 }
+
+export const getUsernameByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getUsernameByAddress(address).call({
+    from: address,
+  })
+}

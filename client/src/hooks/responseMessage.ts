@@ -7,6 +7,7 @@ import { fromNow, format } from '@/utils/day'
 import { toEther } from '@/api/basic'
 import { PurchasePost, SellingPost } from '@/types/index'
 import { ref } from 'vue'
+import { getUsernameByAddress } from '@/api/mainSys'
 export const useResponseMessage = (tableData: Post[], type: string): Post[] => {
   const ETHStore = useETHStore()
   const UserStore = useUserStore()
@@ -24,9 +25,17 @@ export const useResponseMessage = (tableData: Post[], type: string): Post[] => {
           const res = await contract.methods
             .returnPostResponseMessageBean()
             .call({ from: address })
+          const mainSysContarct = ETHStore.contract as Contract
+          let userName = await getUsernameByAddress(
+            mainSysContarct,
+            res.messageSender
+          )
+          if (userName === '') {
+            userName = 'Anonymous'
+          }
           item.children!.push({
             msgAddress: msgAddress,
-            name: 'Anonymous',
+            name: userName,
             amount: res.amount,
             timestamp: res.createdAt,
             date: format(Number(res.createdAt)),
@@ -67,9 +76,17 @@ export const useRepliesTable = async (): Promise<
     const res = await contract.methods
       .returnPostResponseMessageBean()
       .call({ from: address })
+    const mainSysContarct = ETHStore.contract as Contract
+    let userName = await getUsernameByAddress(
+      mainSysContarct,
+      res.messageSender
+    )
+    if (userName === '') {
+      userName = 'Anonymous'
+    }
     if (res.responseMessageType === '0') {
       buyReply.value.push({
-        name: 'Anonymous',
+        name: userName,
         amount: res.amount,
         timestamp: res.createdAt,
         isAccepted: res.isAccepted,

@@ -48,7 +48,7 @@
                     </el-popover>
                   </template>
                 </el-table-column>
-                <el-table-column label="Sell Units" width="130">
+                <el-table-column label="Purchase Units" width="130">
                   <template #default="scope">
                     <span style="margin-left: 10px"
                       >{{ scope.row.amount }} kW.h</span

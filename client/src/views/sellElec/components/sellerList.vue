@@ -126,7 +126,7 @@ const updateTable = () => {
       timestamp: item.createdAt,
       date: format(Number(item.createdAt)),
       fromNow: fromNow(Number(item.createdAt)),
-      name: 'Anonymous',
+      name: item.name,
       address: item.seller,
       priceInWei: item.priceToSell,
       amountToSell: item.amountToSell,
