@@ -185,5 +185,12 @@ contract MainSystem is BeanStructs {
         return result;   
     }
     
+    // -------------------------admin API -------------------------
+
+    // add electricity units
+    function addAvailableElecUnits(address _user, uint  _units) public {
+        userService.addAvailableElecUnits(_user, _units);
+    }  
+
 
 }
