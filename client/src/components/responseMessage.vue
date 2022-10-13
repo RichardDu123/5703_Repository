@@ -9,15 +9,6 @@
   >
     <el-form :model="form" ref="ruleFormRef" :rules="rules">
       <el-form-item
-        :label="`Amount to ${props.type === 'buy' ? 'sell' : 'buy'}:`"
-        :label-width="formLabelWidth"
-        prop="amount"
-      >
-        <el-input v-model="form.amount" autocomplete="off" type="number">
-          <template #append>kW⋅h</template>
-        </el-input>
-      </el-form-item>
-      <el-form-item
         label="Quotation in Wei:"
         :label-width="formLabelWidth"
         prop="quotationInWei"
@@ -28,6 +19,15 @@
           type="number"
         >
           <template #append>Wei</template>
+        </el-input>
+      </el-form-item>
+      <el-form-item
+        :label="`Amount to ${props.type === 'buy' ? 'sell' : 'buy'}:`"
+        :label-width="formLabelWidth"
+        prop="amount"
+      >
+        <el-input v-model="form.amount" autocomplete="off" type="number">
+          <template #append>kW⋅h</template>
         </el-input>
       </el-form-item>
     </el-form>

@@ -6,19 +6,19 @@
         style="width: 100%"
         :header-cell-style="{ background: '#FAFAFA', color: '#606266' }"
       >
-        <el-table-column type="expand">
+        <!-- <el-table-column type="expand">
           <template #default>
             <div m="4">
               <h2>Seller:</h2>
             </div>
           </template>
-        </el-table-column>
-        <el-table-column label="Time" width="200">
+        </el-table-column> -->
+        <el-table-column label="Time" width="210">
           <template #default="scope">
             <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Expected Unit Price" width="160">
+        <el-table-column label="Expected Unit Price" width="170">
           <template #default="scope">
             <el-popover
               effect="light"
@@ -35,12 +35,12 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="Expected Units" width="130">
+        <el-table-column label="Expected Units" width="140">
           <template #default="scope">
             <span style="margin-left: 10px">{{ scope.row.amount }} kW.h</span>
           </template>
         </el-table-column>
-        <el-table-column label="Status" width="130">
+        <el-table-column label="Status" width="140">
           <template #default="scope">
             <el-tag
               class="ml-2"
