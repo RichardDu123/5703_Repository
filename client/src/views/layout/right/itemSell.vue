@@ -36,8 +36,8 @@
         <div>{{ format(+time) }}</div>
       </div>
     </div>
-    <div :class="type === '1' ? 'green' : 'red'">
-      {{ `${type === '1' ? '+' : '-'} ${Number(amount).toFixed(2)} ETH` }}
+    <div :class="type === '1' ? 'red' : 'green'">
+      {{ `${type === '1' ? '-' : '+'} ${amount} kW.h` }}
     </div>
   </div>
 </template>

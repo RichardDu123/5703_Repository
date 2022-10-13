@@ -234,6 +234,7 @@ const handleApprove = async (contract: Contract) => {
 
 //send
 const sendTransaction = async (row: any) => {
+  console.log(row)
   const ETHStore = useETHStore()
   const web3 = ETHStore.web3 as Web3
   const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
@@ -260,6 +261,7 @@ const sendTransaction = async (row: any) => {
     console.log(error)
   } finally {
     updateTable()
+    UserSotre.setWei()
   }
 }
 </script>
