@@ -45,6 +45,8 @@ describe("payment process", function () {
 
 
     });
+
+    //use new added elec unit to post sell post see if it works
         
   
     

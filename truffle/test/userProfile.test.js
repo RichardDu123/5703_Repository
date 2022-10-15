@@ -103,7 +103,7 @@ describe("User Functionalities", function () {
 
         });
 
-        //TO DO check elec unit after the payment
+        //TO DO returnallresponses
     });
 
 });
