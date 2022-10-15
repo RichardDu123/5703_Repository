@@ -23,7 +23,7 @@ contract MainSystem is BeanStructs {
         statisticsService = new StatisticsService();
         buyerService = new BuyerService(statisticsService, userService);       
         sellerService = new SellerService(statisticsService, userService);      
-        userService.initializeContractAddresses(address(buyerService), address(sellerService)); 
+        userService.initializeContractAddresses(address(buyerService), address(sellerService), address(admin)); 
     }
 
     // -------------------------buyer service API -------------------------
