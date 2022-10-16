@@ -6,14 +6,7 @@
         style="width: 100%"
         :header-cell-style="{ background: '#FAFAFA', color: '#606266' }"
       >
-        <!-- <el-table-column type="expand">
-          <template #default>
-            <div m="4">
-              <h2>Seller:</h2>
-            </div>
-          </template>
-        </el-table-column> -->
-        <el-table-column label="Time" width="210">
+        <el-table-column label="Time" width="120">
           <template #default="scope">
             <span>{{ scope.row.date }}</span>
           </template>
@@ -44,13 +37,25 @@
           <template #default="scope">
             <el-tag
               class="ml-2"
-              @click="buyElec(scope.row)"
               :type="`${
                 scope.row.isAccepted
                   ? `${scope.row.isPaid ? 'success' : ''}`
                   : 'info'
               }`"
               >{{ scope.row.status }}</el-tag
+            >
+          </template>
+        </el-table-column>
+        <el-table-column label="Action" width="100">
+          <template #default="scope">
+            <el-button
+              size="small"
+              type="success"
+              @click="buyElec(scope.row)"
+              :disabled="
+                scope.row.isAccepted ? (scope.row.isPaid ? true : false) : true
+              "
+              >Buy</el-button
             >
           </template>
         </el-table-column>
