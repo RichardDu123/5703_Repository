@@ -22,8 +22,9 @@ contract MainSystem is BeanStructs {
         userService = new UserService(address(this));
         statisticsService = new StatisticsService();
         buyerService = new BuyerService(statisticsService, userService);       
-        sellerService = new SellerService(statisticsService, userService);      
-        userService.initializeContractAddresses(address(buyerService), address(sellerService), address(admin)); 
+        sellerService = new SellerService(statisticsService, userService);
+        address admin = msg.sender;
+        userService.initializeContractAddresses(address(buyerService), address(sellerService), admin); 
     }
 
     // -------------------------buyer service API -------------------------
