@@ -93,6 +93,7 @@ contract UserService {
     // add electricity by Admin
     function addAvailableElecUnits(address _user, uint  _units) public {
         require(tx.origin == adminAddress, "access restricted to Admin, access denied");
+        require(_units > 0, "electricity units must be greater than 0");
         userMap[_user].availableElecUnits += _units;
     }
 
