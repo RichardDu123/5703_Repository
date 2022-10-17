@@ -97,13 +97,44 @@ describe("User Functionalities", function () {
 
         it("test for defaut elec units for both buyer and seller", async function ()  {
             const resBuyer =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(buyer.address);
+            //console.log(resBuyer.toNumber());
             expect(await resBuyer.toNumber()).to.equal(0);
             const resSeller =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(seller.address);
-            expect(await resSeller.toNumber()).to.equal(100);
+            //console.log(resSeller);
+            expect(await resSeller.lte()).to.equal(100);
 
         });
 
-        //TO DO returnallresponses
     });
+
+    describe("test return all responses", function() {
+
+        beforeEach("deploy the contract instance and create purchase post and response message first", async function () {
+            await mainSystem.connect(buyer).createPurchasePost(10, 10);
+            await mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, 0);
+            await mainSystem.connect(other).createResponseMessageToPurchasePost(10, 10, 0);
+            await mainSystem.connect(buyer).createPurchasePost(20, 10);
+            await mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, 1);
+            
+        });
+
+        it("test for return all responses for seller", async function ()  {
+
+            const buyerResponse = await mainSystem.connect(buyer).returnAllResponses(buyer.address);
+            expect(buyerResponse).to.have.lengthOf(0);
+
+            const sellerResponse = await mainSystem.connect(buyer).returnAllResponses(seller.address);
+            expect(sellerResponse).to.have.lengthOf(2);
+
+            const otherResponse = await mainSystem.connect(buyer).returnAllResponses(other.address);
+             expect(otherResponse).to.have.lengthOf(1);
+
+        });
+
+
+
+    });
+
+    // to do add elec unit to other account as admin
 
 });
