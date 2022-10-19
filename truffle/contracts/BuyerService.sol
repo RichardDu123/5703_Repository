@@ -16,7 +16,9 @@ contract BuyerService is BeanStructs {
     mapping(uint => bool) PurchasePostStatus;       // label purchase post status
     uint[]  purchasePostKeys;                       // array of keys of purchase posts 
     uint public purchasePostCounter;                // count total number of purchase posts, start from 0
-    
+    uint public recentAveragePriceforBuy;
+    uint[] averagePriceforBuy;
+    uint public averagePriceforBuyKey;
 
     // reference to statistics service
     StatisticsService statisticsService;
@@ -133,11 +135,30 @@ contract BuyerService is BeanStructs {
 
         // 5. transfer ether to seller's account
         payable(seller).transfer(msg.value);
+        
+        //6.
+        if (averagePriceforBuyKey == 100){
+            averagePriceforBuyKey = 0;
+        }
+        
+        averagePriceforBuy[averagePriceforBuyKey] = msg.value/responseMessage.amount();
+        averagePriceforBuyKey ++;
+        
         // 6. emit event
         emit PurchasePostPaymentSuccess(msg.value, _purchasePostKey, address(responseMessage));
         // 7. return success message
         return "success";
         
+    }
+
+    // calculate
+    function RecentAveragePriceforBuy() public {
+        uint recentTotalPriceforBuy = 0;
+        for (uint i = 0; i < averagePriceforBuy.length; i++) {
+            recentTotalPriceforBuy += averagePriceforBuy[i];
+        }
+        
+        recentAveragePriceforBuy = recentTotalPriceforBuy/averagePriceforBuy.length;
     }
 
 
@@ -168,6 +189,11 @@ contract BuyerService is BeanStructs {
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
         require(_postKey >= 0, "post key starts from 0");
         return purchasePostMap[_postKey].responseMessages;
+    }
+    
+    // new
+    function returnRecentAveragePriceforBuy() public view returns (uint) {
+        return recentAveragePriceforBuy;
     }
 
 
