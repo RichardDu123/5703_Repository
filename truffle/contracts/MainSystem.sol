@@ -58,6 +58,11 @@ contract MainSystem is BeanStructs {
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
         return buyerService.returnPurchasePostResponseMessagesByKey(_postKey);
     }
+    
+    // return recommended price of electricity unit price for buy post
+    function returnRecentAveragePriceforBuy() public view returns (uint) {
+        return buyerService.returnRecentAveragePriceforBuy();
+    }
 
     // ------------------------- seller service API -------------------------
 
