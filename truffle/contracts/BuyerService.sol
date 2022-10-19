@@ -133,9 +133,6 @@ contract BuyerService is BeanStructs {
             purchasePostMap[_purchasePostKey].enabled = false;
         }
 
-        // 5. transfer ether to seller's account
-        payable(seller).transfer(msg.value);
-        
         //6.
         if (averagePriceforBuyKey == 100){
             averagePriceforBuyKey = 0;
@@ -143,6 +140,9 @@ contract BuyerService is BeanStructs {
         
         averagePriceforBuy[averagePriceforBuyKey] = msg.value/responseMessage.amount();
         averagePriceforBuyKey ++;
+
+        // 5. transfer ether to seller's account
+        payable(seller).transfer(msg.value);
         
         // 6. emit event
         emit PurchasePostPaymentSuccess(msg.value, _purchasePostKey, address(responseMessage));
