@@ -7,15 +7,17 @@
         <span>kW⋅h</span>
       </div>
     </div>
-    <div class="bigRight">{{ UserStore.currElec }}kW⋅h</div>
+    <div class="bigRight">{{ currElec }}kW⋅h</div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from '@/store'
+import { toRef } from 'vue'
 import Thunder from './svgs/thunder.vue'
 const UserStore = useUserStore()
 UserStore.setElec()
+const currElec = toRef(UserStore, 'currElec')
 </script>
 
 <style scoped lang="less">

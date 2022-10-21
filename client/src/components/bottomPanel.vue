@@ -5,7 +5,7 @@
         <Thunder class="smallThunder" />
         <div>
           <h4>Total Buy</h4>
-          <span>in week</span>
+          <span>in kW⋅h</span>
         </div>
       </div>
       <div>{{ totalBuy }}kW⋅h</div>
@@ -15,7 +15,7 @@
         <Thunder class="smallThunder" />
         <div>
           <h4>Total Sell</h4>
-          <span>in week</span>
+          <span>in kW⋅h</span>
         </div>
       </div>
       <div>{{ totalSell }}kW⋅h</div>

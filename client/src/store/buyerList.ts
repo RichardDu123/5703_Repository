@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 import { useETHStore } from './eth'
 import { Contract } from 'web3-eth-contract'
-import { getPurchasePostSize, getPurchasePostByKey } from '@/api/mainSys'
+import {
+  getPurchasePostSize,
+  getPurchasePostByKey,
+  getUsernameByAddress,
+} from '@/api/mainSys'
 interface purchasePost {
   postIdx: number
   priceToBuy: string
@@ -10,6 +14,7 @@ interface purchasePost {
   enabled: boolean
   createdAt: string
   responseMessages: string[]
+  name: string
 }
 export const useBuyerStore = defineStore('Buyer', {
   state: () => ({
@@ -24,7 +29,11 @@ export const useBuyerStore = defineStore('Buyer', {
       const tempList: purchasePost[] = []
       for (let i = 0; i < buyerListSize; i++) {
         const item = await getPurchasePostByKey(contract, address, i)
-        tempList.push({ postIdx: i, ...item })
+        let userName = await getUsernameByAddress(contract, address)
+        if (userName === '') {
+          userName = 'Anonymous'
+        }
+        tempList.push({ postIdx: i, name: userName, ...item })
       }
       this.buyerList = tempList
     },

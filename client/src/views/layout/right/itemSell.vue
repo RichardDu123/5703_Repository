@@ -1,7 +1,7 @@
 <template>
   <div class="itemContainer">
     <div class="left">
-      <div class="iconSell" v-if="type === 'sell'">
+      <div class="iconSell" v-if="type === '1'">
         <svg
           width="15"
           height="20"
@@ -31,24 +31,29 @@
       </div>
       <div class="spec">
         <div>
-          {{ type === 'sell' ? 'Electricity Sell' : 'Electricity Buy' }}
+          {{ type === '1' ? 'Electricity Sell' : 'Electricity Buy' }}
         </div>
-        <div>time</div>
+        <div>{{ format(+time) }}</div>
       </div>
     </div>
-    <div :class="type === 'sell' ? 'green' : 'red'">
-      {{ `${type === 'sell' ? '+' : '-'} ${amount} ETH` }}
+    <div :class="type === '1' ? 'red' : 'green'">
+      {{ `${type === '1' ? '-' : '+'} ${amount} kW.h` }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { format } from '@/utils/day'
 defineProps({
   type: {
     type: String,
     required: true,
   },
   amount: {
+    type: String,
+    required: true,
+  },
+  time: {
     type: String,
     required: true,
   },
@@ -94,7 +99,7 @@ defineProps({
     .spec {
       text-align: left;
       display: inline-block;
-      width: 123px;
+      width: 116px;
       margin-left: 16px;
       div:first-child {
         font-size: 14px;

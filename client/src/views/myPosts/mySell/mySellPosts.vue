@@ -9,7 +9,7 @@
         <el-table-column type="expand">
           <template #default="props">
             <div m="4">
-              <h2>Seller List:</h2>
+              <h2>Buyer List:</h2>
               <el-table :data="props.row.children" class="innerTable">
                 <el-table-column label="Seller" width="110">
                   <template #default="scope">
@@ -48,7 +48,7 @@
                     </el-popover>
                   </template>
                 </el-table-column>
-                <el-table-column label="Sell Units" width="130">
+                <el-table-column label="Purchase Units" width="130">
                   <template #default="scope">
                     <span style="margin-left: 10px"
                       >{{ scope.row.amount }} kW.h</span
@@ -189,6 +189,7 @@ const updateTable = () => {
   tableData.value = tableData.value.sort((a, b) => {
     return Number(b.timestamp) - Number(a.timestamp)
   })
+  console.log(tableData)
 }
 watchEffect(updateTable)
 //Pagination

@@ -44,3 +44,8 @@ export interface responseMessage {
   status: string
   contract: any
 }
+export interface transacItem {
+  time: string
+  type: string
+  amount: string
+}

@@ -135,3 +135,36 @@ export const returnAllResponses = (
     from: address,
   })
 }
+
+export const getUsernameByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.getUsernameByAddress(address).call({
+    from: address,
+  })
+}
+export const returnTotalBuyByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnTotalBuyByAddress(address).call({
+    from: address,
+  })
+}
+export const returnTotalSellByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnTotalSellByAddress(address).call({
+    from: address,
+  })
+}
+export const returnRecentTransactions = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnRecentTransactions(address).call({
+    from: address,
+  })
+}
