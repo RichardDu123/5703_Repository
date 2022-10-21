@@ -68,7 +68,32 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  amount: {
+    type: String,
+    required: true,
+  },
 })
+const validateAmount2 = (props: any) => {
+  return function (rule: any, value: any, callback: any) {
+    console.log(props.amount)
+    console.log(value)
+    if (+props.amount < +value) {
+      callback(new Error('The amount is too large.'))
+    }
+    if (value === '') {
+      callback(
+        new Error('Please input how many electricity units you want to buy.')
+      )
+    } else {
+      if (value <= 0) {
+        callback(new Error('The amount must be greater than 0.'))
+      } else if (!Number.isInteger(Number(value))) {
+        callback(new Error('The amount must be an integer.'))
+      }
+      callback()
+    }
+  }
+}
 const emit = defineEmits(['update:modelValue'])
 const dialogFormVisible = ref(false)
 watch(
@@ -95,7 +120,7 @@ const rules = reactive<FormRules>({
   ],
   amount: [
     {
-      validator: validateAmount,
+      validator: validateAmount2(props),
       trigger: 'blur',
     },
   ],

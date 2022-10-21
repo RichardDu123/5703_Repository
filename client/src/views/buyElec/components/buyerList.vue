@@ -90,7 +90,12 @@
       />
     </div>
   </div>
-  <ResponseMessage v-model="isShow" :post-id="postIdx" type="buy" />
+  <ResponseMessage
+    v-model="isShow"
+    :post-id="postIdx"
+    type="buy"
+    :amount="amount"
+  />
 </template>
 
 <script setup lang="ts">
@@ -205,9 +210,11 @@ const pageChanged = (value: any) => {
 //dialogue
 const isShow = ref(false)
 const postIdx = ref('')
+const amount = ref('')
 const handleReply = (row: Post) => {
   isShow.value = true
   postIdx.value = row.postIdx.toString()
+  amount.value = row.amountToBuy.toString()
 }
 
 //options

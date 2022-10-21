@@ -11,7 +11,7 @@ export const validatePrice = (rule: any, value: any, callback: any) => {
     callback()
   }
 }
-export const validateAmount = (rule: any, value: any, callback: any) => {
+export const validateAmount = function (rule: any, value: any, callback: any) {
   if (value === '') {
     callback(
       new Error('Please input how many electricity units you want to buy.')
