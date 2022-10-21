@@ -17,7 +17,7 @@ contract SellerService is BeanStructs {
     uint[]  sellingPostKeys;                        // array of keys of purchase posts 
     uint public sellingPostCounter;                  // count total number of purchase posts, start from 0
     
-    string public recentAveragePriceforSell;         // string to store the float number
+    string public recentAveragePriceforSell;               // string to store the float number
     uint[] public averagePriceforSell = new uint[](100); //array to store the average transaction price, set length as 100
     uint public averagePriceforSellKey;              // key of averagePrice array
     bool private reachSizeLimit;                    // identify if the size limit of averagePrice array is reached
