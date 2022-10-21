@@ -7,6 +7,8 @@ Run the simple dApp using 1 of 2 ways.
 ```sh
 # Install Truffle globally and run `truffle unbox`
 $ npm install -g truffle
+# Install OpenZeppelin Contracts dependency 
+$ npm install @openzeppelin/contracts
 ```
 
 ```sh
