@@ -14,7 +14,7 @@ describe("User Functionalities", function () {
         mainSystem = await MainSystem.deploy();
         await mainSystem.deployed();     
     });
-
+    
     describe("test username creation", function() {
 
         it("test read current user name", async function () {
@@ -133,8 +133,44 @@ describe("User Functionalities", function () {
 
 
 
-    });
+    }); 
 
-    // to do add elec unit to other account as admin
+    describe("test for add elec unit", function() {
+
+        it("test for admin add elec to himself/herself", async function ()  {
+
+            await expect(mainSystem.connect(buyer).addAvailableElecUnits(buyer.address, 100)).not.to.be.reverted;
+            const resBuyer =  await mainSystem.connect(buyer).getAvailableElecUnitsByAccountAddress(buyer.address);
+            expect(await resBuyer.toNumber()).to.equal(100);
+
+        });
+
+        it("test for admin add elec to others", async function ()  {
+
+            await expect(mainSystem.connect(buyer).addAvailableElecUnits(seller.address, 50)).not.to.be.reverted;
+            const resSeller =  await mainSystem.connect(buyer).getAvailableElecUnitsByAccountAddress(seller.address);
+            expect(await resSeller.toNumber()).to.equal(50);
+
+            await expect(mainSystem.connect(buyer).addAvailableElecUnits(other.address, 10)).not.to.be.reverted;
+            const resOther =  await mainSystem.connect(buyer).getAvailableElecUnitsByAccountAddress(other.address);
+            expect(await resOther.toNumber()).to.equal(10);
+
+        });
+
+         it("test for others add elec", async function ()  {
+
+            await expect(mainSystem.connect(seller).addAvailableElecUnits(seller.address, 100)).to.be.reverted;
+            const resSeller =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(seller.address);
+            expect(await resSeller.toNumber()).to.equal(0);
+
+            await expect(mainSystem.connect(other).addAvailableElecUnits(seller.address, 100)).to.be.reverted;
+            const resOther =  await mainSystem.connect(other).getAvailableElecUnitsByAccountAddress(seller.address);
+            expect(await resOther.toNumber()).to.equal(0);
+
+        });
+
+
+
+    });
 
 });
