@@ -33869,12 +33869,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x60c6AAab9F00a85d92a3e41F292747001875a1DA",
-      "transactionHash": "0x6439a663a491c613c4cf8efdd6bc83bfd11ff35c92b31f9f2b894c8d3fa29e9c"
+      "address": "0x77591FA13616C0476a3F79863dD2f91d19EF16Fc",
+      "transactionHash": "0x8a5a9c396b9d29e016a1faf7ade7299461b3a8b5621828a141cb4cda2ae3ff2f"
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-10-22T06:38:41.698Z",
+  "updatedAt": "2022-10-23T08:07:26.253Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
