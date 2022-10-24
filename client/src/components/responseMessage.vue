@@ -132,10 +132,10 @@ const contract = ETHStore.contract as Contract
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const isLoading = ref(false)
 const submitForm = async (formEl: FormInstance | undefined) => {
-  isLoading.value = true
   if (!formEl) return
   await formEl.validate(async (valid, fields) => {
     if (valid) {
+      isLoading.value = true
       if (props.type === 'buy') {
         try {
           const res = await createPurchasePostRes(

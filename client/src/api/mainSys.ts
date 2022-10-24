@@ -168,3 +168,37 @@ export const returnRecentTransactions = (
     from: address,
   })
 }
+
+export const getBuyPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnRecentAveragePriceforBuy().call({
+    from: address,
+  })
+}
+export const updateBuyPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.updateAndReturnRecentAveragePriceforBuy().send({
+    from: address,
+  })
+}
+
+export const getSellPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnRecentAveragePriceforSell().call({
+    from: address,
+  })
+}
+export const updateSellPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.updateAndReturnRecentAveragePriceforSell().send({
+    from: address,
+  })
+}

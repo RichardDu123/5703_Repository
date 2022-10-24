@@ -5,7 +5,7 @@
 Run the simple dApp using 1 of 2 ways.
 
 ```sh
-# Install Truffle globally and run `truffle unbox`
+# Install Truffle globally`
 $ npm install -g truffle
 # Install OpenZeppelin Contracts dependency 
 $ npm install @openzeppelin/contracts
@@ -15,6 +15,7 @@ $ npm install @openzeppelin/contracts
 #test on port 7545
 open ganache software and start a private blockchain
 $ cd truffle
+$ npm install
 # deploy contracts on the ganache
 $ truffle migrate
 ```
