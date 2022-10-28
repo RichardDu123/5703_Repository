@@ -1,38 +1,28 @@
 <template>
   <div class="statContainer">
     <div class="s1">
-      
       <div class="sellWeek">
         <Thunder class="thunder" />
-        <h3 class="tb">
-          TotalBuy
-        </h3>
+        <h3 class="tb">TotalBuy</h3>
 
         <span class="s">K</span>
-        <h5 class="inWeek">
-          in week
-        </h5>
+        <h5 class="inWeek">in week</h5>
       </div>
 
       <div class="buyWeek">
         <Thunder class="thunder" />
-        <h3 class="ts">
-          TotalSell
-        </h3>
+        <h3 class="ts">TotalSell</h3>
 
         <span class="s">K</span>
 
-        <h5 class="SellInWeek">
-          in week
-        </h5>
-
+        <h5 class="SellInWeek">in week</h5>
       </div>
     </div>
 
     <div class="s2">
       <div class="buyStatic">
         <div class="img1">
-          <img src="../../assets/images/Activity.png" alt="">
+          <img src="../../assets/images/Activity.png" alt="" />
         </div>
 
         <!-- <div class="view">
@@ -40,14 +30,13 @@
         </div> -->
 
         <div class="contentB">WeeklyBuy</div>
-          
       </div>
     </div>
 
     <div class="s3">
       <div class="sellStatic">
         <div class="img2">
-          <img src="../../assets/images/Activity.png" alt="">
+          <img src="../../assets/images/Activity.png" alt="" />
         </div>
 
         <!-- <div class="view">
@@ -55,8 +44,6 @@
         </div> -->
 
         <div class="contentS">WeeklySell</div>
-          
-      
       </div>
     </div>
   </div>
@@ -64,7 +51,7 @@
 
 <script setup lang="ts">
 import Thunder from '../../components/svgs/thunder.vue'
-import * as echarts from "echarts";
+// import * as echarts from "echarts";
 // export default {
 //   name: "echartsBox",
 //   setup() {
@@ -78,7 +65,7 @@ import * as echarts from "echarts";
 //     onUnmounted(() => {
 //       echart.dispose;
 //     });
-	
+
 //     // 基础配置一下Echarts
 //     function initChart() {
 //       let chart = echart.init(document.getElementById("myEcharts"), "dark");
@@ -137,31 +124,26 @@ import * as echarts from "echarts";
 //     return { initChart };
 //   }
 // };
-
-
-
-
-
 </script>
 
 <style scoped lang="less">
-.s1{
+.s1 {
   position: relative;
 }
 
-.s2{
+.s2 {
   position: relative;
 }
 
-.s3{
+.s3 {
   position: relative;
 }
-.chart{
+.chart {
   height: 400px;
 }
 
-.sellWeek{
-   .hoverShadow ();
+.sellWeek {
+  .hoverShadow ();
   position: relative;
   font-family: 'Abel';
   display: flex;
@@ -176,24 +158,23 @@ import * as echarts from "echarts";
   border-radius: 16px;
 }
 
-.tb{
+.tb {
   position: relative;
-    right: 10%;
-    top: -8%;
+  right: 10%;
+  top: -8%;
 }
 
-.inWeek{
-  
+.inWeek {
   position: relative;
-    /* bottom: 2px; */
-    /* right: 2px; */
+  /* bottom: 2px; */
+  /* right: 2px; */
   right: 70%;
   bottom: -10%;
-  color: #919EAB;
+  color: #919eab;
 }
 
-.buyWeek{
-   .hoverShadow ();
+.buyWeek {
+  .hoverShadow ();
   position: relative;
   font-family: 'Abel';
   display: flex;
@@ -208,20 +189,20 @@ import * as echarts from "echarts";
   border-radius: 16px;
 }
 
-.SellInWeek{
-  color: #919EAB;
-    position: relative;
-    left: -70%;
-    bottom: -11%;
-}
-
-.ts{
+.SellInWeek {
+  color: #919eab;
   position: relative;
-    left: -10%;
-    top: -5%;
+  left: -70%;
+  bottom: -11%;
 }
 
-.buyStatic{
+.ts {
+  position: relative;
+  left: -10%;
+  top: -5%;
+}
+
+.buyStatic {
   .hoverShadow ();
   position: relative;
   font-family: 'Abel';
@@ -237,13 +218,13 @@ import * as echarts from "echarts";
   border-radius: 16px;
 }
 
-.view{
+.view {
   position: relative;
   width: 150px;
   height: 150px;
 }
 
-.sellStatic{
+.sellStatic {
   .hoverShadow ();
   position: relative;
   font-family: 'Abel';
@@ -259,20 +240,7 @@ import * as echarts from "echarts";
   border-radius: 16px;
 }
 
-.contentS{
-
-  position: relative;
-  left: -80%;
-  top: -30%;
-  font-family: Abel;
-  font-style: Regular;
-  font-size: 20px;
-  line-height: 25px;
-  line-height: 100%;
-  
-}
-
-.contentB{
+.contentS {
   position: relative;
   left: -80%;
   top: -30%;
@@ -283,13 +251,24 @@ import * as echarts from "echarts";
   line-height: 100%;
 }
 
-.img1{
+.contentB {
+  position: relative;
+  left: -80%;
+  top: -30%;
+  font-family: Abel;
+  font-style: Regular;
+  font-size: 20px;
+  line-height: 25px;
+  line-height: 100%;
+}
+
+.img1 {
   position: relative;
   top: -20%;
   left: 5%;
 }
 
-.img2{
+.img2 {
   position: relative;
   top: -20%;
   left: 5%;

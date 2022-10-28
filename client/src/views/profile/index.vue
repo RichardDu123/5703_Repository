@@ -1,67 +1,56 @@
 <template>
   <div class="profileContainer">
-    <div class="navi">
-      My Profile
-    </div>
+    <div class="navi">My Profile</div>
 
-
-  <div class="userInfo">
-
-    
-    <div class="p1">
+    <div class="userInfo">
+      <div class="p1">
         <div class="icon">
           <el-icon><User /></el-icon>
         </div>
 
         <div class="userName">
-          {{name}}
+          {{ name }}
         </div>
-    </div>
+      </div>
 
-    <div class="p2">
-        <div class="hint">
-          
-            Please fill your new nickname:
-          
-        </div>
+      <div class="p2">
+        <div class="hint">Please fill your new nickname:</div>
 
         <div class="newNike">
-          <text class="newSize">
-            New nikename:
-          </text>
+          <text class="newSize"> New nikename: </text>
 
           <div class="editor">
-          <el-input v-model="input" placeholder="Please input" clearable />
+            <el-input v-model="input" placeholder="Please input" clearable />
           </div>
-
-          
         </div>
-        <div class="noMore">
-            No more than 10 charaters
-          </div>
+        <div class="noMore">No more than 10 charaters</div>
+      </div>
 
-        
-    </div>
-
-    <div class="p3">
+      <div class="p3">
         <div class="confirm">
-            <el-button @click="handleSubmit" round>Comfirm</el-button>
+          <el-button @click="handleSubmit" round>Comfirm</el-button>
         </div>
 
         <div class="cancel">
-            <el-button type="success" round>Cancel</el-button>
+          <el-button type="success" round>Cancel</el-button>
         </div>
+      </div>
     </div>
-
   </div>
-</div>
-
 </template>
 
 <script setup lang="ts">
-
-import {useRouter} from 'vue-router'
-import { computed, onMounted, reactive, ref, watchEffect, onBeforeMount,onUpdated,onBeforeUpdate} from 'vue'
+import { useRouter } from 'vue-router'
+import {
+  computed,
+  onMounted,
+  reactive,
+  ref,
+  watchEffect,
+  onBeforeMount,
+  onUpdated,
+  onBeforeUpdate,
+} from 'vue'
 import { useETHStore } from '../../store'
 import { Contract } from 'web3-eth-contract'
 import { setMapStoreSuffix } from 'pinia'
@@ -70,7 +59,7 @@ import {
   getUsernameByAddress,
   setUsername,
   addAvailableElecUnits,
-  getElecByAddress
+  getElecByAddress,
 } from '../../api/mainSys'
 // import { setMapStoreSuffix } from 'pinia'
 
@@ -84,140 +73,128 @@ let name = ref('')
 let getName = ref('')
 console.log(address)
 
-const val = getUsernameByAddress(contract,address).then((value)=>{
+const val = getUsernameByAddress(contract, address).then((value) => {
   console.log(value)
   getName.value = value
   console.log(getName.value)
-  if(getName.value.length == null){
+  if (getName.value.length == null) {
     console.log('1111111')
     name.value = 'Tony'
-  }else{
+  } else {
     console.log('222222')
     name.value = getName.value
   }
 })
 
-function handleSubmit(){
+function handleSubmit() {
   let memory = input.value
-  setUsername(contract,address,memory).then((value)=>{
-    if(input.value.length>= 10){
-    alert('Cannot greater than 10 ')
-  }else{
-    name.value = input.value
-    console.log('1111')
-  }
+  setUsername(contract, address, memory).then((value) => {
+    if (input.value.length >= 10) {
+      alert('Cannot greater than 10 ')
+    } else {
+      name.value = input.value
+      console.log('1111')
+    }
   })
 }
-  
-  
+
 // }
 
 // function handleCancel(){
-  
+
 // }
 </script>
 
 <style scoped lang="less">
-
-.profileContainer{
-
+.profileContainer {
 }
 
-.userInfo{
-
+.userInfo {
 }
 
-.navi{
+.navi {
   position: absolute;
   font-family: Abel;
   font-style: Regular;
   font-size: 24px;
 }
 
-.p1{
+.p1 {
   position: absolute;
   width: 100%;
   top: 20%;
-  
-
 }
 
-.icon{
+.icon {
   position: absolute;
   left: 10%;
 }
 
-.userName{
+.userName {
   position: absolute;
   left: 12%;
   font-weight: bold;
 }
 
-.p2{
+.p2 {
   position: absolute;
   width: 100%;
   height: 7%;
   top: 25%;
 }
 
-.hint{
+.hint {
   position: absolute;
   left: 10%;
   font-family: Abel;
   font-size: 22px;
 }
 
-
-
-.newNike{
- position: absolute;
-    top: 100%;
-    left: 10%;
-    width: 100%;
-    height: 50%;
-    display: flex;
-    
+.newNike {
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  width: 100%;
+  height: 50%;
+  display: flex;
 }
 
-.newSize{
+.newSize {
   position: absolute;
   top: 30%;
   font-size: 22px;
 }
 
-.editor{
+.editor {
   position: absolute;
-    left: 10%;
-    width: 20%;
-    top: 20%;
+  left: 10%;
+  width: 20%;
+  top: 20%;
 }
 
-.noMore{
+.noMore {
   position: absolute;
-  color: #B8BED9;
+  color: #b8bed9;
   left: 20%;
   top: 200%;
 }
 
-.p3{
+.p3 {
   position: absolute;
-    width: 100%;
-    top: 45%;
-    /* left: 30%; */
-    display: flex;
+  width: 100%;
+  top: 45%;
+  /* left: 30%; */
+  display: flex;
 }
 
-.confirm{
+.confirm {
   position: absolute;
-    left: 10%;
-}
-  
-
-
-.cancel{
-  position: absolute;
-    /* right: 0%; */
-    left: 20%;
+  left: 10%;
 }
 
+.cancel {
+  position: absolute;
+  /* right: 0%; */
+  left: 20%;
+}
 </style>
