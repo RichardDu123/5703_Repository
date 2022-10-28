@@ -85,7 +85,7 @@ describe("purchaseProcess", function () {
             
             /*await expect(
                 mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, -1))
-                .to.be.revertedWith("post key starts from 0");*/
+                .to.be.revertedWith("post key starts from 0"); */
             
         });
 
@@ -103,7 +103,9 @@ describe("purchaseProcess", function () {
             })).to.equal(responseMessagesbyKey);
         });
 
-    });
+    }); 
+
+    
 
     describe("test for payment process Purchase Post", function() {
 
@@ -121,7 +123,7 @@ describe("purchaseProcess", function () {
             expect(allPost).to.have.lengthOf(2);
         });
 
-    });
+    }); 
 
     //to do updateAndReturnRecentAveragePriceforBuy
    
