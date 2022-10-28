@@ -7,6 +7,7 @@ import "./BuyerService.sol";
 import "./SellerService.sol";
 import "./UserService.sol";
 import "./StatisticsService.sol";
+import "./Division.sol";
 
 // system contract
 contract MainSystem is BeanStructs {
@@ -21,9 +22,11 @@ contract MainSystem is BeanStructs {
         // 1.initialize services and mount them to reference variables
         userService = new UserService(address(this));
         statisticsService = new StatisticsService();
-        buyerService = new BuyerService(statisticsService, userService);       
-        sellerService = new SellerService(statisticsService, userService);      
-        userService.initializeContractAddresses(address(buyerService), address(sellerService)); 
+        Division divisionUtils = new Division();
+        buyerService = new BuyerService(statisticsService, userService, divisionUtils);       
+        sellerService = new SellerService(statisticsService, userService, divisionUtils);
+        address admin = msg.sender;
+        userService.initializeContractAddresses(address(buyerService), address(sellerService), admin); 
     }
 
     // -------------------------buyer service API -------------------------
@@ -57,6 +60,24 @@ contract MainSystem is BeanStructs {
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
         return buyerService.returnPurchasePostResponseMessagesByKey(_postKey);
     }
+  
+    //-------------------------------------------------------//
+    // update recommended price of electricity unit price for buy post
+    function updateRecentAveragePriceforBuy() public {
+         buyerService.updateRecentAveragePriceforBuy();
+    }
+
+    // return recommended price of electricity unit price for buy post
+    function returnRecentAveragePriceforBuy() public view returns (string memory) {
+        return buyerService.returnRecentAveragePriceforBuy();
+    }
+
+    // update and return recommended price of electricity unit price for buy post
+    function updateAndReturnRecentAveragePriceforBuy() public returns (string memory) {
+        buyerService.updateRecentAveragePriceforBuy();
+        return buyerService.returnRecentAveragePriceforBuy();
+    }
+    //-------------------------------------------------------//
 
     // ------------------------- seller service API -------------------------
 
@@ -91,6 +112,24 @@ contract MainSystem is BeanStructs {
     function returnSellPostMapSize() public view returns(uint){
         return sellerService.returnSellPostMapSize();
     }
+    
+    //-------------------------------------------------------//
+    // update recommended price of electricity unit price for sell post
+    function updateRecentAveragePriceforSell() public {
+         sellerService.updateRecentAveragePriceforSell();
+    }
+
+    // return recommended price of electricity unit price for sell post
+    function returnRecentAveragePriceforSell() public view returns (string memory) {
+        return sellerService.returnRecentAveragePriceforSell();
+    }
+
+    // update and return recommended price of electricity unit price for sell post
+    function updateAndReturnRecentAveragePriceforSell() public returns (string memory) {
+        sellerService.updateRecentAveragePriceforSell();
+        return sellerService.returnRecentAveragePriceforSell();
+    }
+    //-------------------------------------------------------//
 
     // ------------------------- user service API -------------------------
 
@@ -185,5 +224,12 @@ contract MainSystem is BeanStructs {
         return result;   
     }
     
+    // -------------------------admin API -------------------------
+
+    // add electricity units
+    function addAvailableElecUnits(address _user, uint  _units) public {
+        userService.addAvailableElecUnits(_user, _units);
+    }  
+
 
 }

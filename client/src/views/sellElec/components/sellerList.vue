@@ -90,7 +90,12 @@
       />
     </div>
   </div>
-  <ResponseMessage v-model="isShow" :post-id="postIdx" type="sell" />
+  <ResponseMessage
+    v-model="isShow"
+    :post-id="postIdx"
+    type="sell"
+    :amount="amount"
+  />
 </template>
 
 <script setup lang="ts">
@@ -126,7 +131,7 @@ const updateTable = () => {
       timestamp: item.createdAt,
       date: format(Number(item.createdAt)),
       fromNow: fromNow(Number(item.createdAt)),
-      name: 'Anonymous',
+      name: item.name,
       address: item.seller,
       priceInWei: item.priceToSell,
       amountToSell: item.amountToSell,
@@ -205,12 +210,13 @@ const pageChanged = (value: any) => {
 //dialogue
 const isShow = ref(false)
 const postIdx = ref('')
+const amount = ref('')
 const handleReply = (row: Post) => {
   isShow.value = true
   postIdx.value = row.postIdx.toString()
+  amount.value = row.amountToSell.toString()
 }
 
-//options
 //options
 
 const units = ref('')

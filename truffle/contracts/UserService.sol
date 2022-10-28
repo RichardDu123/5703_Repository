@@ -14,6 +14,7 @@ contract UserService {
     address mainSystemAddress;
     address buyerServiceAddress;
     address sellerServiceAddress;
+    address adminAddress;
 
     struct User{
         string username;      // nickname
@@ -33,11 +34,12 @@ contract UserService {
 
     }
 
-    function initializeContractAddresses(address _buyerServiceAddress, address _sellerServiceAddress) public {
+    function initializeContractAddresses(address _buyerServiceAddress, address _sellerServiceAddress, address _adminAddress) public {
         require(msg.sender == mainSystemAddress, "internal initialization function, access denied");
-        // initilize buyer and seller service's contract address
+        // initialize buyer, seller service's contract address and admin address
         buyerServiceAddress = _buyerServiceAddress;
         sellerServiceAddress = _sellerServiceAddress;
+        adminAddress = _adminAddress;
     }
 
     
@@ -88,5 +90,11 @@ contract UserService {
         return userMap[_user].responses;
     }
 
+    // add electricity by Admin
+    function addAvailableElecUnits(address _user, uint  _units) public {
+        require(tx.origin == adminAddress, "access restricted to Admin, access denied");
+        require(_units > 0, "electricity units must be greater than 0");
+        userMap[_user].availableElecUnits += _units;
+    }
 
 }

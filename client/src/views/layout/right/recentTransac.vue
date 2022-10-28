@@ -2,45 +2,20 @@
   <section class="recentContainer">
     <h3>Recent Transactions</h3>
     <ul>
-      <li>
-        <item-sell type="sell" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
-      </li>
-      <li>
-        <item-sell type="buy" amount="2.00" />
+      <li v-for="(item, index) in recenTrsac" :key="index">
+        <item-sell :type="item.type" :amount="item.amount" :time="item.time" />
       </li>
     </ul>
   </section>
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/store'
+import { toRef } from 'vue'
 import ItemSell from './itemSell.vue'
+const UserStore = useUserStore()
+const recenTrsac = toRef(UserStore, 'recentTransaction')
+UserStore.setRecnetTransaction()
 </script>
 
 <style scoped lang="less">

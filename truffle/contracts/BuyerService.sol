@@ -6,6 +6,7 @@ pragma solidity ^0.8.0;
 import "./BeanStructs.sol";
 import "./UserService.sol";
 import "./StatisticsService.sol";
+import "./Division.sol";
 
 contract BuyerService is BeanStructs {
 
@@ -17,14 +18,20 @@ contract BuyerService is BeanStructs {
     uint[]  purchasePostKeys;                       // array of keys of purchase posts 
     uint public purchasePostCounter;                // count total number of purchase posts, start from 0
     
+    string public recentAveragePriceforBuy;         // string to store the float number
+    uint[] public averagePriceforBuy = new uint[](100); //array to store the average transaction price, set length as 100
+    uint public averagePriceforBuyKey;              // key of averagePrice array
+    bool private reachSizeLimit;                    // identify if the size limit of averagePrice array is reached
 
     // reference to statistics service
     StatisticsService statisticsService;
     UserService userService;
+    Division divisionUtils;
     
-    constructor(StatisticsService _statisticsService, UserService _userService) {
+    constructor(StatisticsService _statisticsService, UserService _userService, Division _divisionUtils) {
         statisticsService = _statisticsService;
         userService = _userService;
+        divisionUtils = _divisionUtils;
     }
 
     // events
@@ -131,13 +138,34 @@ contract BuyerService is BeanStructs {
             purchasePostMap[_purchasePostKey].enabled = false;
         }
 
-        // 5. transfer ether to seller's account
+        // 5. record unit transaction price
+        if (averagePriceforBuyKey == 100){
+            reachSizeLimit = true;
+            averagePriceforBuyKey = 0;
+        }
+        averagePriceforBuy[averagePriceforBuyKey++] = responseMessage.quotationInWei();
+
+        // 6. transfer ether to seller's account
         payable(seller).transfer(msg.value);
-        // 6. emit event
+        
+        // 7. emit event
         emit PurchasePostPaymentSuccess(msg.value, _purchasePostKey, address(responseMessage));
-        // 7. return success message
+        // 8. return success message
         return "success";
         
+    }
+
+    // update the unit transaction price into array
+    function updateRecentAveragePriceforBuy() public {
+        uint recentTotalPriceforBuy = 0;
+        for (uint i = 0; i < averagePriceforBuy.length; i++) {
+            recentTotalPriceforBuy += averagePriceforBuy[i];
+        }
+        if (reachSizeLimit) {
+            (, , recentAveragePriceforBuy) = divisionUtils.division(3, recentTotalPriceforBuy, 100);
+        } else {
+            (, , recentAveragePriceforBuy) = divisionUtils.division(3, recentTotalPriceforBuy, averagePriceforBuyKey);
+        }
     }
 
 
@@ -168,6 +196,11 @@ contract BuyerService is BeanStructs {
     function returnPurchasePostResponseMessagesByKey(uint _postKey) public view returns(PostResponseMessage[] memory){
         require(_postKey >= 0, "post key starts from 0");
         return purchasePostMap[_postKey].responseMessages;
+    }
+    
+    // return the recent average price for buy transaction
+    function returnRecentAveragePriceforBuy() public view returns (string memory) {
+        return recentAveragePriceforBuy;
     }
 
 

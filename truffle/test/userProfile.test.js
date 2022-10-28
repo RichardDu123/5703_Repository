@@ -14,7 +14,7 @@ describe("User Functionalities", function () {
         mainSystem = await MainSystem.deploy();
         await mainSystem.deployed();     
     });
-
+    
     describe("test username creation", function() {
 
         it("test read current user name", async function () {
@@ -97,13 +97,80 @@ describe("User Functionalities", function () {
 
         it("test for defaut elec units for both buyer and seller", async function ()  {
             const resBuyer =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(buyer.address);
+            //console.log(resBuyer.toNumber());
             expect(await resBuyer.toNumber()).to.equal(0);
             const resSeller =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(seller.address);
-            expect(await resSeller.toNumber()).to.equal(100);
+            //console.log(resSeller);
+            expect(await resSeller.lte()).to.equal(100);
 
         });
 
-        //TO DO check elec unit after the payment
+    });
+
+    describe("test return all responses", function() {
+
+        beforeEach("deploy the contract instance and create purchase post and response message first", async function () {
+            await mainSystem.connect(buyer).createPurchasePost(10, 10);
+            await mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, 0);
+            await mainSystem.connect(other).createResponseMessageToPurchasePost(10, 10, 0);
+            await mainSystem.connect(buyer).createPurchasePost(20, 10);
+            await mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, 1);
+            
+        });
+
+        it("test for return all responses for seller", async function ()  {
+
+            const buyerResponse = await mainSystem.connect(buyer).returnAllResponses(buyer.address);
+            expect(buyerResponse).to.have.lengthOf(0);
+
+            const sellerResponse = await mainSystem.connect(buyer).returnAllResponses(seller.address);
+            expect(sellerResponse).to.have.lengthOf(2);
+
+            const otherResponse = await mainSystem.connect(buyer).returnAllResponses(other.address);
+             expect(otherResponse).to.have.lengthOf(1);
+
+        });
+
+
+
+    }); 
+
+    describe("test for add elec unit", function() {
+
+        it("test for admin add elec to himself/herself", async function ()  {
+
+            await expect(mainSystem.connect(buyer).addAvailableElecUnits(buyer.address, 100)).not.to.be.reverted;
+            const resBuyer =  await mainSystem.connect(buyer).getAvailableElecUnitsByAccountAddress(buyer.address);
+            expect(await resBuyer.toNumber()).to.equal(100);
+
+        });
+
+        it("test for admin add elec to others", async function ()  {
+
+            await expect(mainSystem.connect(buyer).addAvailableElecUnits(seller.address, 50)).not.to.be.reverted;
+            const resSeller =  await mainSystem.connect(buyer).getAvailableElecUnitsByAccountAddress(seller.address);
+            expect(await resSeller.toNumber()).to.equal(50);
+
+            await expect(mainSystem.connect(buyer).addAvailableElecUnits(other.address, 10)).not.to.be.reverted;
+            const resOther =  await mainSystem.connect(buyer).getAvailableElecUnitsByAccountAddress(other.address);
+            expect(await resOther.toNumber()).to.equal(10);
+
+        });
+
+         it("test for others add elec", async function ()  {
+
+            await expect(mainSystem.connect(seller).addAvailableElecUnits(seller.address, 100)).to.be.reverted;
+            const resSeller =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(seller.address);
+            expect(await resSeller.toNumber()).to.equal(0);
+
+            await expect(mainSystem.connect(other).addAvailableElecUnits(seller.address, 100)).to.be.reverted;
+            const resOther =  await mainSystem.connect(other).getAvailableElecUnitsByAccountAddress(seller.address);
+            expect(await resOther.toNumber()).to.equal(0);
+
+        });
+
+
+
     });
 
 });

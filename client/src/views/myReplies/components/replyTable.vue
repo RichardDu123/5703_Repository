@@ -6,19 +6,12 @@
         style="width: 100%"
         :header-cell-style="{ background: '#FAFAFA', color: '#606266' }"
       >
-        <el-table-column type="expand">
-          <template #default>
-            <div m="4">
-              <h2>Seller:</h2>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Time" width="200">
+        <el-table-column label="Time" width="150">
           <template #default="scope">
             <span>{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Expected Unit Price" width="160">
+        <el-table-column label="Expected Unit Price" width="170">
           <template #default="scope">
             <el-popover
               effect="light"
@@ -35,12 +28,12 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="Expected Units" width="130">
+        <el-table-column label="Expected Units" width="210">
           <template #default="scope">
             <span style="margin-left: 10px">{{ scope.row.amount }} kW.h</span>
           </template>
         </el-table-column>
-        <el-table-column label="Status" width="130">
+        <el-table-column label="Status" width="140">
           <template #default="scope">
             <el-tag
               class="ml-2"
@@ -50,6 +43,19 @@
                   : 'info'
               }`"
               >{{ scope.row.status }}</el-tag
+            >
+          </template>
+        </el-table-column>
+        <el-table-column label="Action" width="100" v-if="type === 'sell'">
+          <template #default="scope">
+            <el-button
+              size="small"
+              type="success"
+              @click="buyElec(scope.row)"
+              :disabled="
+                scope.row.isAccepted ? (scope.row.isPaid ? true : false) : true
+              "
+              >Buy</el-button
             >
           </template>
         </el-table-column>
@@ -73,12 +79,17 @@ import { computed, ref } from 'vue'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import { responseMessage } from '@/types/index'
-import { useETHStore } from '@/store'
+import { useETHStore, useUserStore } from '@/store'
 import Web3 from 'web3'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-message-box.css'
 //tableData
 const props = defineProps<{
   tableData: responseMessage[]
+  type: string
 }>()
+const emit = defineEmits(['updateTable'])
 //Pagination
 const showFormData = computed(() => {
   return props.tableData
@@ -95,6 +106,38 @@ const curPage = ref(1)
 
 const pageChanged = (value: any) => {
   curPage.value = value
+}
+//buy elec if sell repliy has been approved
+const buyElec = async (row: any) => {
+  if (row.isAccepted && !row.isPaid && props.type === 'sell') {
+    const ETHStore = useETHStore()
+    const UserSotre = useUserStore()
+    const web3 = ETHStore.web3 as Web3
+    const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
+    const msg = {
+      from: address,
+      to: row.msgAddress,
+      value: row.quotationInWei * row.amount,
+      gas: 2000000,
+      gasPrice: 2000000000,
+    }
+    try {
+      await web3.eth.sendTransaction(msg)
+      await UserSotre.setWei()
+      await UserSotre.setElec()
+      ElMessage({
+        message: 'Success. The transaction is complete.',
+        type: 'success',
+      })
+      await UserSotre.setRecnetTransaction()
+      emit('updateTable')
+    } catch (error) {
+      ElMessage({
+        message: 'Warning. Your transaction is reverted.',
+        type: 'warning',
+      })
+    }
+  }
 }
 </script>
 

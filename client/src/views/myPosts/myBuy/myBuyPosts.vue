@@ -234,6 +234,7 @@ const handleApprove = async (contract: Contract) => {
 
 //send
 const sendTransaction = async (row: any) => {
+  console.log(row)
   const ETHStore = useETHStore()
   const web3 = ETHStore.web3 as Web3
   const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
@@ -241,23 +242,26 @@ const sendTransaction = async (row: any) => {
     from: address,
     to: row.msgAddress,
     value: row.quotationInWei * row.amount,
-    gas: 2000000,
+    gas: 20000000,
     gasPrice: 2000000000,
   }
   console.log(msg)
   try {
     await web3.eth.sendTransaction(msg)
     ElMessage({
-      message: 'Success. The transaction is complete.',
+      message: 'Success. The transaction is completed.',
       type: 'success',
     })
+    await UserSotre.setRecnetTransaction()
   } catch (error) {
     ElMessage({
-      message: 'Warning. Your electricity is not enough.',
+      message: 'Warning. Your transaction is reverted.',
       type: 'warning',
     })
+    console.log(error)
   } finally {
     updateTable()
+    UserSotre.setWei()
   }
 }
 </script>

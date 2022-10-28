@@ -137,31 +137,90 @@ export const returnAllResponses = (
 }
 
 export const getUsernameByAddress = (
-  contract:Contract,
-  address:string
-):Promise<any> => {
+  contract: Contract,
+  address: string
+): Promise<any> => {
   return contract.methods.getUsernameByAddress(address).call({
-    from:address
+    from: address,
   })
 }
 
 export const setUsername = (
-  contract:Contract,
-  address:string,
-  memory:string
-):Promise<any>=>{
-  return contract.methods.setUsername(address,memory).send({
-    from:address
+  contract: Contract,
+  address: string,
+  memory: string
+): Promise<any> => {
+  return contract.methods.setUsername(address, memory).send({
+    from: address,
   })
 }
 
-export const addAvailableElecUnits=(
-  contract:Contract,
-  address:string,
+export const addAvailableElecUnits = (
+  contract: Contract,
+  address: string,
   addressAd: string,
-  amount:string
-):Promise<any>=>{
-  return contract.methods.setUsername(address,amount).call({
-    from:addressAd
+  amount: string
+): Promise<any> => {
+  return contract.methods.setUsername(address, amount).call({
+    from: addressAd,
+  })
+}
+
+export const returnTotalBuyByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnTotalBuyByAddress(address).call({
+    from: address,
+  })
+}
+export const returnTotalSellByAddress = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnTotalSellByAddress(address).call({
+    from: address,
+  })
+}
+export const returnRecentTransactions = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnRecentTransactions(address).call({
+    from: address,
+  })
+}
+
+export const getBuyPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnRecentAveragePriceforBuy().call({
+    from: address,
+  })
+}
+export const updateBuyPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.updateAndReturnRecentAveragePriceforBuy().send({
+    from: address,
+  })
+}
+
+export const getSellPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.returnRecentAveragePriceforSell().call({
+    from: address,
+  })
+}
+export const updateSellPrice = (
+  contract: Contract,
+  address: string
+): Promise<any> => {
+  return contract.methods.updateRecentAveragePriceforSell().send({
+    from: address,
   })
 }

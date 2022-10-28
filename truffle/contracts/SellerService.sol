@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "./BeanStructs.sol";
 import "./UserService.sol";
 import "./StatisticsService.sol";
+import "./Division.sol";
 
 contract SellerService is BeanStructs {
 
@@ -16,14 +17,20 @@ contract SellerService is BeanStructs {
     uint[]  sellingPostKeys;                        // array of keys of purchase posts 
     uint public sellingPostCounter;                  // count total number of purchase posts, start from 0
     
-
+    string public recentAveragePriceforSell;               // string to store the float number
+    uint[] public averagePriceforSell = new uint[](100); //array to store the average transaction price, set length as 100
+    uint public averagePriceforSellKey;              // key of averagePrice array
+    bool private reachSizeLimit;                    // identify if the size limit of averagePrice array is reached
+    
     // reference to statistics service
     StatisticsService statisticsService;
     UserService userService;
+    Division divisionUtils;
     
-    constructor(StatisticsService _statisticsService, UserService _userService) {
+     constructor(StatisticsService _statisticsService, UserService _userService, Division _divisionUtils) {
         statisticsService = _statisticsService;
         userService = _userService;
+        divisionUtils = _divisionUtils;
     }
 
     // events
@@ -130,13 +137,32 @@ contract SellerService is BeanStructs {
             sellingPostMap[_sellingPostKey].enabled = false;
         }
 
-        // 5. transfer ether to seller's account
+        // 5. record unit transaction price
+        if (averagePriceforSellKey == 100){
+            reachSizeLimit = true;
+            averagePriceforSellKey = 0;
+        }
+        averagePriceforSell[averagePriceforSellKey++] = responseMessage.quotationInWei();
+        
+        // 6. transfer ether to seller's account
         payable(seller).transfer(msg.value);
 
         emit SellingPostPaymentSuccess(msg.value, _sellingPostKey, address(responseMessage));
         
     }
 
+    // update the unit transaction price into array
+    function updateRecentAveragePriceforSell() public {
+        uint recentTotalPriceforSell = 0;
+        for (uint i = 0; i < averagePriceforSell.length; i++) {
+            recentTotalPriceforSell += averagePriceforSell[i];
+        }
+        if (reachSizeLimit) {
+            (, , recentAveragePriceforSell) = divisionUtils.division(3, recentTotalPriceforSell, 100);
+        } else {
+            (, , recentAveragePriceforSell) = divisionUtils.division(3, recentTotalPriceforSell, averagePriceforSellKey);
+        }
+    }
 
     // ------------------------- seller side utils -------------------------
     
@@ -166,6 +192,11 @@ contract SellerService is BeanStructs {
     // return total number of sell posts in the system
     function returnSellPostMapSize() public view returns(uint) {
         return sellingPostCounter;
+    }
+    
+    // return the recent average price for sell transaction
+    function returnRecentAveragePriceforSell() public view returns (string memory) {
+        return recentAveragePriceforSell;
     }
 
 }
