@@ -59,17 +59,58 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+
+import {useRouter} from 'vue-router'
+import { computed, onMounted, reactive, ref, watchEffect, onBeforeMount,onUpdated,onBeforeUpdate} from 'vue'
+import { useETHStore } from '../../store'
+import { Contract } from 'web3-eth-contract'
+import { setMapStoreSuffix } from 'pinia'
+import Web3 from 'web3'
+import {
+  getUsernameByAddress,
+  setUsername,
+  addAvailableElecUnits,
+  getElecByAddress
+} from '../../api/mainSys'
+// import { setMapStoreSuffix } from 'pinia'
+
+const router = useRouter()
+const ETHStore = useETHStore()
+const web3 = ETHStore.web3 as Web3
+const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+const contract = ETHStore.contract as Contract
 let input = ref('')
-let name = ref('Tony')
+let name = ref('')
+let getName = ref('')
+console.log(address)
+
+const val = getUsernameByAddress(contract,address).then((value)=>{
+  console.log(value)
+  getName.value = value
+  console.log(getName.value)
+  if(getName.value.length == null){
+    console.log('1111111')
+    name.value = 'Tony'
+  }else{
+    console.log('222222')
+    name.value = getName.value
+  }
+})
+
 function handleSubmit(){
-  if(input.value.length>= 10){
+  let memory = input.value
+  setUsername(contract,address,memory).then((value)=>{
+    if(input.value.length>= 10){
     alert('Cannot greater than 10 ')
   }else{
     name.value = input.value
+    console.log('1111')
   }
-  
+  })
 }
+  
+  
+// }
 
 // function handleCancel(){
   

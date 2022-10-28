@@ -135,3 +135,33 @@ export const returnAllResponses = (
     from: address,
   })
 }
+
+export const getUsernameByAddress = (
+  contract:Contract,
+  address:string
+):Promise<any> => {
+  return contract.methods.getUsernameByAddress(address).call({
+    from:address
+  })
+}
+
+export const setUsername = (
+  contract:Contract,
+  address:string,
+  memory:string
+):Promise<any>=>{
+  return contract.methods.setUsername(address,memory).send({
+    from:address
+  })
+}
+
+export const addAvailableElecUnits=(
+  contract:Contract,
+  address:string,
+  addressAd: string,
+  amount:string
+):Promise<any>=>{
+  return contract.methods.setUsername(address,amount).call({
+    from:addressAd
+  })
+}
