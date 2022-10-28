@@ -6,7 +6,7 @@
         style="width: 100%"
         :header-cell-style="{ background: '#FAFAFA', color: '#606266' }"
       >
-        <el-table-column label="Time" width="100">
+        <el-table-column label="Time" width="150">
           <template #default="scope">
             <span>{{ scope.row.date }}</span>
           </template>
@@ -28,7 +28,7 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="Expected Units" width="160">
+        <el-table-column label="Expected Units" width="210">
           <template #default="scope">
             <span style="margin-left: 10px">{{ scope.row.amount }} kW.h</span>
           </template>
@@ -46,7 +46,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="Action" width="100">
+        <el-table-column label="Action" width="100" v-if="type === 'sell'">
           <template #default="scope">
             <el-button
               size="small"

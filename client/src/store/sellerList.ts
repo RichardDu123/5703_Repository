@@ -29,7 +29,7 @@ export const useSellerStore = defineStore('Seller', {
       const tempList: sellPost[] = []
       for (let i = 0; i < buyerListSize; i++) {
         const item = await getSellPostByKey(contract, address, i)
-        let userName = await getUsernameByAddress(contract, address)
+        let userName = await getUsernameByAddress(contract, item.seller)
         if (userName === '') {
           userName = 'Anonymous'
         }
