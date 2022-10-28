@@ -6,7 +6,7 @@
         style="width: 100%"
         :header-cell-style="{ background: '#FAFAFA', color: '#606266' }"
       >
-        <el-table-column label="Time" width="120">
+        <el-table-column label="Time" width="100">
           <template #default="scope">
             <span>{{ scope.row.date }}</span>
           </template>
@@ -28,7 +28,7 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="Expected Units" width="140">
+        <el-table-column label="Expected Units" width="160">
           <template #default="scope">
             <span style="margin-left: 10px">{{ scope.row.amount }} kW.h</span>
           </template>
