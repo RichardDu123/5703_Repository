@@ -17,7 +17,7 @@ contract StatisticsService is BeanStructs{
         uint transactionCounter; // storing total transaction number
         
         // transaction creation time => transaction ETH value
-        mapping(uint => uint)  electricityBuyTransactions; 
+        mapping(uint => uint) electricityBuyTransactions ; 
         uint[] electricityBuyKeys; // keep tracks of buy transaction time
 
         // transaction creation time => transaction ETH value
@@ -38,48 +38,75 @@ contract StatisticsService is BeanStructs{
     // ------------------------- constructor -------------------------
     constructor() {
         //TO-DO: insert dummy data for test purpose
-        address testAccount = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
+        // address testAccount = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
         // uint current = block.timestamp;
-        uint Sep12 = 1662940800;
-        uint Sep12_random = 1662940810;
-        uint Sep13 = 1663027200;
-        uint Sep14 = 1663113600;
-        uint Sep15 = 1663200000;
-        uint Sep15_random1 = 1663200010;
-        uint Sep15_random2 = 1663200020;
-        // uint Sep16 = 1663250400;
-        uint Sep16_random = 1663286400;
-        uint Sep17_random = 1663372800;
-        uint Sep18_random1 = 1663459200;
-        uint Sep18_random2 = 1663459210;
-        uint Sep18_random3 = 1663459220;
+        // uint Sep12 = 1662940800;
+        // uint Sep12_random = 1662940810;
+        // uint Sep13 = 1663027200;
+        // uint Sep14 = 1663113600;
+        // uint Sep15 = 1663200000;
+        // uint Sep15_random1 = 1663200010;
+        // uint Sep15_random2 = 1663200020;
+        // // uint Sep16 = 1663250400;
+        // uint Sep16_random = 1663286400;
+        // uint Sep17_random = 1663372800;
+        // uint Sep18_random1 = 1663459200;
+        // uint Sep18_random2 = 1663459210;
+        // uint Sep18_random3 = 1663459220;
         
-        // expected weekly statistics startging from Sep 12: [10, 20, 30, 70, 40, 50, 60]
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep12] = 5;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep12_random] = 5;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep13] = 20;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep14] = 30;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep15] = 20;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep15_random1] = 40;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep15_random2] = 10;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep16_random] = 40;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep17_random] = 50;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep18_random1] = 20;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep18_random2] = 20;
-        userStatisticsMap[testAccount].electricityBuyTransactions[Sep18_random3] = 20;
+        // // expected weekly statistics startging from Sep 12: [10, 20, 30, 70, 40, 50, 60]
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep12] = 5;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep12_random] = 5;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep13] = 20;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep14] = 30;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep15] = 20;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep15_random1] = 40;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep15_random2] = 10;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep16_random] = 40;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep17_random] = 50;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep18_random1] = 20;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep18_random2] = 20;
+        // userStatisticsMap[testAccount].electricityBuyTransactions[Sep18_random3] = 20;
 
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep12);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep12_random);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep13);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep14);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep15);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep15_random1);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep15_random2);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep16_random);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep17_random);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep18_random1);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep18_random2);
-        userStatisticsMap[testAccount].electricityBuyKeys.push(Sep18_random3);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep12);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep12_random);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep13);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep14);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep15);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep15_random1);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep15_random2);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep16_random);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep17_random);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep18_random1);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep18_random2);
+        // userStatisticsMap[testAccount].electricityBuyKeys.push(Sep18_random3);
+
+        // addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+        // addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+        // addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+        // addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+        // addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+        // addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 10);
+
+        // addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+        // addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 10);
+        // addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 10);
+        // addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, block.timestamp, 5);
+
+        // initial buy value for today: 35
+        
+        addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946496, 5);
+        addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946497, 5);
+        addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946498, 5);
+        addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946499, 5);
+        addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946528, 5);
+        addOneElectricBuyTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946529, 10);
+
+        // initial sell value for today: 35
+        addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946521, 5);
+        addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946522, 10);
+        addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946523, 10);
+        addOneElectricSellTransaction(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 1666946524, 5);
 
     }
     
@@ -212,7 +239,12 @@ contract StatisticsService is BeanStructs{
         for (uint i = 0; i < keys.length; i++) {
             if ( keys[i] >= info.startDateTimestamp && keys[i] <= info.endDateTimestamp ) {
                 uint _dayNum = BokkyPooBahsDateTimeLibrary.getDayOfWeek(keys[i]);
-                info.weeklyStatistics[_dayNum - 1] += userStatisticsMap[_user].electricityBuyTransactions[keys[i]];
+                if (_txType == 0) {
+                    info.weeklyStatistics[_dayNum - 1] += userStatisticsMap[_user].electricityBuyTransactions[keys[i]];
+                } else {
+                    info.weeklyStatistics[_dayNum - 1] += userStatisticsMap[_user].electricitySellTransactions[keys[i]];
+                }
+                
             }
         }
         return info.weeklyStatistics;
@@ -227,7 +259,7 @@ contract StatisticsService is BeanStructs{
         return weeklyTotalSum;
     }
     
-
+    // ------------------------- testing purpose functions -------------------------
     // utils
     // function getDayOfWeek() public view returns (uint){
     //     return BokkyPooBahsDateTimeLibrary.getDayOfWeek(block.timestamp);
@@ -235,6 +267,39 @@ contract StatisticsService is BeanStructs{
 
     // function timestampFromDate(uint _year,uint _month,uint _day) public view returns (uint){
     //     return BokkyPooBahsDateTimeLibrary.timestampFromDate(_year, _month, _day);
+    // }
+
+    // function getElectricityBuyTransactions() public view returns (uint[] memory) {
+    //     uint[] transactionTime
+    // }
+
+    // function getUnixTimestamp() public view returns (uint) {
+    //     return block.timestamp;
+    // }
+
+    // struct TxBean {
+    //     uint txTime;
+    //     uint txVal;
+    // }
+
+    // function returnBuyMap(address _user) public view returns (TxBean[] memory) {
+    //    uint[] memory keys = userStatisticsMap[_user].electricityBuyKeys;
+    //    TxBean[] memory txBeans = new TxBean[](keys.length);
+    //    for (uint i = 0; i < keys.length; i++) {
+    //        txBeans[i].txTime = keys[i];
+    //        txBeans[i].txVal = userStatisticsMap[_user].electricityBuyTransactions[keys[i]];
+    //    }
+    //    return txBeans;
+    // }
+
+    // function returnSellMap(address _user) public view returns (TxBean[] memory) {
+    //    uint[] memory keys = userStatisticsMap[_user].electricitySellKeys;
+    //    TxBean[] memory txBeans = new TxBean[](keys.length);
+    //    for (uint i = 0; i < keys.length; i++) {
+    //        txBeans[i].txTime = keys[i];
+    //        txBeans[i].txVal = userStatisticsMap[_user].electricitySellTransactions[keys[i]];
+    //    }
+    //    return txBeans;
     // }
 
     
