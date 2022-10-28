@@ -200,7 +200,41 @@
             expect(seller1Pre2Weekly).to.equal(0);
     
         });
+
+        it("test weekly sell transaction", async function(){   
+        //buyer1's weekly transaction (test day is friday)
+        const buyer1Weekly = await mainSystem.connect(buyer1).returnWeeklySellStatistics(buyer1.address,0).then(resultArray => {
+        const buyer1Weekly = resultArray[4];
+            return buyer1Weekly;
+        });
+        expect(buyer1Weekly).to.equal(0);
+        buyer1's last week's weekly transaction
+        const buyer1PreWeekly = await mainSystem.connect(buyer1).returnWeeklySellStatistics(buyer1.address,1).then(resultArray => {
+        const buyer1PreWeekly = resultArray[4];
+            return buyer1PreWeekly;
+        });
+        expect(buyer1PreWeekly).to.equal(0); 
+        //seller1's weekly transaction
+        const seller1Weekly = await mainSystem.connect(buyer1).returnWeeklySellStatistics(seller1.address,0).then(resultArray => {
+            const seller1Weekly = resultArray[4];
+                return seller1Weekly;
+            });
+            expect(seller1Weekly).to.equal(20);
+            
+            //seller1's weekly transaction, day before today no transaction
+            const seller1WeeklyDayBefore = await mainSystem.connect(buyer1).returnWeeklySellStatistics(seller1.address,0).then(resultArray => {
+            const seller1WeeklyDayBefore = resultArray[3];
+                return seller1WeeklyDayBefore;
+            });
+            expect(seller1WeeklyDayBefore).to.equal(0);
+            //seller1's 2 weeks ago' weekly transaction
+            const seller1Pre2Weekly = await mainSystem.connect(buyer1).returnWeeklySellStatistics(seller1.address,2).then(resultArray => {
+            const seller1Pre2Weekly = resultArray[4];
+                return seller1Pre2Weekly;
+            });
+            expect(seller1Pre2Weekly).to.equal(0); 
     
+        });
         */
     
         
