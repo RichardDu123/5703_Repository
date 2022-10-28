@@ -181,7 +181,7 @@ export const updateBuyPrice = (
   contract: Contract,
   address: string
 ): Promise<any> => {
-  return contract.methods.updateRecentAveragePriceforBuy().send({
+  return contract.methods.updateAndReturnRecentAveragePriceforBuy().send({
     from: address,
   })
 }
