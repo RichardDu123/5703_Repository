@@ -32,9 +32,9 @@ getSellPrice(contract, address).then((val) => {
 })
 const refresh = () => {
   updateSellPrice(contract, address).then(() => {
-    getSellPrice(contract, address).then((val) => {
-      price.value = val
-    })
+    // getSellPrice(contract, address).then((val) => {
+    //   price.value = val
+    // })
   })
 }
 </script>

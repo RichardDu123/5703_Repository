@@ -32,10 +32,11 @@ getBuyPrice(contract, address).then((val) => {
   price.value = val
 })
 const refresh = () => {
+  console.log('qiguai')
   updateBuyPrice(contract, address).then(() => {
-    getBuyPrice(contract, address).then((val) => {
-      price.value = val
-    })
+    // getBuyPrice(contract, address).then((val) => {
+    //   price.value = val
+    // })
   })
 }
 </script>

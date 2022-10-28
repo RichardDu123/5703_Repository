@@ -118,6 +118,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         dialogFormVisible.value = false
       }
     } else {
+      isLoading.value = false
       console.log('error submit!', fields)
     }
   })
