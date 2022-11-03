@@ -161,7 +161,7 @@ export const addAvailableElecUnits = (
   addressAd: string,
   amount: string
 ): Promise<any> => {
-  return contract.methods.setUsername(address, amount).call({
+  return contract.methods.addAvailableElecUnits(address, amount).send({
     from: addressAd,
   })
 }

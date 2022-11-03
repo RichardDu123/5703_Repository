@@ -5,7 +5,7 @@
     </div>
     <transition name="left">
       <div class="left" v-show="showLeft">
-        <h2>{{name}}</h2>
+        <h2>{{ name }}</h2>
         <nav>
           <ul @click="handleClick">
             <li id="dashboard">
@@ -136,11 +136,11 @@
                 <span>Profile</span>
               </div>
             </li>
-             <li id="admin">
-              <div
-                class="navItem"
-                :class="{ active: currentNav === '/admin' }"
-              >
+            <li
+              id="admin"
+              v-if="address === '0xCc4e1a8e8aB6A77ABe6d1063F431B40eC4eCAc01'"
+            >
+              <div class="navItem" :class="{ active: currentNav === '/admin' }">
                 <svg
                   width="20"
                   height="20"
@@ -167,7 +167,6 @@
     </transition>
   </div>
   <div v-else><wrong /></div>
-
 </template>
 
 <script setup lang="ts">
@@ -181,10 +180,7 @@ import wrong from '../../components/erro.vue'
 
 import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
-import {
-  getUsernameByAddress,
-} from '../../api/mainSys'
-
+import { getUsernameByAddress } from '../../api/mainSys'
 
 const router = useRouter()
 const route = useRoute()
@@ -196,7 +192,7 @@ const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const contract = ETHStore.contract as Contract
 let name = ref('')
 
-const val = getUsernameByAddress(contract,address).then((value)=>{
+const val = getUsernameByAddress(contract, address).then((value) => {
   name.value = value
 })
 
