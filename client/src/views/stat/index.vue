@@ -47,7 +47,7 @@ import Thunder from '../../components/svgs/thunder.vue'
 import { onMounted, reactive, ref } from 'vue'
 import { useETHStore } from '../../store'
 import { Contract } from 'web3-eth-contract'
-import Web3 from 'web3'
+
 import {
   returnWeeklyTotalBuyAndSell,
   returnWeeklyBuyStatistics,
@@ -55,7 +55,7 @@ import {
 } from '../../api/mainSys'
 import * as echarts from 'echarts'
 const ETHStore = useETHStore()
-const web3 = ETHStore.web3 as Web3
+
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const contract = ETHStore.contract as Contract
 const amount = 0
@@ -72,72 +72,64 @@ let buyStatic = reactive({
   buyData: [],
 })
 
-const cur = returnWeeklyTotalBuyAndSell(contract, address, amount).then(
-  (value) => {
-    sell.value = value[1]
-    console.log(sell.value)
-  }
-)
+returnWeeklyTotalBuyAndSell(contract, address, amount).then((value) => {
+  sell.value = value[1]
+  console.log(sell.value)
+})
 
-const car1 = returnWeeklyTotalBuyAndSell(contract, address, amount).then(
-  (value) => {
-    buy.value = value[0]
-    console.log(buy.value)
-  }
-)
+returnWeeklyTotalBuyAndSell(contract, address, amount).then((value) => {
+  buy.value = value[0]
+  console.log(buy.value)
+})
 
 onMounted(() => {
   myChart.value = echarts.init(charRef.value)
   myChartSell.value = echarts.init(charRefSell.value)
-  let sellS = returnWeeklySellStatistics(contract, address, amount).then(
-    (value) => {
-      sellStatic.sellData = value
-      let testSell = sellStatic.sellData
-      testSell = testSell.map(Number)
-      console.log(testSell)
-      let optionSell = {
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  returnWeeklySellStatistics(contract, address, amount).then((value) => {
+    sellStatic.sellData = value
+    let testSell = sellStatic.sellData
+    testSell = testSell.map(Number)
+    console.log(testSell)
+    let optionSell = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: testSell,
+          type: 'line',
         },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            data: testSell,
-            type: 'line',
-          },
-        ],
-      }
-      myChartSell.value.setOption(optionSell)
+      ],
     }
-  )
-  let buyS = returnWeeklyBuyStatistics(contract, address, amount).then(
-    (value) => {
-      // buyStatic.data = value
-      buyStatic.buyData = value
-      let testBuy = buyStatic.buyData
-      testBuy = testBuy.map(Number)
+    myChartSell.value.setOption(optionSell)
+  })
+  returnWeeklyBuyStatistics(contract, address, amount).then((value) => {
+    // buyStatic.data = value
+    buyStatic.buyData = value
+    let testBuy = buyStatic.buyData
+    testBuy = testBuy.map(Number)
 
-      let optionBuy = {
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    let optionBuy = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: testBuy,
+          type: 'line',
         },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            data: testBuy,
-            type: 'line',
-          },
-        ],
-      }
-      myChart.value.setOption(optionBuy)
+      ],
     }
-  )
+    myChart.value.setOption(optionBuy)
+  })
 })
 </script>
 
