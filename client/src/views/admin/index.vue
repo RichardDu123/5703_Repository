@@ -98,13 +98,12 @@ function handleSubmit(){
         if(a_put.value.length>= 15 && e_put.value.length>= 0 ){
         ad_data.address = a_put.value
         ad_data.unit = e_put.value
-        // addAvailableElecUnits(contract,address1,amount)
         console.log(ad_data)
         alert('You have add ' + ad_data.unit + ' in ' + ad_data.address)
      }else{
         alert ('Address is not match')
   }
-        return value
+        
     })
   
   

@@ -136,10 +136,7 @@
                 <span>Profile</span>
               </div>
             </li>
-            <li
-              id="admin"
-              v-if="address === '0xCc4e1a8e8aB6A77ABe6d1063F431B40eC4eCAc01'"
-            >
+            <li id="admin" v-if="address === admin">
               <div class="navItem" :class="{ active: currentNav === '/admin' }">
                 <svg
                   width="20"
@@ -185,13 +182,11 @@ import { getUsernameByAddress } from '../../api/mainSys'
 const router = useRouter()
 const route = useRoute()
 const currentNav = ref(route.path)
-
 const ETHStore = useETHStore()
 const web3 = ETHStore.web3 as Web3
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const contract = ETHStore.contract as Contract
 let name = ref('')
-
 const val = getUsernameByAddress(contract, address).then((value) => {
   name.value = value
 })
@@ -226,6 +221,8 @@ onMounted(() => {
 //detect network
 const store = useETHStore()
 const isETHLoaded = store.isWeb3Load
+//detect admin
+const admin = process.env.VUE_APP_ADMIN_ADDRESS
 </script>
 
 <style scoped lang="less">
