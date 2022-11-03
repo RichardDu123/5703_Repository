@@ -19,12 +19,10 @@ describe("purchaseProcess", function () {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test purchase post value validation", async function () {
             await expect(
-                mainSystem.connect(buyer1).createPurchasePost(0, 10)).to.be.reverted;
-                //With('purchase price must be greater than 0');
+                mainSystem.connect(buyer1).createPurchasePost(0, 10)).to.be.revertedWith('purchase price must be greater than 0');
 
             await expect(
-                mainSystem.connect(buyer1).createPurchasePost(10, 0)).to.be.reverted;
-                //With('amount to buy must be greater than 0');
+                mainSystem.connect(buyer1).createPurchasePost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
         });
 
         //Test the creation for multi users, in this case we create different purchase post by 2 different users
