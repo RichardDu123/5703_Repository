@@ -5,15 +5,14 @@
         <Thunder class="thunder" />
         <h3 class="tb">TotalBuy</h3>
 
-        <span class="s">{{buy}}K</span>
+        <span class="s">{{ buy }}kW.h</span>
         <h5 class="inWeek">in week</h5>
       </div>
-
 
       <div class="sellWeek">
         <Thunder class="thunder" />
         <h3 class="ts">TotalSell</h3>
-        <span class="s">{{sell}}K</span>
+        <span class="s">{{ sell }}kW.h</span>
 
         <h5 class="SellInWeek">in week</h5>
       </div>
@@ -24,9 +23,7 @@
         <div class="img1">
           <img src="../../assets/images/Activity.png" alt="" />
         </div>
-        <div class = 's22' ref="charRef">
-
-        </div>
+        <div class="s22" ref="charRef"></div>
 
         <div class="contentB">WeeklyBuy</div>
       </div>
@@ -37,9 +34,7 @@
         <div class="img2">
           <img src="../../assets/images/Activity.png" alt="" />
         </div>
-        <div class = 's33' ref="charRefSell">
-
-        </div>
+        <div class="s33" ref="charRefSell"></div>
 
         <div class="contentS">WeeklySell</div>
       </div>
@@ -49,19 +44,16 @@
 
 <script setup lang="ts">
 import Thunder from '../../components/svgs/thunder.vue'
-import { computed, onMounted, reactive, ref, watchEffect, onBeforeMount,onUpdated,onBeforeUpdate} from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useETHStore } from '../../store'
 import { Contract } from 'web3-eth-contract'
 import Web3 from 'web3'
 import {
   returnWeeklyTotalBuyAndSell,
   returnWeeklyBuyStatistics,
-  returnWeeklySellStatistics
+  returnWeeklySellStatistics,
 } from '../../api/mainSys'
-import {inject} from 'vue'
-import { SetUp } from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
-import { isArray } from '@vue/shared'
 const ETHStore = useETHStore()
 const web3 = ETHStore.web3 as Web3
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
@@ -74,95 +66,98 @@ let myChart = ref()
 let charRefSell = ref<HTMLElement>()
 let myChartSell = ref()
 let sellStatic = reactive({
-  sellData:[]
+  sellData: [],
 })
 let buyStatic = reactive({
-  buyData:[]
+  buyData: [],
 })
 
-const cur = returnWeeklyTotalBuyAndSell(contract,address,amount).then((value)=>{
-  sell.value = value[1] 
-  console.log(sell.value)
-  
-})
+const cur = returnWeeklyTotalBuyAndSell(contract, address, amount).then(
+  (value) => {
+    sell.value = value[1]
+    console.log(sell.value)
+  }
+)
 
-const car1 = returnWeeklyTotalBuyAndSell(contract,address,amount).then((value)=>{
-  buy.value = value[0] 
-  console.log(buy.value)
-  
-})
+const car1 = returnWeeklyTotalBuyAndSell(contract, address, amount).then(
+  (value) => {
+    buy.value = value[0]
+    console.log(buy.value)
+  }
+)
 
-onMounted(()=>{
-myChart.value =  echarts.init(charRef.value)
-myChartSell.value = echarts.init(charRefSell.value)
-let sellS = returnWeeklySellStatistics(contract,address,amount).then((value)=>{
-  sellStatic.sellData = value
-  let testSell = sellStatic.sellData
-  testSell = testSell.map(Number)
-  console.log(testSell)
-  let optionSell = {
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: testSell,
-      type: 'line'
+onMounted(() => {
+  myChart.value = echarts.init(charRef.value)
+  myChartSell.value = echarts.init(charRefSell.value)
+  let sellS = returnWeeklySellStatistics(contract, address, amount).then(
+    (value) => {
+      sellStatic.sellData = value
+      let testSell = sellStatic.sellData
+      testSell = testSell.map(Number)
+      console.log(testSell)
+      let optionSell = {
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: testSell,
+            type: 'line',
+          },
+        ],
+      }
+      myChartSell.value.setOption(optionSell)
     }
-  ]
-};
-myChartSell.value.setOption(optionSell)
-})
-let buyS = returnWeeklyBuyStatistics(contract,address,amount).then((value)=>{
-  // buyStatic.data = value
-  buyStatic.buyData = value
-  let testBuy = buyStatic.buyData
-  testBuy = testBuy.map(Number)
+  )
+  let buyS = returnWeeklyBuyStatistics(contract, address, amount).then(
+    (value) => {
+      // buyStatic.data = value
+      buyStatic.buyData = value
+      let testBuy = buyStatic.buyData
+      testBuy = testBuy.map(Number)
 
-  let optionBuy = {
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: testBuy,
-      type: 'line'
+      let optionBuy = {
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: testBuy,
+            type: 'line',
+          },
+        ],
+      }
+      myChart.value.setOption(optionBuy)
     }
-  ]
-};
-myChart.value.setOption(optionBuy);
+  )
 })
- 
-  
-})
-  
 </script>
 
 <style scoped lang="less">
 .s1 {
   position: absolute;
-    width: 80%;
-    left: 5%;
-    height: 10%;
-    top: 5%;
-    /* left: 0%; */
-    display: inline-block;
+  width: 80%;
+  left: 5%;
+  height: 10%;
+  top: 5%;
+  /* left: 0%; */
+  display: inline-block;
 }
 
 .s2 {
   position: absolute;
-    top: 20%;
+  top: 20%;
 }
 
-.s22{
+.s22 {
   position: absolute;
   width: 90%;
   height: 90%;
@@ -171,11 +166,11 @@ myChart.value.setOption(optionBuy);
 }
 
 .s3 {
- position: absolute;
-    top: 50%;
+  position: absolute;
+  top: 50%;
 }
 
-.s33{
+.s33 {
   position: absolute;
   width: 90%;
   height: 90%;
