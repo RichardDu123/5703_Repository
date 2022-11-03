@@ -1,19 +1,19 @@
 <template>
   <div class="statContainer">
     <div class="s1">
-      <div class="sellWeek">
+      <div class="buyWeek">
         <Thunder class="thunder" />
         <h3 class="tb">TotalBuy</h3>
 
-        <span class="s">K</span>
+        <span class="s">{{buy}}K</span>
         <h5 class="inWeek">in week</h5>
       </div>
 
-      <div class="buyWeek">
+
+      <div class="sellWeek">
         <Thunder class="thunder" />
         <h3 class="ts">TotalSell</h3>
-
-        <span class="s">K</span>
+        <span class="s">{{sell}}K</span>
 
         <h5 class="SellInWeek">in week</h5>
       </div>
@@ -24,10 +24,9 @@
         <div class="img1">
           <img src="../../assets/images/Activity.png" alt="" />
         </div>
+        <div class = 's22' ref="charRef">
 
-        <!-- <div class="view">
-          <div id="myEcharts" :style="{ width: '900px', height: '300px' }"></div>
-        </div> -->
+        </div>
 
         <div class="contentB">WeeklyBuy</div>
       </div>
@@ -38,10 +37,9 @@
         <div class="img2">
           <img src="../../assets/images/Activity.png" alt="" />
         </div>
+        <div class = 's33' ref="charRefSell">
 
-        <!-- <div class="view">
-          <div id="myEcharts" :style="{ width: '900px', height: '300px' }"></div>
-        </div> -->
+        </div>
 
         <div class="contentS">WeeklySell</div>
       </div>
@@ -51,92 +49,138 @@
 
 <script setup lang="ts">
 import Thunder from '../../components/svgs/thunder.vue'
-// import * as echarts from "echarts";
-// export default {
-//   name: "echartsBox",
-//   setup() {
-//     /// 声明定义一下echart
-//     let echart = echarts;
+import { computed, onMounted, reactive, ref, watchEffect, onBeforeMount,onUpdated,onBeforeUpdate} from 'vue'
+import { useETHStore } from '../../store'
+import { Contract } from 'web3-eth-contract'
+import Web3 from 'web3'
+import {
+  returnWeeklyTotalBuyAndSell,
+  returnWeeklyBuyStatistics,
+  returnWeeklySellStatistics
+} from '../../api/mainSys'
+import {inject} from 'vue'
+import { SetUp } from '@element-plus/icons-vue'
+import * as echarts from 'echarts'
+import { isArray } from '@vue/shared'
+const ETHStore = useETHStore()
+const web3 = ETHStore.web3 as Web3
+const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+const contract = ETHStore.contract as Contract
+const amount = 0
+let sell = ref('')
+let buy = ref('')
+let charRef = ref<HTMLElement>()
+let myChart = ref()
+let charRefSell = ref<HTMLElement>()
+let myChartSell = ref()
+let sellStatic = reactive({
+  sellData:[]
+})
+let buyStatic = reactive({
+  buyData:[]
+})
 
-//     onMounted(() => {
-//       initChart();
-//     });
+const cur = returnWeeklyTotalBuyAndSell(contract,address,amount).then((value)=>{
+  sell.value = value[1] 
+  console.log(sell.value)
+  
+})
 
-//     onUnmounted(() => {
-//       echart.dispose;
-//     });
+const car1 = returnWeeklyTotalBuyAndSell(contract,address,amount).then((value)=>{
+  buy.value = value[0] 
+  console.log(buy.value)
+  
+})
 
-//     // 基础配置一下Echarts
-//     function initChart() {
-//       let chart = echart.init(document.getElementById("myEcharts"), "dark");
-//       // 把配置和数据放这里
-//       chart.setOption({
-//         xAxis: {
-//           type: "category",
-//           data: [
-//             "一月",
-//             "二月",
-//             "三月",
-//             "四月",
-//             "五月",
-//             "六月",
-//             "七月",
-//             "八月",
-//             "九月",
-//             "十月",
-//             "十一月",
-//             "十二月"
-//           ]
-//         },
-//         tooltip: {
-//           trigger: "axis"
-//         },
-//         yAxis: {
-//           type: "value"
-//         },
-//         series: [
-//           {
-//             data: [
-//               820,
-//               932,
-//               901,
-//               934,
-//               1290,
-//               1330,
-//               1320,
-//               801,
-//               102,
-//               230,
-//               4321,
-//               4129
-//             ],
-//             type: "line",
-//             smooth: true
-//           }
-//         ]
-//       });
-//       window.onresize = function() {
-//         //自适应大小
-//         chart.resize();
-//       };
-//     }
+onMounted(()=>{
+myChart.value =  echarts.init(charRef.value)
+myChartSell.value = echarts.init(charRefSell.value)
+let sellS = returnWeeklySellStatistics(contract,address,amount).then((value)=>{
+  sellStatic.sellData = value
+  let testSell = sellStatic.sellData
+  testSell = testSell.map(Number)
+  console.log(testSell)
+  let optionSell = {
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: testSell,
+      type: 'line'
+    }
+  ]
+};
+myChartSell.value.setOption(optionSell)
+})
+let buyS = returnWeeklyBuyStatistics(contract,address,amount).then((value)=>{
+  // buyStatic.data = value
+  buyStatic.buyData = value
+  let testBuy = buyStatic.buyData
+  testBuy = testBuy.map(Number)
 
-//     return { initChart };
-//   }
-// };
+  let optionBuy = {
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: testBuy,
+      type: 'line'
+    }
+  ]
+};
+myChart.value.setOption(optionBuy);
+})
+ 
+  
+})
+  
 </script>
 
 <style scoped lang="less">
 .s1 {
-  position: relative;
+  position: absolute;
+    width: 80%;
+    left: 5%;
+    height: 10%;
+    top: 5%;
+    /* left: 0%; */
+    display: inline-block;
 }
 
 .s2 {
-  position: relative;
+  position: absolute;
+    top: 20%;
+}
+
+.s22{
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 20%;
+  left: 5%;
 }
 
 .s3 {
-  position: relative;
+ position: absolute;
+    top: 50%;
+}
+
+.s33{
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 20%;
+  left: 5%;
 }
 .chart {
   height: 400px;
@@ -144,15 +188,15 @@ import Thunder from '../../components/svgs/thunder.vue'
 
 .sellWeek {
   .hoverShadow ();
-  position: relative;
+  position: absolute;
   font-family: 'Abel';
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 328px;
   height: 93px;
-  left: 200px;
-  top: 125px;
+  left: 50%;
+  top: 10%;
   background: #ffffff;
   box-shadow: 0px 0px 25px rgba(48, 73, 191, 0.07);
   border-radius: 16px;
@@ -175,15 +219,15 @@ import Thunder from '../../components/svgs/thunder.vue'
 
 .buyWeek {
   .hoverShadow ();
-  position: relative;
+  position: absolute;
   font-family: 'Abel';
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 328px;
   height: 93px;
-  left: 624px;
-  top: 30px;
+  left: 20%;
+  top: 10%;
   background: #ffffff;
   box-shadow: 0px 0px 25px rgba(48, 73, 191, 0.07);
   border-radius: 16px;

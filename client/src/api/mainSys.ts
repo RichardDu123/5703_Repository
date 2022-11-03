@@ -161,7 +161,7 @@ export const addAvailableElecUnits = (
   addressAd: string,
   amount: string
 ): Promise<any> => {
-  return contract.methods.setUsername(address, amount).call({
+  return contract.methods.addAvailableElecUnits(address, amount).send({
     from: addressAd,
   })
 }
@@ -222,5 +222,35 @@ export const updateSellPrice = (
 ): Promise<any> => {
   return contract.methods.updateRecentAveragePriceforSell().send({
     from: address,
+  })
+}
+
+export const returnWeeklyTotalBuyAndSell = (
+  contract:Contract,
+  address:string,
+  amount:string
+):Promise<any>=>{
+  return contract.methods.returnWeeklyTotalBuyAndSell(address,amount).call({
+    from:address
+  })
+}
+
+export const returnWeeklyBuyStatistics = (
+  contract:Contract,
+  address:string,
+  amount:string
+):Promise<any>=>{
+  return contract.methods.returnWeeklyBuyStatistics(address,amount).call({
+    from:address
+  })
+}
+
+export const returnWeeklySellStatistics = (
+  contract:Contract,
+  address:string,
+  amount:string
+):Promise<any>=>{
+  return contract.methods.returnWeeklySellStatistics(address,amount).call({
+    from:address
   })
 }
