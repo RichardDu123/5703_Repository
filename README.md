@@ -1,8 +1,6 @@
 # G3_CS34 \_COMP5703
 
-## Installation
-
-Run the simple dApp using 1 of 2 ways.
+## Deploy the smart contract on the private blockchain
 
 ```sh
 # Install Truffle globally`
@@ -18,7 +16,9 @@ $ npm install
 $ truffle migrate
 ```
 
-Start the client dev server.
+## Start the client dev server
+
+Edit the .env file in the client folder and changed the admin address (The smart contract creator address) and then:
 
 ```sh
 $ cd client
