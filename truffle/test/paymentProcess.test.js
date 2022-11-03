@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const { ethers} = require("hardhat");
+const { ethers } = require("hardhat");
 
 describe("payment process", function () {
     let buyer1, seller1, buyer2, seller2, mainSystem;
@@ -46,7 +46,7 @@ describe("payment process", function () {
             await paymentSystemOne.connect(buyer2).triggerPurchasePostPayment();
             const resBuyer1 =  await mainSystem.connect(buyer1).getAvailableElecUnitsByAccountAddress(buyer1.address);
             const resBuyer2 =  await mainSystem.connect(buyer1).getAvailableElecUnitsByAccountAddress(buyer2.address);
-            expect(await resBuyer1.toNumber()).to.equal(110);
+            expect(await resBuyer1.toNumber()).to.equal(10);
             expect(await resBuyer2.toNumber()).to.equal(15);
             const resSeller1 =  await mainSystem.connect(buyer1).getAvailableElecUnitsByAccountAddress(seller1.address);
             console.log(resSeller1.toNumber());
@@ -97,7 +97,7 @@ describe("payment process", function () {
             await paymentSystemNew.connect(buyer1).triggerSellingPostPayment();
             const resBuyer2 =  await mainSystem.connect(seller1).getAvailableElecUnitsByAccountAddress(buyer1.address);
             console.log(resBuyer2.toNumber());
-            expect(await resBuyer2.toNumber()).to.equal(130);
+            expect(await resBuyer2.toNumber()).to.equal(30);
             const resSeller2 =  await mainSystem.connect(seller1).getAvailableElecUnitsByAccountAddress(seller1.address);
             console.log(resSeller2.toNumber());
             expect(await resSeller2.toNumber()).to.equal(70);  

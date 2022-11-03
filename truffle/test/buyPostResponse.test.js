@@ -1,7 +1,6 @@
 const { expect } = require("chai");
-const { ethers} = require("hardhat");
-// need npm install --save-dev @nomicfoundation/hardhat-chai-matchers to make revertedWith works
-//const { ethers} = require("@nomicfoundation/hardhat-chai-matchers");
+const { ethers } = require("hardhat");
+
 
 describe("purchaseProcess", function () {
     let seller, buyer1, buyer2, mainSystem;
@@ -20,12 +19,10 @@ describe("purchaseProcess", function () {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test purchase post value validation", async function () {
             await expect(
-                mainSystem.connect(buyer1).createPurchasePost(0, 10)).to.be.reverted;
-                //With('purchase price must be greater than 0');
+                mainSystem.connect(buyer1).createPurchasePost(0, 10)).to.be.revertedWith('purchase price must be greater than 0');
 
             await expect(
-                mainSystem.connect(buyer1).createPurchasePost(10, 0)).to.be.reverted;
-                //With('amount to buy must be greater than 0');
+                mainSystem.connect(buyer1).createPurchasePost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
         });
 
         //Test the creation for multi users, in this case we create different purchase post by 2 different users
@@ -76,16 +73,11 @@ describe("purchaseProcess", function () {
         it("test response Message data valiadtion", async function () {
             await expect(
                 mainSystem.connect(seller).createResponseMessageToPurchasePost(0, 10, 0))
-                .to.be.reverted;
-                //With("amount must be greater than 0");
+                .to.be.revertedWith("amount must be greater than 0");
             await expect(
                 mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 0, 0))
-                .to.be.reverted;
-                //With("quotation must be greater than 0");
+                .to.be.revertedWith("quotation must be greater than 0");
             
-            /*await expect(
-                mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, -1))
-                .to.be.revertedWith("post key starts from 0"); */
             
         });
 
@@ -124,8 +116,6 @@ describe("purchaseProcess", function () {
         });
 
     }); 
-
-    //to do updateAndReturnRecentAveragePriceforBuy
    
 
 });

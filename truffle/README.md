@@ -76,9 +76,8 @@ Request parameter
 默认 isAccpeted 为 false，此时无法进行支付操作，只有在  isAccpeted 更新为true后才能进行支付
 
 
-#### 6. Test cases
+#### 6. Install Dependencies and run test cases
 
-npm install --save-dev ethereum-waffle;
-npm install chai;
-npm install --global mocha;
-npm install --save-dev @nomicfoundation/hardhat-chai-matchers;
+npm install
+
+npx hardhat test
