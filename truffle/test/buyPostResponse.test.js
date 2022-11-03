@@ -73,16 +73,11 @@ describe("purchaseProcess", function () {
         it("test response Message data valiadtion", async function () {
             await expect(
                 mainSystem.connect(seller).createResponseMessageToPurchasePost(0, 10, 0))
-                .to.be.reverted;
-                //With("amount must be greater than 0");
+                .to.be.revertedWith("amount must be greater than 0");
             await expect(
                 mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 0, 0))
-                .to.be.reverted;
-                //With("quotation must be greater than 0");
+                .to.be.revertedWith("quotation must be greater than 0");
             
-            /*await expect(
-                mainSystem.connect(seller).createResponseMessageToPurchasePost(10, 10, -1))
-                .to.be.revertedWith("post key starts from 0"); */
             
         });
 
@@ -121,8 +116,6 @@ describe("purchaseProcess", function () {
         });
 
     }); 
-
-    //to do updateAndReturnRecentAveragePriceforBuy
    
 
 });
