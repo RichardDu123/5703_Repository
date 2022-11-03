@@ -1,8 +1,5 @@
 const { expect } = require("chai");
-const { ethers} = require("hardhat");
-
-// need npm install --save-dev @nomicfoundation/hardhat-chai-matchers to make revertedWith works
-//const { ethers} = require("@nomicfoundation/hardhat-chai-matchers");
+const { ethers } = require("hardhat");
 
 describe("User Functionalities", function () {
     let seller, buyer, other, mainSystem;
@@ -101,7 +98,7 @@ describe("User Functionalities", function () {
             expect(await resBuyer.toNumber()).to.equal(0);
             const resSeller =  await mainSystem.connect(seller).getAvailableElecUnitsByAccountAddress(seller.address);
             //console.log(resSeller);
-            expect(await resSeller.lte()).to.equal(100);
+            expect(await resSeller.toNumber()).to.equal(0);
 
         });
 

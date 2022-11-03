@@ -1,7 +1,6 @@
 const { expect } = require("chai");
-const { ethers} = require("hardhat");
-// need npm install --save-dev @nomicfoundation/hardhat-chai-matchers to make revertedWith works
-//const { ethers} = require("@nomicfoundation/hardhat-chai-matchers");
+const { ethers } = require("hardhat");
+
 
 describe("purchaseProcess", function () {
     let seller, buyer1, buyer2, mainSystem;
