@@ -175,7 +175,6 @@ import Account from './right/account.vue'
 import RecentTransac from './right/recentTransac.vue'
 import wrong from '../../components/erro.vue'
 
-import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
 import { getUsernameByAddress } from '../../api/mainSys'
 
@@ -183,11 +182,11 @@ const router = useRouter()
 const route = useRoute()
 const currentNav = ref(route.path)
 const ETHStore = useETHStore()
-const web3 = ETHStore.web3 as Web3
+
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const contract = ETHStore.contract as Contract
 let name = ref('')
-const val = getUsernameByAddress(contract, address).then((value) => {
+getUsernameByAddress(contract, address).then((value) => {
   name.value = value
 })
 
@@ -226,6 +225,15 @@ const admin = process.env.VUE_APP_ADMIN_ADDRESS
 </script>
 
 <style scoped lang="less">
+.router-link-active {
+  background-color: rgb(68, 102, 251);
+  color: white;
+  transition: all 0.2s;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  path {
+    fill: white;
+  }
+}
 .left-enter-from {
   transform: translateX(-100%);
 }
@@ -270,6 +278,7 @@ const admin = process.env.VUE_APP_ADMIN_ADDRESS
         li {
           padding-bottom: 10px;
           .navItem {
+            display: block;
             position: relative;
             text-align: left;
             line-height: 64px;

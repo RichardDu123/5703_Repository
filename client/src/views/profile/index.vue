@@ -32,7 +32,7 @@
         </div>
 
         <div class="cancel">
-          <el-button type="success" round>Cancel</el-button>
+          <el-button type="success" round @click="input = ''">Cancel</el-button>
         </div>
       </div>
     </div>
@@ -40,32 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import {
-  computed,
-  onMounted,
-  reactive,
-  ref,
-  watchEffect,
-  onBeforeMount,
-  onUpdated,
-  onBeforeUpdate,
-} from 'vue'
+import { ref } from 'vue'
 import { useETHStore } from '../../store'
 import { Contract } from 'web3-eth-contract'
-import { setMapStoreSuffix } from 'pinia'
-import Web3 from 'web3'
-import {
-  getUsernameByAddress,
-  setUsername,
-  addAvailableElecUnits,
-  getElecByAddress,
-} from '../../api/mainSys'
-// import { setMapStoreSuffix } from 'pinia'
+import { getUsernameByAddress, setUsername } from '../../api/mainSys'
 
-const router = useRouter()
 const ETHStore = useETHStore()
-const web3 = ETHStore.web3 as Web3
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const contract = ETHStore.contract as Contract
 let input = ref('')
@@ -73,7 +53,7 @@ let name = ref('')
 let getName = ref('')
 console.log(address)
 
-const val = getUsernameByAddress(contract, address).then((value) => {
+getUsernameByAddress(contract, address).then((value) => {
   console.log(value)
   getName.value = value
   console.log(getName.value)
@@ -97,16 +77,11 @@ function handleSubmit() {
     }
   })
 }
-
-// }
-
-// function handleCancel(){
-
-// }
 </script>
 
 <style scoped lang="less">
 .profileContainer {
+  overflow: hidden;
 }
 
 .userInfo {
