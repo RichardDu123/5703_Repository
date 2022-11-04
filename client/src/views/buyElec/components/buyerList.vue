@@ -74,7 +74,7 @@
       <el-table-column label="Trade" width="100">
         <template #default="scope">
           <el-button size="small" type="success" @click="handleReply(scope.row)"
-            >Replay</el-button
+            >Reply</el-button
           >
         </template>
       </el-table-column>

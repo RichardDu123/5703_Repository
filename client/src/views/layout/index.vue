@@ -225,6 +225,15 @@ const admin = process.env.VUE_APP_ADMIN_ADDRESS
 </script>
 
 <style scoped lang="less">
+.router-link-active {
+  background-color: rgb(68, 102, 251);
+  color: white;
+  transition: all 0.2s;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  path {
+    fill: white;
+  }
+}
 .left-enter-from {
   transform: translateX(-100%);
 }
@@ -269,6 +278,7 @@ const admin = process.env.VUE_APP_ADMIN_ADDRESS
         li {
           padding-bottom: 10px;
           .navItem {
+            display: block;
             position: relative;
             text-align: left;
             line-height: 64px;

@@ -32,7 +32,7 @@
         </div>
 
         <div class="cancel">
-          <el-button type="success" round>Cancel</el-button>
+          <el-button type="success" round @click="input = ''">Cancel</el-button>
         </div>
       </div>
     </div>

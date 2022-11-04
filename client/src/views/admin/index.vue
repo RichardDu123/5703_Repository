@@ -91,7 +91,8 @@ function handleSubmit() {
 }
 
 function gotoMain() {
-  router.push('/')
+  a_put.value = ''
+  e_put.value = ''
 }
 </script>
 
