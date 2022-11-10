@@ -39,6 +39,7 @@ const handleUpdate = () => {
 .myRepliesContainer {
   width: 900px;
   margin: auto;
+  padding: 0 42px;
   h2 {
     margin-top: 41px;
     text-align: left;

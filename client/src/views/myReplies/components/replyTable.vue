@@ -55,6 +55,7 @@
               :disabled="
                 scope.row.isAccepted ? (scope.row.isPaid ? true : false) : true
               "
+              :lading="isBuyLoading"
               >Buy</el-button
             >
           </template>
@@ -108,7 +109,9 @@ const pageChanged = (value: any) => {
   curPage.value = value
 }
 //buy elec if sell repliy has been approved
+const isBuyLoading = ref(false)
 const buyElec = async (row: any) => {
+  isBuyLoading.value = true
   if (row.isAccepted && !row.isPaid && props.type === 'sell') {
     const ETHStore = useETHStore()
     const UserSotre = useUserStore()
@@ -136,6 +139,8 @@ const buyElec = async (row: any) => {
         message: 'Warning. Your transaction is reverted.',
         type: 'warning',
       })
+    } finally {
+      isBuyLoading.value = false
     }
   }
 }
