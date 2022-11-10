@@ -67,6 +67,7 @@
                       type="success"
                       @click="handleApprove(scope.row.contract)"
                       :disabled="scope.row.isAccepted"
+                      :loading="isApproveLoading"
                       >Approve</el-button
                     >
                   </template>
@@ -209,16 +210,22 @@ const pageChanged = (value: any) => {
 }
 
 //handleApprove
+const isApproveLoading = ref(false)
 const handleApprove = async (contract: Contract) => {
-  const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
-  await contract.methods.setIsAccepted(true).send({
-    from: address,
-  })
-  UserSotre.setSellingPosts()
-  ElMessage({
-    message: 'Success. The reply has been approved.',
-    type: 'success',
-  })
+  isApproveLoading.value = true
+  try {
+    const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+    await contract.methods.setIsAccepted(true).send({
+      from: address,
+    })
+    UserSotre.setSellingPosts()
+    ElMessage({
+      message: 'Success. The reply has been approved.',
+      type: 'success',
+    })
+  } finally {
+    isApproveLoading.value = false
+  }
 }
 </script>
 

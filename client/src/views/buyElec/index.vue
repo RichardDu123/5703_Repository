@@ -9,6 +9,7 @@
       :icon="RefreshLeft"
       class="refresh"
       @click="refresh"
+      :loading="isLoading"
     />
     <h3>Buyer List</h3>
     <BuyerList />
@@ -28,15 +29,22 @@ const ETHStore = useETHStore()
 const contract = ETHStore.contract as Contract
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const price = ref('')
+const isLoading = ref(false)
 getBuyPrice(contract, address).then((val) => {
   price.value = val
 })
 const refresh = () => {
-  updateBuyPrice(contract, address).then(() => {
-    getBuyPrice(contract, address).then((val) => {
-      price.value = val
+  isLoading.value = true
+  updateBuyPrice(contract, address)
+    .then(() => {
+      getBuyPrice(contract, address).then((val) => {
+        price.value = val
+        isLoading.value = false
+      })
     })
-  })
+    .catch(() => {
+      isLoading.value = false
+    })
 }
 </script>
 
