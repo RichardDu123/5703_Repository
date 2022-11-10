@@ -36,7 +36,7 @@ export const useETHStore = defineStore('ETH', {
           this.accounts = await this.web3.eth.requestAccounts()
           this.networkID = await this.web3.eth.net.getId()
           const abi: any = ARTIFACT.abi
-          if ((window as any).ethereum.chainId !== '0x1691') {
+          if ((window as any).ethereum.chainId !== '0xaa36a7') {
             throw Error('wrong network!')
           }
           const address: any = ARTIFACT.networks[this.networkID].address
