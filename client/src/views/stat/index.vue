@@ -35,7 +35,6 @@
           <img src="../../assets/images/Activity.png" alt="" />
         </div>
         <div class="s33" ref="charRefSell"></div>
-
         <div class="contentS">WeeklySell</div>
       </div>
     </div>
@@ -145,8 +144,8 @@ onMounted(() => {
 }
 
 .s2 {
-  position: absolute;
-  top: 20%;
+  margin: 200px auto 0;
+  padding: 0 42px;
 }
 
 .s22 {
@@ -158,8 +157,8 @@ onMounted(() => {
 }
 
 .s3 {
-  position: absolute;
-  top: 50%;
+  margin: 50px auto 0;
+  padding: 0 42px;
 }
 
 .s33 {
@@ -242,8 +241,7 @@ onMounted(() => {
   align-items: center;
   width: 719px;
   height: 320px;
-  left: 200px;
-  top: 80px;
+  margin: auto;
   background: #ffffff;
   box-shadow: 0px 0px 25px rgba(48, 73, 191, 0.07);
   border-radius: 16px;
@@ -264,8 +262,7 @@ onMounted(() => {
   align-items: center;
   width: 719px;
   height: 320px;
-  left: 200px;
-  top: 160px;
+  margin: auto;
   background: #ffffff;
   box-shadow: 0px 0px 25px rgba(48, 73, 191, 0.07);
   border-radius: 16px;

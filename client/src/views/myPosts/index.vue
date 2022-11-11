@@ -22,8 +22,9 @@ const activeName = ref('buy')
 
 <style scoped lang="less">
 .myPostsContainer {
-  width: 900px;
+  width: 750px;
   margin: auto;
+  padding: 0 40px;
   h2 {
     margin-top: 41px;
     text-align: left;
