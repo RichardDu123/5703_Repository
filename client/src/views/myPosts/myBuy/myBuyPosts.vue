@@ -276,6 +276,7 @@ const sendTransaction = async (row: any) => {
   }
 }
 const test = async () => {
+  console.log('begin')
   await UserSotre.setRecnetTransaction()
   console.log('set')
 }

@@ -82,6 +82,7 @@ export const useUserStore = defineStore('User', {
       this.relies = keys
     },
     async setRecnetTransaction() {
+      console.log('123')
       this.recentTransaction = []
       const ETHStore = useETHStore()
       const contract = ETHStore.contract as Contract
@@ -94,7 +95,7 @@ export const useUserStore = defineStore('User', {
           amount: item.transactionValue,
         })
       })
-      console.log(this.recentTransaction)
+      console.log('456')
     },
   },
 })
