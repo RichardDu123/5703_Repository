@@ -1,6 +1,5 @@
 <template>
   <div class="Container">
-    <button @click="test">test</button>
     <div class="buyerListContainer">
       <el-table
         :data="showFormData"
@@ -276,11 +275,6 @@ const sendTransaction = async (row: any) => {
     UserSotre.setWei()
     isBuyLoading.value = false
   }
-}
-const test = async () => {
-  console.log('begin')
-  await UserSotre.setRecnetTransaction()
-  console.log('set')
 }
 </script>
 
