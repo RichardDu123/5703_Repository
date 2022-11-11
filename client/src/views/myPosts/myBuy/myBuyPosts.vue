@@ -1,6 +1,6 @@
 <template>
   <div class="Container">
-    <!-- <button @click="test">test</button> -->
+    <button @click="test">test</button>
     <div class="buyerListContainer">
       <el-table
         :data="showFormData"
