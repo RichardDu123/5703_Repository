@@ -39,7 +39,6 @@ export const useETHStore = defineStore('ETH', {
           if ((window as any).ethereum.chainId !== '0xaa36a7') {
             this.isWeb3Load = false
             return
-            throw Error('wrong network!')
           }
           const address: any = ARTIFACT.networks[this.networkID].address
           this.contract = new this.web3.eth.Contract(abi, address)
