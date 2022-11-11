@@ -106,7 +106,7 @@
         <el-table-column label="Expected Units" width="130">
           <template #default="scope">
             <span style="margin-left: 10px"
-              >{{ scope.row.amountToBuy }} kW.h</span
+              >{{ scope.row.initialAmountToBuy }} kW.h</span
             >
           </template>
         </el-table-column>
@@ -179,6 +179,7 @@ const updateTable = () => {
       address: item.seller,
       priceInWei: item.priceToSell,
       amountToBuy: item.amountToSell,
+      initialAmountToBuy: item.initialAmountToSell,
       priceToBuy: ETHStore.web3
         ? Number(toEther(ETHStore.web3 as Web3, item.priceToSell))
             .toFixed(4)

@@ -1,6 +1,6 @@
 <template>
   <div class="Container">
-    <button @click="test">test</button>
+    <!-- <button @click="test">test</button> -->
     <div class="buyerListContainer">
       <el-table
         :data="showFormData"
@@ -120,7 +120,7 @@
         <el-table-column label="Expected Units" width="130">
           <template #default="scope">
             <span style="margin-left: 10px"
-              >{{ scope.row.amountToBuy }} kW.h</span
+              >{{ scope.row.initialAmountToBuy }} kW.h</span
             >
           </template>
         </el-table-column>
@@ -186,6 +186,7 @@ let tableData = ref<Post[]>([])
 const updateTable = () => {
   tableData.value = []
   postListRef.value.forEach((item) => {
+    console.log(item)
     tableData.value.push({
       postIdx: item.postIdx,
       timestamp: item.createdAt,
@@ -195,6 +196,7 @@ const updateTable = () => {
       address: item.buyer,
       priceInWei: item.priceToBuy,
       amountToBuy: item.amountToBuy,
+      initialAmountToBuy: item.initialAmountToBuy,
       priceToBuy: ETHStore.web3
         ? Number(toEther(ETHStore.web3 as Web3, item.priceToBuy))
             .toFixed(4)

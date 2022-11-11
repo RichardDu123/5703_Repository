@@ -51,6 +51,7 @@ export const useUserStore = defineStore('User', {
           enabled: post.enabled,
           createdAt: post.createdAt,
           responseMessages: post.responseMessages,
+          initialAmountToBuy: post.initialAmountToBuy,
         })
       })
     },
@@ -70,6 +71,7 @@ export const useUserStore = defineStore('User', {
           enabled: post.enabled,
           createdAt: post.createdAt,
           responseMessages: post.responseMessages,
+          initialAmountToSell: post.initialAmountToSell,
         })
       })
     },

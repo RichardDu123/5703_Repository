@@ -5,6 +5,7 @@ export interface Post {
   address: string
   priceToBuy: string
   amountToBuy: string
+  initialAmountToBuy: string
   priceInWei: string
   fromNow: string
   timestamp: string
@@ -14,6 +15,7 @@ export interface PurchasePost {
   postIdx: number
   priceToBuy: string
   amountToBuy: string
+  initialAmountToBuy: string
   buyer: string
   enabled: boolean
   createdAt: string
@@ -23,6 +25,7 @@ export interface SellingPost {
   postIdx: number
   priceToSell: string
   amountToSell: string
+  initialAmountToSell: string
   seller: string
   enabled: boolean
   createdAt: string
