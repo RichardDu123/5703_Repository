@@ -177,19 +177,22 @@ import wrong from '../../components/erro.vue'
 
 import { Contract } from 'web3-eth-contract'
 import { getUsernameByAddress } from '../../api/mainSys'
+//detect network
+const store = useETHStore()
+const isETHLoaded = store.isWeb3Load
 
 const router = useRouter()
 const route = useRoute()
 const currentNav = ref(route.path)
 const ETHStore = useETHStore()
-
 const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
 const contract = ETHStore.contract as Contract
 let name = ref('')
-getUsernameByAddress(contract, address).then((value) => {
-  name.value = value
-})
-
+if (isETHLoaded) {
+  getUsernameByAddress(contract, address).then((value) => {
+    name.value = value
+  })
+}
 const handleClick = (e: Event) => {
   let target = e.target as HTMLElement
   while (target.tagName != 'ul') {
@@ -217,9 +220,6 @@ onMounted(() => {
     showRight.value = true
   })
 })
-//detect network
-const store = useETHStore()
-const isETHLoaded = store.isWeb3Load
 //detect admin
 const admin = process.env.VUE_APP_ADMIN_ADDRESS
 </script>
