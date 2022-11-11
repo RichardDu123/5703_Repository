@@ -11,10 +11,15 @@
 
 <script setup lang="ts">
 import { useUserStore } from '@/store'
-import { toRef } from 'vue'
+import { ref, toRef } from 'vue'
 import ItemSell from './itemSell.vue'
 const UserStore = useUserStore()
-const recenTrsac = toRef(UserStore, 'recentTransaction')
+// const recenTrsac = toRef(UserStore, 'recentTransaction')
+let recenTrsac = ref<any>([])
+UserStore.$subscribe((mutation, state) => {
+  recenTrsac.value = UserStore.recentTransaction
+  console.log(recenTrsac)
+})
 UserStore.setRecnetTransaction()
 </script>
 
