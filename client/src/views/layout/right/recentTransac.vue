@@ -1,25 +1,21 @@
 <template>
   <section class="recentContainer">
     <h3>Recent Transactions</h3>
+    <div>{{ recenTrsac }}</div>
     <ul>
-      <li v-for="(item, index) in recenTrsac" :key="index">
+      <!-- <li v-for="(item, index) in recenTrsac" :key="index">
         <item-sell :type="item.type" :amount="item.amount" :time="item.time" />
-      </li>
+      </li> -->
     </ul>
   </section>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from '@/store'
-import { ref, toRef } from 'vue'
+import { toRef } from 'vue'
 import ItemSell from './itemSell.vue'
 const UserStore = useUserStore()
-// const recenTrsac = toRef(UserStore, 'recentTransaction')
-let recenTrsac = ref<any>([])
-UserStore.$subscribe((mutation, state) => {
-  recenTrsac.value = UserStore.recentTransaction
-  console.log(recenTrsac)
-})
+const recenTrsac = toRef(UserStore, 'recentTransaction')
 UserStore.setRecnetTransaction()
 </script>
 
