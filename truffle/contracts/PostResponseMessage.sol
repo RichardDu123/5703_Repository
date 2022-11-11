@@ -6,6 +6,7 @@ pragma solidity ^0.8.0;
 contract PostResponseMessage {
     
     address public messageSender;
+    uint public initialAmount;
     uint public amount;
     uint public quotationInWei;
     uint8 public responseMessageType;   // 0 - purchase post response; 1 - selling post response
@@ -26,6 +27,7 @@ contract PostResponseMessage {
         systemContractAddress = _systemContractAddress;
         messageSender = _messageSender;
         amount = _amount;
+        initialAmount = amount;
         quotationInWei = _quotationInWei;
         responseMessageType = _responseMessageType;
         postKey = _postKey;
