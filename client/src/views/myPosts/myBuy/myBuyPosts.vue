@@ -1,5 +1,6 @@
 <template>
   <div class="Container">
+    <button @click="test">test</button>
     <div class="buyerListContainer">
       <el-table
         :data="showFormData"
@@ -67,6 +68,7 @@
                       type="success"
                       @click="handleApprove(scope.row.contract)"
                       :disabled="scope.row.isAccepted"
+                      :loading="isApproveLoading"
                       >Approve</el-button
                     >
                   </template>
@@ -76,6 +78,7 @@
                     <el-button
                       size="small"
                       type="success"
+                      :loading="isBuyLoading"
                       @click="sendTransaction(scope.row)"
                       :disabled="
                         scope.row.isAccepted
@@ -175,6 +178,8 @@ import 'element-plus/theme-chalk/el-message-box.css'
 //get buyerlist size
 const UserSotre = useUserStore()
 const ETHStore = useETHStore()
+const isApproveLoading = ref(false)
+const isBuyLoading = ref(false)
 UserSotre.setPurchasePosts()
 const postListRef = toRef(UserSotre, 'purchasePosts')
 let tableData = ref<Post[]>([])
@@ -221,20 +226,25 @@ const pageChanged = (value: any) => {
 
 //handleApprove
 const handleApprove = async (contract: Contract) => {
+  isApproveLoading.value = true
   const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
-  await contract.methods.setIsAccepted(true).send({
-    from: address,
-  })
-  UserSotre.setPurchasePosts()
-  ElMessage({
-    message: 'Success. The reply has been approved.',
-    type: 'success',
-  })
+  try {
+    await contract.methods.setIsAccepted(true).send({
+      from: address,
+    })
+    UserSotre.setPurchasePosts()
+    ElMessage({
+      message: 'Success. The reply has been approved.',
+      type: 'success',
+    })
+  } finally {
+    isApproveLoading.value = false
+  }
 }
 
 //send
 const sendTransaction = async (row: any) => {
-  console.log(row)
+  isBuyLoading.value = true
   const ETHStore = useETHStore()
   const web3 = ETHStore.web3 as Web3
   const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
@@ -262,7 +272,13 @@ const sendTransaction = async (row: any) => {
   } finally {
     updateTable()
     UserSotre.setWei()
+    isBuyLoading.value = false
   }
+}
+const test = async () => {
+  console.log('begin')
+  await UserSotre.setRecnetTransaction()
+  console.log('set')
 }
 </script>
 
