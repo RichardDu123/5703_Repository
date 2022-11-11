@@ -17,7 +17,7 @@
         <div class="hint">Please fill your new nickname:</div>
 
         <div class="newNike">
-          <text class="newSize"> New nikename: </text>
+          <text class="newSize"> New nickname: </text>
 
           <div class="editor">
             <el-input v-model="input" placeholder="Please input" clearable />
