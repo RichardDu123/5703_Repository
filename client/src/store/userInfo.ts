@@ -82,11 +82,14 @@ export const useUserStore = defineStore('User', {
       this.relies = keys
     },
     async setRecnetTransaction() {
+      console.log('1')
       this.recentTransaction = []
       const ETHStore = useETHStore()
       const contract = ETHStore.contract as Contract
       const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
+      console.log('2')
       const res = await returnRecentTransactions(contract, address)
+      console.log('3')
       res.forEach((item: any) => {
         this.recentTransaction.push({
           time: item.createdAt,
@@ -94,6 +97,7 @@ export const useUserStore = defineStore('User', {
           amount: item.transactionValue,
         })
       })
+      console.log(this.recentTransaction)
       console.log(res)
     },
   },
