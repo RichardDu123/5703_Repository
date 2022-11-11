@@ -1,12 +1,14 @@
 <template>
   <section class="recentContainer">
     <h3>Recent Transactions</h3>
-
     <ul>
-      <li v-for="item in recenTrsac" :key="item.time">
+      {{
+        recenTrsac
+      }}
+      <!-- <li v-for="item in recenTrsac" :key="item.time">
         {{ item }}
-        <!-- <item-sell :type="item.type" :amount="item.amount" :time="item.time" /> -->
-      </li>
+        <item-sell :type="item.type" :amount="item.amount" :time="item.time" />
+      </li> -->
     </ul>
   </section>
 </template>
