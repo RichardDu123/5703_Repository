@@ -29,6 +29,7 @@ export const useBuyerStore = defineStore('Buyer', {
       const tempList: purchasePost[] = []
       for (let i = 0; i < buyerListSize; i++) {
         const item = await getPurchasePostByKey(contract, address, i)
+        console.log(item)
         let userName = await getUsernameByAddress(contract, item.buyer)
         if (userName === '') {
           userName = 'Anonymous'
