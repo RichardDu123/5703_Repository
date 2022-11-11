@@ -1,11 +1,12 @@
 <template>
   <section class="recentContainer">
     <h3>Recent Transactions</h3>
-    <div>{{ recenTrsac }}</div>
+
     <ul>
-      <!-- <li v-for="(item, index) in recenTrsac" :key="index">
-        <item-sell :type="item.type" :amount="item.amount" :time="item.time" />
-      </li> -->
+      <li v-for="(item, index) in recenTrsac" :key="index">
+        {{ item }}
+        <!-- <item-sell :type="item.type" :amount="item.amount" :time="item.time" /> -->
+      </li>
     </ul>
   </section>
 </template>
