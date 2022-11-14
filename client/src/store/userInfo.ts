@@ -51,6 +51,7 @@ export const useUserStore = defineStore('User', {
           enabled: post.enabled,
           createdAt: post.createdAt,
           responseMessages: post.responseMessages,
+          initialAmountToBuy: post.initialAmountToBuy,
         })
       })
     },
@@ -70,6 +71,7 @@ export const useUserStore = defineStore('User', {
           enabled: post.enabled,
           createdAt: post.createdAt,
           responseMessages: post.responseMessages,
+          initialAmountToSell: post.initialAmountToSell,
         })
       })
     },
@@ -82,6 +84,7 @@ export const useUserStore = defineStore('User', {
       this.relies = keys
     },
     async setRecnetTransaction() {
+      console.log('123')
       this.recentTransaction = []
       const ETHStore = useETHStore()
       const contract = ETHStore.contract as Contract
@@ -94,7 +97,7 @@ export const useUserStore = defineStore('User', {
           amount: item.transactionValue,
         })
       })
-      console.log(res)
+      console.log('456')
     },
   },
 })

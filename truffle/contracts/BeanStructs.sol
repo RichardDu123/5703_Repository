@@ -9,6 +9,7 @@ contract BeanStructs {
     // ------------------------- buyer module bean -------------------------
     struct PurchasePost{
         uint priceToBuy;
+        uint initialAmountToBuy;
         uint amountToBuy;
         address buyer;
         bool enabled;
@@ -20,6 +21,7 @@ contract BeanStructs {
     // selling post storage structure
     struct SellingPost{
         uint priceToSell;
+        uint initialAmountToSell;
         uint amountToSell;
         address seller;
         bool enabled;

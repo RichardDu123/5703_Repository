@@ -67,6 +67,7 @@
                       type="success"
                       @click="handleApprove(scope.row.contract)"
                       :disabled="scope.row.isAccepted"
+                      :loading="isApproveLoading"
                       >Approve</el-button
                     >
                   </template>
@@ -76,6 +77,7 @@
                     <el-button
                       size="small"
                       type="success"
+                      :loading="isBuyLoading"
                       @click="sendTransaction(scope.row)"
                       :disabled="
                         scope.row.isAccepted
@@ -117,7 +119,7 @@
         <el-table-column label="Expected Units" width="130">
           <template #default="scope">
             <span style="margin-left: 10px"
-              >{{ scope.row.amountToBuy }} kW.h</span
+              >{{ scope.row.initialAmountToBuy }} kW.h</span
             >
           </template>
         </el-table-column>
@@ -175,12 +177,15 @@ import 'element-plus/theme-chalk/el-message-box.css'
 //get buyerlist size
 const UserSotre = useUserStore()
 const ETHStore = useETHStore()
+const isApproveLoading = ref(false)
+const isBuyLoading = ref(false)
 UserSotre.setPurchasePosts()
 const postListRef = toRef(UserSotre, 'purchasePosts')
 let tableData = ref<Post[]>([])
 const updateTable = () => {
   tableData.value = []
   postListRef.value.forEach((item) => {
+    console.log(item)
     tableData.value.push({
       postIdx: item.postIdx,
       timestamp: item.createdAt,
@@ -190,6 +195,7 @@ const updateTable = () => {
       address: item.buyer,
       priceInWei: item.priceToBuy,
       amountToBuy: item.amountToBuy,
+      initialAmountToBuy: item.initialAmountToBuy,
       priceToBuy: ETHStore.web3
         ? Number(toEther(ETHStore.web3 as Web3, item.priceToBuy))
             .toFixed(4)
@@ -221,20 +227,25 @@ const pageChanged = (value: any) => {
 
 //handleApprove
 const handleApprove = async (contract: Contract) => {
+  isApproveLoading.value = true
   const address = ETHStore.accounts ? ETHStore.accounts[0] : ''
-  await contract.methods.setIsAccepted(true).send({
-    from: address,
-  })
-  UserSotre.setPurchasePosts()
-  ElMessage({
-    message: 'Success. The reply has been approved.',
-    type: 'success',
-  })
+  try {
+    await contract.methods.setIsAccepted(true).send({
+      from: address,
+    })
+    UserSotre.setPurchasePosts()
+    ElMessage({
+      message: 'Success. The reply has been approved.',
+      type: 'success',
+    })
+  } finally {
+    isApproveLoading.value = false
+  }
 }
 
 //send
 const sendTransaction = async (row: any) => {
-  console.log(row)
+  isBuyLoading.value = true
   const ETHStore = useETHStore()
   const web3 = ETHStore.web3 as Web3
   const address: string = ETHStore.accounts ? ETHStore.accounts[0] : ''
@@ -262,6 +273,7 @@ const sendTransaction = async (row: any) => {
   } finally {
     updateTable()
     UserSotre.setWei()
+    isBuyLoading.value = false
   }
 }
 </script>

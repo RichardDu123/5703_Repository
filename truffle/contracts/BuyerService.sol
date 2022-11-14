@@ -52,7 +52,8 @@ contract BuyerService is BeanStructs {
             
             // 2. save information to the purchase post map
             purchasePostMap[purchasePostCounter].priceToBuy = _priceToBuy;
-            purchasePostMap[purchasePostCounter].amountToBuy = _amountToBuy;          
+            purchasePostMap[purchasePostCounter].initialAmountToBuy = _amountToBuy;
+            purchasePostMap[purchasePostCounter].amountToBuy = _amountToBuy;           
             purchasePostMap[purchasePostCounter].buyer = _msgSender;
             purchasePostMap[purchasePostCounter].enabled = true;
             purchasePostMap[purchasePostCounter].createdAt = block.timestamp;

@@ -15,6 +15,7 @@ interface purchasePost {
   createdAt: string
   responseMessages: string[]
   name: string
+  initialAmountToBuy: string
 }
 export const useBuyerStore = defineStore('Buyer', {
   state: () => ({

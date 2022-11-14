@@ -50,6 +50,7 @@ contract SellerService is BeanStructs {
             
             // 2. save information to the selling post map
             sellingPostMap[sellingPostCounter].priceToSell = _priceToSell;
+            sellingPostMap[sellingPostCounter].initialAmountToSell = _amountToSell; 
             sellingPostMap[sellingPostCounter].amountToSell = _amountToSell;          
             sellingPostMap[sellingPostCounter].seller = _msgSender;
             sellingPostMap[sellingPostCounter].enabled = true;
