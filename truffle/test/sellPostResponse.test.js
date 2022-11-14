@@ -18,7 +18,7 @@ describe("sell Process", function () {
         //test the value validation that enter from user, use revertedwith() check if it return correct error message
         it("test selling post value validation", async function () {
             await expect(
-                mainSystem.connect(seller1).createSellingPost(0, 10)).to.be.revertedWith('selling price must be greater than 0');
+                mainSystem.connect(seller1).createSellingPost(0, 10)).to.be.revertedWith('purchase price must be greater than 0');
 
             await expect(
                 mainSystem.connect(seller1).createSellingPost(10, 0)).to.be.revertedWith('amount to buy must be greater than 0');
