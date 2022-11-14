@@ -30,13 +30,13 @@ describe("purchaseProcess", function () {
             await mainSystem.connect(buyer1).createPurchasePost(10, 10);
             //check the buyer address is equal to poster address
             expect(await mainSystem.getPurchasePostByKey(0).then(resultArray => {
-                const buyer = resultArray[2];
+                const buyer = resultArray[3];
                 return buyer;
             })).to.equal(buyer1.address);
             
             await mainSystem.connect(buyer2).createPurchasePost(20, 10);
             expect(await mainSystem.getPurchasePostByKey(1).then(resultArray => {
-                const buyer = resultArray[2];
+                const buyer = resultArray[3];
                 return buyer;
             })).to.equal(buyer2.address);
   
@@ -90,7 +90,7 @@ describe("purchaseProcess", function () {
             });
 
             expect(await mainSystem.getPurchasePostByKey(0).then(resultArray => {
-                const responseMessages = resultArray[5];
+                const responseMessages = resultArray[6];
                 return responseMessages[0];
             })).to.equal(responseMessagesbyKey);
         });

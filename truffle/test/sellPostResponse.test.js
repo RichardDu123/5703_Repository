@@ -29,13 +29,13 @@ describe("sell Process", function () {
             await mainSystem.connect(seller1).createSellingPost(10, 10);
             //check the buyer address is equal to poster address
             expect(await mainSystem.getSellingPostByKey(0).then(resultArray => {
-                const seller1 = resultArray[2];
+                const seller1 = resultArray[3];
                 return seller1;
             })).to.equal(seller1.address);
             
             await mainSystem.connect(seller2).createSellingPost(20, 10);
             expect(await mainSystem.getSellingPostByKey(1).then(resultArray => {
-                const seller2 = resultArray[2];
+                const seller2 = resultArray[3];
                 return seller2;
             })).to.equal(seller2.address);
   
@@ -91,7 +91,7 @@ describe("sell Process", function () {
             });
 
             expect(await mainSystem.getSellingPostByKey(0).then(resultArray => {
-                const responseMessages = resultArray[5];
+                const responseMessages = resultArray[6];
                 return responseMessages[0];
             })).to.equal(responseMessagesbyKey);
         });
