@@ -5,7 +5,7 @@ const path = require('path')
 let productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const cdn = {
   css: ['https://unpkg.com/element-plus/dist/index.css'],
-  js: ['https://unpkg.com/vue@3', 'https://unpkg.com/element-plus']
+  js: ['https://unpkg.com/vue@3', 'https://unpkg.com/element-plus', 'https://cdn.bootcdn.net/ajax/libs/echarts/5.4.0/echarts.common.js']
 }
 module.exports = {
   productionSourceMap: false,
@@ -15,7 +15,8 @@ module.exports = {
   configureWebpack: {
     externals: {
       'vue': 'Vue',
-      'element-plus': 'ElementPlus'
+      'element-plus': 'ElementPlus',
+      'echarts': 'echarts'
     },
     plugins: [
       AutoImport({
@@ -42,10 +43,12 @@ module.exports = {
         minRatio: 0.8
       }])
     }
+    //cdn注入
     config.plugin("html").tap((args) => {
       args[0].cdn = cdn
       return args
     })
+    //分包
     config.optimization.splitChunks({
       cacheGroups: {
         common: {
