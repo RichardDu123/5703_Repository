@@ -3,12 +3,20 @@ const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 const path = require('path')
 let productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
+const cdn = {
+  css: ['https://unpkg.com/element-plus/dist/index.css'],
+  js: ['https://unpkg.com/vue@3', 'https://unpkg.com/element-plus']
+}
 module.exports = {
   productionSourceMap: false,
   publicPath: './',
   outputDir: 'dist',
   assetsDir: 'assets',
   configureWebpack: {
+    externals: {
+      'vue': 'Vue',
+      'element-plus': 'ElementPlus'
+    },
     plugins: [
       AutoImport({
         resolvers: [ElementPlusResolver()],
@@ -17,55 +25,6 @@ module.exports = {
         resolvers: [ElementPlusResolver()],
       }),
     ],
-  },
-  //webpack配置
-  configureWebpack: (config) => {
-    if (process.env.NODE_ENV === 'production') {
-      // 为生产环境修改配置...
-      config.mode = 'production'
-      // 将每个依赖包打包成单独的js文件
-      let optimization = {
-        runtimeChunk: 'single',
-        splitChunks: {
-          chunks: 'all',
-          maxInitialRequests: Infinity,
-          minSize: 20000,
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name (module) {
-                // get the name. E.g. node_modules/packageName/not/this/part.js
-                // or node_modules/packageName
-                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-                // npm package names are URL-safe, but some servers don't like @ symbols
-                return `npm.${packageName.replace('@', '')}`
-              }
-            }
-          }
-        },
-
-        minimizer: [
-        ]
-      }
-
-      //配置hash
-      Object.assign(config, {
-        optimization,
-        output: {
-          ...config.output,
-          filename: `static/js/[name].[contenthash:5].js`,
-          chunkFilename: `static/js/[name].[contenthash:5].js`
-        },
-        // 插件配置
-        plugins: [
-          ...config.plugins,
-        ]
-      })
-    } else {
-      // 为开发环境修改配置...
-      config.mode = 'development'
-    }
-
   },
   chainWebpack: config => {
     if (process.env.use_analyzer) { // 添加分析工具
@@ -83,6 +42,39 @@ module.exports = {
         minRatio: 0.8
       }])
     }
+    config.plugin("html").tap((args) => {
+      args[0].cdn = cdn
+      return args
+    })
+    config.optimization.splitChunks({
+      cacheGroups: {
+        common: {
+          name: 'chunk-common', // 打包后的文件名
+          chunks: 'initial', // 
+          minChunks: 2,
+          maxInitialRequests: 5,
+          minSize: 0,
+          priority: 1,
+          reuseExistingChunk: true
+        },
+        vendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'initial',
+          priority: 2,
+          reuseExistingChunk: true,
+          enforce: true
+        },
+        antDesignVue: {
+          name: 'chunk-eth',
+          test: /[\\/]node_modules[\\/]@ethereumjs[\\/]/,
+          chunks: 'initial',
+          priority: 3,
+          reuseExistingChunk: true,
+          enforce: true
+        }
+      }
+    })
   },
   //引入less全局变量
   pluginOptions: {
